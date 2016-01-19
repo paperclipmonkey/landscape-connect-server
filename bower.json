@@ -1,10 +1,10 @@
 {
-  "name": "Angle",
-  "version": "0.0.0",
+  "name": "Landscape Connect",
+  "version": "0.1.0",
   "authors": [
-    "@themicon_co"
+    "@paperclipmonkey"
   ],
-  "description": "Angle - Bootstrap Admin App + AngularJS",
+  "description": "Landscape Connect",
   "main": "index.html",
   "keywords": [
     "bootstrap",

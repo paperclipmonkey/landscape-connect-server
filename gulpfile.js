@@ -29,7 +29,7 @@ var ignored_files = '!'+hidden_files;
 
 // MAIN PATHS
 var paths = {
-  app:     '../app/',
+  app:     'public/app/',
   markup:  'jade/',
   styles:  'less/',
   scripts: 'js/'
@@ -37,7 +37,7 @@ var paths = {
 
 // if sass -> switch to sass folder
 if(useSass) {
-  log('Using SASS stylesheets...');
+  log('Using SASS stylesheets..');
   paths.styles = 'sass/';
 }
 
@@ -47,13 +47,13 @@ var vendor = {
   // vendor scripts required to start the app
   base: {
     source: require('./vendor.base.json'),
-    dest: '../app/js',
+    dest: 'public/app/js',
     name: 'base.js'
   },
   // vendor scripts to make the app work. Usually via lazy loading
   app: {
     source: require('./vendor.json'),
-    dest: '../vendor'
+    dest: 'public/vendor'
   }
 };
 
@@ -84,7 +84,7 @@ var build = {
   scripts: paths.app + 'js',
   styles:  paths.app + 'css',
   templates: {
-    index: '../',
+    index: './',
     views: paths.app,
     cache: paths.app + 'js/' + 'templates.js',
   }
@@ -105,21 +105,21 @@ var vendorUglifyOpts = {
 };
 
 var compassOpts = {
-  project: path.join(__dirname, '../'),
-  css: 'app/css',
-  sass: 'master/sass/',
-  image: 'app/img'
+  project: path.join(__dirname, './'),
+  css: 'public/app/css',
+  sass: 'sass/',
+  image: 'public/app/img'
 };
 
 var compassOptsThemes = {
-  project: path.join(__dirname, '../'),
-  css: 'app/css',
-  sass: 'master/sass/themes/', // themes in a subfolders
-  image: 'app/img'
+  project: path.join(__dirname, './'),
+  css: 'public/app/css',
+  sass: 'sass/themes/', // themes in a subfolders
+  image: 'public/app/img'
 };
 
 var tplCacheOptions = {
-  root: 'app',
+  root: 'public/app',
   filename: 'templates.js',
   //standalone: true,
   module: 'app.core',
@@ -345,7 +345,7 @@ gulp.task('build', gulpsync.sync([
         ]));
 
 gulp.task('prod', function() { 
-  log('Starting production build...');
+  log('Starting production build..');
   isProduction = true; 
 });
 
