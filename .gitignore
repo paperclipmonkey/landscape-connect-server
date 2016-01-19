@@ -1,4 +1,8 @@
 /master/node_modules/
 /master/bower_components/
-/app/
+/app/css/
+/app/js/
+/app/pages/
+/app/vendor/
+/app/views/
 /vendor/
