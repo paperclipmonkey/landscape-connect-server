@@ -3,7 +3,38 @@
   "version": "0.0.0",
   "description": "Angle - Bootstrap Admin App + AngularJS",
   "author": "@themicon_co",
-  "dependencies": {},
+  "dependencies": {
+    "archiver": "0.14.x",
+    "async": "1.4.x",
+    "aws-sdk": "^2.2.9",
+    "base64-stream": "^0.1.3",
+    "body-parser": "1.13.x",
+    "connect-multiparty": "2.0.x",
+    "cookie-parser": "1.3.x",
+    "cookie-session": "1.2.x",
+    "crypto": ">=0.0.3",
+    "date-utils": "1.2.x",
+    "datejs": "1.0.0-rc3",
+    "errorhandler": "1.4.x",
+    "escape-html": "1.0.x",
+    "eventemitter2": "^0.4.14",
+    "express": "4.13.x",
+    "geojson-area": "*",
+    "hbs": "*",
+    "json2csv": "2.9.x",
+    "method-override": "2.3.x",
+    "mocha": "2.2.x",
+    "mongoose": "4.1.x",
+    "node-uuid": "1.4.x",
+    "nodemailer": "1.4.x",
+    "passport": "0.2.x",
+    "passport-local": "1.0.x",
+    "request": "2.60.x",
+    "s3": "4.4.x",
+    "should": "7.x",
+    "supertest": "*",
+    "vows": "0.8.x"
+    },
   "devDependencies": {
     "css-flip": "git://github.com/geedmo/css-flip",
     "del": "^1.2.0",
@@ -40,8 +71,6 @@
     "yargs": "^3.7.2"
   },
   "scripts": {
-    "prestart": "bower install",
-    "start": "npm install",
-    "poststart": "gulp"
+    "start": "heroku local:run node ./"
   }
 }

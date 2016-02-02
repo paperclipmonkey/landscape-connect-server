@@ -34,8 +34,8 @@
                 .then(function(response) {
                   // assumes if ok, response is an object with some data, if not, a string with error
                   // customize according to your api
-                  if ( !response.account ) {
-                    vm.authMsg = response;
+                  if ( !response.data.account ) {
+                    vm.authMsg = response.data;
                   }else{
                     $state.go('app.dashboard');
                   }

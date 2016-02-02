@@ -13,17 +13,24 @@
           span.fa.fa-envelope.form-control-feedback.text-muted
           span.text-danger(ng-show="reg.registerForm.account_email.$dirty && reg.registerForm.account_email.$error.required") This field is required
           span.text-danger(ng-show="reg.registerForm.account_email.$dirty && reg.registerForm.account_email.$error.email") This field must be a valid email address
+          //- - Password 1
+          //-<input class="form-control" name="password" type="text" required ng-model="password" placeholder="password">
+          //-<input class="form-control" name="confirm_password" type="text" required ng-model="confirm_password" ui-validate=" '$value==password' "ui-validate-watch=" 'password' " placeholder="confirm password">
+
         .form-group.has-feedback
           label.text-muted Password
-          input#id-password.form-control(type='password', name="account_password", ng-model="reg.register.password", ng-pattern="/^[a-zA-Z0-9]{6,10}$/", required='')
+          input#id-password.form-control(type='password', name="account_password", ng-model="reg.account.password", ng-pattern="/^[a-zA-Z0-9]{6,}$/", required='')
           span.fa.fa-lock.form-control-feedback.text-muted
           span.text-danger(ng-show="reg.registerForm.account_password.$dirty && reg.registerForm.account_password.$error.required") This field is required
-          span.text-danger(ng-show="reg.registerForm.account_password.$dirty && reg.registerForm.account_password.$error.pattern") Input should match 'a-zA-Z0-9' and 6-10 length
+          span.text-danger(ng-show="reg.registerForm.account_password.$dirty && reg.registerForm.account_password.$error.pattern") Input should match 'a-zA-Z0-9' and longer than 5 characters
+        //- - Password 2
         .form-group.has-feedback
           label.text-muted Retype Password
-          input.form-control(type='password', name="account_password_confirm", ng-model="reg.register.account_password_confirm", ui-validate="'$value==register.password'" ui-validate-watch="'password'")
+          input.form-control(type='password', name="account_password_confirm", ng-model="reg.account.account_password_confirm", ui-validate="'$value==reg.account.password'" ui-validate-watch="'reg.account.password'")
           span.fa.fa-lock.form-control-feedback.text-muted
           span.text-danger(ng-show="reg.registerForm.account_password_confirm.$dirty && reg.registerForm.account_password_confirm.$error.validator") Password does Not match
+
+
         .clearfix
           .checkbox.c-checkbox.pull-left.mt0
             label

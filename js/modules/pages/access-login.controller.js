@@ -24,6 +24,16 @@
           // place the message if something goes wrong
           vm.authMsg = '';
 
+          $http
+            .get('api/account/details')
+            .then(function(response) {
+              if(!response.data.account){
+                return;
+              }
+              $state.go('app.dashboard');
+              console.log('user account details', response.data.account)
+            });
+
           vm.login = function() {
             vm.authMsg = '';
 
@@ -34,7 +44,7 @@
                 .then(function(response) {
                   // assumes if ok, response is an object with some data, if not, a string with error
                   // customize according to your api
-                  if ( !response.account ) {
+                  if ( !response.data.account ) {
                     vm.authMsg = 'Incorrect credentials.';
                   }else{
                     $state.go('app.dashboard');

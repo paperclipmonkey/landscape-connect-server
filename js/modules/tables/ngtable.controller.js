@@ -151,7 +151,7 @@
 
           // AJAX
           
-          var Api = $resource('server/table-data.json');
+          var Api = $resource('/api/questionnaires');
 
           vm.tableParams5 = new ngTableParams({
               page: 1,            // show first page

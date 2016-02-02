@@ -10,18 +10,57 @@
         .module('app.questions')
         .controller('questionnaireNewCtrl', questionnaireNewCtrl);
     /*jshint -W055 */
-    //questionnaireNewCtrl.$inject = ['ui-sortable'];
+    questionnaireNewCtrl.$inject = ['$http'];//'ui-sortable'
     
-    function questionnaireNewCtrl() {
+    function questionnaireNewCtrl($http) {
       window.$scope = this
       $scope.questionnaire = {
         'dateAdded': '',
         'name': '',
         'description': '',
         'serverId': '',
-        'sections': []
+        'sections': [
+          {
+            'title': 'Sample Section 1',
+            'questions': [
+              {
+                title: 'Example Multi Select',
+                type: 'multi',
+                choices: [
+                  {
+                    choice: 'Example choice 1'
+                  },
+                  {
+                    choice: 'Another example choice 2'
+                  }
+                ]
+              },
+              {
+                title: 'Example Multiline Textarea',
+                type: 'textarea'
+              }
+            ]
+          },
+          {
+            'title': 'Sample Section 2',
+            'questions': [
+              {
+                title: 'Second Multi Select',
+                type: 'multi',
+                choices: [
+                  {
+                    choice: 'Example choice'
+                  },
+                  {
+                    choice: 'Another example choice'
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
-      $scope.selectedSection = null
+      $scope.selectedSection = $scope.questionnaire.sections[0]
       $scope.selectedQuestion = null
 
       $scope.choiceToAdd = ''
@@ -29,7 +68,6 @@
 
       var sectionTemplate = {
         'title': 'Section title',
-        'required': false,
         'questions': []
       }
 
@@ -39,10 +77,10 @@
           type: 'radio',
           choices: [
             {
-              choice: 'example'
+              choice: 'Example single choice'
             },
             {
-              choice: 'another'
+              choice: 'Another example single choice'
             }
           ]
         },
@@ -51,19 +89,19 @@
           type: 'multi',
           choices: [
             {
-              choice: 'example'
+              choice: 'Example choice'
             },
             {
-              choice: 'another'
+              choice: 'Another example choice'
             }
           ]
         },
         {
-          title: 'Textarea',
+          title: 'Multiline Textarea',
           type: 'textarea'
         },
         {
-          title: 'Text',
+          title: 'Single Text Line',
           type: 'text'
         }
       ]
@@ -90,9 +128,9 @@
       }
 
       $scope.removeQuestion = function (el) {
+        $scope.deselectQuestion()
         var index = $scope.selectedSection.questions.indexOf(el)
         $scope.selectedSection.questions.splice(index, 1)
-        $scope.deselectQuestion()
       }
 
       $scope.addOption = function () {
@@ -132,6 +170,14 @@
         var newEl = angular.copy(a)
         $scope.selectedSection.questions.push(newEl)
         $scope.selectedQuestion = newEl
+      }
+
+      $scope.submitQuestionnaire = function(a){
+        console.log("Submitting Questionnaire")
+        $http.post("/api/questionnaires/", $scope.questionnaire).success(function(data, status) {
+            console.log(data, status)
+            $scope.hello = data;
+        })
       }
 
       $scope.draggableOptions = {

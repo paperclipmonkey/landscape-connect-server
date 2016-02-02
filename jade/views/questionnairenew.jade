@@ -1,186 +1,185 @@
 h3 New Questionnaire
-  small Native AngularJS form wizard
+  small Native AngularJS form wizard 
 // START panel
-.panel.panel-default
-  .panel-body
+.questionnairenew
+  //- .panel.panel-default
+  div 
+    //-.panel-body
     form(form-wizard="", steps="4", novalidate="", ng-submit="alertSubmit()")
       .form-wizard.wizard-horizontal(ng-controller="questionnaireNewCtrl as dgnr")
         // START wizard steps indicator
-        ol.row
-          li.col-md-3(ng-class="{'active':wizard.active(1)}", ng-click="wizard.go(1)")
-            h4 Start
-            small.text-muted Copy an existing questionnaire or create a new one 
-          li.col-md-3(ng-class="{'active':wizard.active(2)}", ng-click="wizard.go(2)")
-            h4 Designer
-            small.text-muted Nulla pharetra imperdiet sapien ac faucibus. 
-          li.col-md-3(ng-class="{'active':wizard.active(3)}", ng-click="wizard.go(3)")
-            h4 Splash page
-            small.text-muted Sed elementum lorem dolor, id fermentum metus. 
-          li.col-md-3(ng-class="{'active':wizard.active(4)}", ng-click="wizard.go(4)")
-            h4 Publish
-            small.text-muted Nullam sit amet magna vestibulum libero.
-        // END wizard steps indicator
+        ol.row.panel.panel-default
+            li.col-md-3(ng-class="{'active':wizard.active(1)}", ng-click="wizard.go(1)")
+              h4 Start
+              small.text-muted Copy an existing questionnaire or create a new one 
+            li.col-md-3(ng-class="{'active':wizard.active(2)}", ng-click="wizard.go(2)")
+              h4 Designer
+              small.text-muted Nulla pharetra imperdiet sapien ac faucibus. 
+            li.col-md-3(ng-class="{'active':wizard.active(3)}", ng-click="wizard.go(3)")
+              h4 Splash page
+              small.text-muted Sed elementum lorem dolor, id fermentum metus. 
+            li.col-md-3(ng-class="{'active':wizard.active(4)}", ng-click="wizard.go(4)")
+              h4 Publish
+              small.text-muted Nullam sit amet magna vestibulum libero.
+          // END wizard steps indicator
 
         // START Wizard Step inputs 
-        div.panel(ng-show="wizard.active(1)")
-          p create a new form or edit an existing one
-          fieldset
-            legend Start
-            // START row 
-            .row
-              .col-md-4
-                button New questionnaire
-              .col-md-4
-                .form-group
-                label.control-label Saved questionnaires
-                select(name="account" class="form-control")
-                  option Option 1
-                  option Option 2
-                  option Option 3
-                  option Option 4
-            // END row 
-          ul.pager
-            li.next
-              a(href='#', ng-click="wizard.go(2)")
-                | Next 
-                span &rarr;
-        // END Wizard Step inputs 
+        div.panel.panel-default(ng-show="wizard.active(1)")
+          .panel-body
+            p create a new form or edit an existing one
+            fieldset
+              legend Start
+              // START row 
+              p Title
+              input.mb-lg.form-control.input-lg(type="text", ng-model='dgnr.questionnaire.name', placeholder='Title')
+              p Project Website address
+              input.mb-lg.form-control.input-lg(type="text", ng-model='dgnr.questionnaire.website', placeholder='http://')
+              p Description
+              textarea.form-control(rows='6', ng-model='dgnr.questionnaire.description')
+              .clearfix
+            ul.pager
+              li.next
+                a(href='#', ng-click="wizard.go(2)")
+                  | Next 
+                  span &rarr;
+          // END Wizard Step inputs
         // START Wizard Step inputs 
         div(ng-show="wizard.active(2)" tour="",  backdrop="true")
           // START QBuilder
           h2 Form builder
           button.btn.btn-primary.mb-lg(ng-click='tour.restart(true)') Start Tour!
-          div
+          div.row
             //- - - - - - - - - Sections - - - - - - - - - 
-            .col-md-3(tour-step='', order='1', title='Sections', content='A questionnaire is broken up in to sections. Click a section to edit it or drag to reorder sections.', placement='right')
-              h2 Sections
-              div
-                .screen.draggable-element-container.list-group(ui-sortable='dgnr.sectionOptions', ng-model='dgnr.questionnaire.sections')
-                  .alert(ng-click='dgnr.sectionClick(section)', ng-class='{"alert-info": section === dgnr.selectedSection}', ng-repeat='section in dgnr.questionnaire.sections track by $index')
-                    em.fa.fa-reorder.fa-fw.text-muted.mr-log.moveicon
-                    | {{section.title}}
-                    em.fa.fa-times.deleteicon(ng-click='dgnr.removeSection(section)')
-                .form-group
-                  input.form-control(ng-model='dgnr.sectionToAdd', ng-keyup='$event.keyCode == 13 ? dgnr.addSection() : true', type='text', placeholder='Add Section')
-            
-            //- - - - - - - - - Questions - - - - - - - - -
-            .col-md-6.minheight10.form(tour-step='', order='2', title='Questions', content='Inside each section there are questions.', placement='right')
-              .newquestionbuttons.btn-group(ng-hide='dgnr.selectedSection == null', tour-step='', order='3', title='New question', content='Click to add a new question to the selected section', placement='right')
-                .btn.screen(ng-repeat='arr in dgnr.draggables track by $index', ng-model='arr')
-                  .btn.btn-info(ng-click='dgnr.newQuestionClick(questionType)', ng-repeat='questionType in arr')
-                    i.fa(ng-class="{'fa-check-square': questionType.type == 'multi','fa-circle-o': questionType.type == 'radio', 'fa-font': questionType.type == 'text', 'fa-quote-left': questionType.type == 'textarea'}")
-              .apps-container.screen.connected-drop-target-sortable(ui-sortable='dgnr.sortableOptions', ng-model='dgnr.selectedSection')
-                .form-group.formelementlistitem.alert(ng-repeat='question in dgnr.selectedSection.questions track by $index', ng-class='{"alert-info": question === dgnr.selectedQuestion}', ng-click='dgnr.selectQuestion(question)')
-                  label.movable {{question.title}}
-                  input.form-control(ng-if="question.type === 'text'", type='text', placeholder='')
-                  textarea.form-control(ng-if="question.type === 'textarea'", type='text', placeholder='')
-                  div(ng-if="question.type === 'radio'")
-                    .radio(ng-repeat='choice in question.choices')
-                      label
-                        input(type='radio', name='{{question.title}}', value='{{choice.choice}}')
-                        |                   {{choice.choice}}
-                  div(ng-if="question.type === 'multi'")
-                    .checkbox(ng-repeat='choice in question.choices')
-                      label
-                        input(type='checkbox', value='{{choice.choice}}')
-                        |                   {{choice.choice}}
-            //- - - - - - - - - Properties - - - - - - - - -
-            .col-md-3(tour-step='', order='4', title='Properties', content='Edit section and Question properties', placement='left')
-              h2 Properties
-              .apps-container.screen
-                // Question details
-                div(ng-if='dgnr.selectedQuestion != null')
-                  .form-group
-                    label(for='title') Question
-                    input.form-control(type='text', ng-model='dgnr.selectedQuestion.title', placeholder='Title')
-                  .form-group.screen.draggable-element-container.list-group(ui-sortable='dgnr.questionOptions' ng-show='dgnr.selectedQuestion.choices', ng-if="dgnr.selectedQuestion.type === 'multi' || dgnr.selectedQuestion.type === 'radio'")
-                    label(for='title') choices
-                    div(ng-repeat='choice in dgnr.selectedQuestion.choices')
-                      .list-group-item
+            .col-lg-3.sections
+              .panel.panel-default(tour-step='', order='1', title='Sections', content='A questionnaire is broken up in to sections. Click a section to edit it or drag to reorder sections.', placement='right')
+                .panel-body
+                  h2 Sections
+                  div
+                    .screen.draggable-element-container.list-group(ui-sortable='dgnr.sectionOptions', ng-model='dgnr.questionnaire.sections')
+                      .alert.section(ng-click='dgnr.sectionClick(section)', ng-class='{"alert-info": section === dgnr.selectedSection}', ng-repeat='section in dgnr.questionnaire.sections track by $index')
                         em.fa.fa-reorder.fa-fw.text-muted.mr-log.moveicon
-                        | {{choice.choice}}
-                        em.fa.fa-times.deleteicon(ng-click='dgnr.removeOption(dgnr.selectedQuestion, choice)')
+                        | {{section.title}}
+                        em.fa.fa-times.deleteicon(ng-click='dgnr.removeSection(section)')
                     .form-group
-                      input.form-control(ng-model='dgnr.choiceToAdd', ng-keyup='$event.keyCode == 13 ? dgnr.addOption() : true', type='text', placeholder='Add Choice')
-                  .form-group
-                    label(for='title') Required
-                    input.form-control(type='checkbox', ng-model='dgnr.selectedQuestion.required')
-                    p.help-block Require this question to be answered
-                  .form-group
-                    label(for='title') Delete
-                    button.form-control(type='button', ng-click='dgnr.removeQuestion(selectedQuestion)') Delete
-                // Section details
-                div(ng-if='dgnr.selectedQuestion == null && dgnr.selectedSection != null')
-                  .form-group
-                    label(for='title') Section
-                    input.form-control(type='text', ng-model='dgnr.selectedSection.title', placeholder='Title')
-                  .form-group
-                    label(for='title') Delete
-                    button.form-control(type='button', ng-click='dgnr.removeSection(selectedSection)') Delete
-                // Questionnaire details
-                div(ng-if='dgnr.selectedQuestion == null && dgnr.selectedSection == null')
-                  .form-group
-                    label(for='title') Questionnaire
-                    input.form-control(type='text', ng-model='dgnr.questionnaire.name', placeholder='Title')
-                  .form-group
-                    label(for='title') Description
-                    textarea.form-control(rows='6', ng-model='dgnr.questionnaire.description')
-                  .form-group
-                    label(for='title') Website
-                    input.form-control(type='text', ng-model='dgnr.questionnaire.website', placeholder='http://')
-                // import / export
-                //- .app
-                //-   .form-group
-                //-     label(for='title') Data
-                //-     textarea.importexport(rows='10', questionnaireJsonDirective='', ng-model-options="{ updateOn: 'blur', debounce: { 'default': 500, 'blur': 0 } }", ng-model='dgnr.questionnaire')
+                      input.form-control(ng-model='dgnr.sectionToAdd', ng-keyup='$event.keyCode == 13 ? dgnr.addSection() : true', type='text', placeholder='Add Section')
+                
+            //- - - - - - - - - Questions - - - - - - - - -
+            .col-lg-6.minheight10.form(tour-step='', order='2', title='Questions', content='Inside each section there are questions.', placement='right')
+              .panel.panel-default
+                .panel-body
+                  .newquestionbuttons.row(ng-hide='dgnr.selectedSection == null', tour-step='', order='3', title='New question', content='Click to add a new question to the selected section', placement='right')
+                    .btn.screen.col-md-3(ng-repeat='arr in dgnr.draggables track by $index', ng-model='arr')
+                      .btn.btn-info(ng-click='dgnr.newQuestionClick(questionType)', ng-repeat='questionType in arr')
+                        i.fa(ng-class="{'fa-check-square': questionType.type == 'multi','fa-circle-o': questionType.type == 'radio', 'fa-font': questionType.type == 'text', 'fa-quote-left': questionType.type == 'textarea'}")
+                  .apps-container.screen.connected-drop-target-sortable(ui-sortable='dgnr.sortableOptions', ng-model='dgnr.selectedSection')
+                    .form-group.formelementlistitem.alert.question(ng-repeat='question in dgnr.selectedSection.questions track by $index', ng-class='{"alert-info": question === dgnr.selectedQuestion}', ng-click='dgnr.selectQuestion(question)')
+                      label.movable {{question.title}}
+                      em.fa.fa-times.deleteicon(ng-click='dgnr.removeQuestion(question)')
+                      input.form-control(ng-if="question.type === 'text'", type='text', placeholder='')
+                      textarea.form-control(ng-if="question.type === 'textarea'", type='text', placeholder='')
+                      div(ng-if="question.type === 'radio'")
+                        .radio(ng-repeat='choice in question.choices')
+                          label
+                            input(type='radio', name='{{question.title}}', value='{{choice.choice}}')
+                            |                   {{choice.choice}}
+                      div(ng-if="question.type === 'multi'")
+                        .checkbox(ng-repeat='choice in question.choices')
+                          label
+                            input(type='checkbox', value='{{choice.choice}}')
+                            |                   {{choice.choice}}
+            //- - - - - - - - - Properties - - - - - - - - -
+            .col-lg-3.properties(tour-step='', order='4', title='Properties', content='Edit section and Question properties', placement='left')
+              .panel.panel-default
+                .panel-body
+                  h2 Properties
+                  .apps-container.screen
+                    // Question details
+                    div(ng-if='dgnr.selectedQuestion != null')
+                      .form-group
+                        label(for='title') Question
+                        input.form-control(type='text', ng-model='dgnr.selectedQuestion.title', placeholder='Title')
+                      .form-group.screen.draggable-element-container.list-group(ui-sortable='dgnr.questionOptions' ng-show='dgnr.selectedQuestion.choices', ng-if="dgnr.selectedQuestion.type === 'multi' || dgnr.selectedQuestion.type === 'radio'")
+                        label(for='title') choices
+                        div(ng-repeat='choice in dgnr.selectedQuestion.choices')
+                          .list-group-item
+                            em.fa.fa-reorder.fa-fw.text-muted.mr-log.moveicon
+                            | {{choice.choice}}
+                            em.fa.fa-times.deleteicon(ng-click='dgnr.removeOption(dgnr.selectedQuestion, choice)')
+                        .form-group
+                          input.form-control(ng-model='dgnr.choiceToAdd', ng-keyup='$event.keyCode == 13 ? dgnr.addOption() : true', type='text', placeholder='Add Choice')
+                      .form-group
+                        label(for='title') Required
+                        input.form-control(type='checkbox', ng-model='dgnr.selectedQuestion.required')
+                        p.help-block Require this question to be answered
+                    // Section details
+                    div(ng-if='dgnr.selectedQuestion == null && dgnr.selectedSection != null')
+                      .form-group
+                        label(for='title') Section title
+                        input.form-control(type='text', ng-model='dgnr.selectedSection.title', placeholder='Title')
+                    // Questionnaire details
+                    div(ng-if='dgnr.selectedQuestion == null && dgnr.selectedSection == null')
+                    // import / export
+                    //- .app
+                    //-   .form-group
+                    //-     label(for='title') Data
+                    //-     textarea.importexport(rows='10', questionnaireJsonDirective='', ng-model-options="{ updateOn: 'blur', debounce: { 'default': 500, 'blur': 0 } }", ng-model='dgnr.questionnaire')
 
 
         // END Wizard Step inputs 
         // START Wizard Step inputs 
         div(ng-show="wizard.active(3)")
-          fieldset
-            legend Splash page
-            p The splash page is shown when a new response is started to a questionnaire. 
-            p It consists of a title, description and image.
-            // START row 
-            .row
-              .col-md-12
-                .form-group
-                  label(for='title') Intro title
-                  input.form-control(type='text', ng-model='dgnr.questionnaire.introTitle', placeholder='Welcome to...')
-                .form-group
-                  label(for='title') Intro description
-                  textarea.form-control(rows='6', ng-model='dgnr.questionnaire.introDescription', placeholder='Help us build a picture of...')
-                .form-group
-                  label(for='title') Intro image
-                  img.img-responsive(data-ng-src='{{dgnr.questionnaire.introImage}}', data-err-src='images/png/avatar.png')
-                  input.form-control(type='file', ng-model='dgnr.questionnaire.introImage', accept='image/jpeg', app-filereader='')
-                  p.help-block .jpg file with max dimensions of 600px x 600px
-            // END row 
-          ul.pager
-            li.previous
-              a(href='#', ng-click="wizard.go(2)")
-                span &larr; Previous
-            li.next
-              a(href='#', ng-click="wizard.go(4)")
-                | Next 
-                span &rarr;
+          .panel.panel-default
+            .panel-body
+              fieldset
+                legend Splash page
+                p The splash page is shown when starting a new response to a questionnaire. 
+                // START row 
+                .row
+                  .col-md-12
+                    .form-group
+                      label(for='title') Intro title
+                      input.form-control(type='text', ng-model='dgnr.questionnaire.introTitle', placeholder='Welcome to...')
+                    .form-group
+                      label(for='title') Intro description
+                      textarea.form-control(rows='6', ng-model='dgnr.questionnaire.introDescription', placeholder='Help us build a picture of...')
+                    .form-group
+                      label(for='title') Intro image
+                      img.img-responsive(data-ng-src='{{dgnr.questionnaire.introImage}}', data-err-src='images/png/avatar.png')
+                      input.form-control(type='file', ng-model='dgnr.questionnaire.introImage', accept='image/jpeg', app-filereader='')
+                      p.help-block .jpg file with max dimensions of 600px x 600px
+                // END row 
+              ul.pager
+                li.previous
+                  a(href='#', ng-click="wizard.go(2)")
+                    span &larr; Previous
+                li.next
+                  a(href='#', ng-click="wizard.go(4)")
+                    span Next &rarr; 
+                
         // END Wizard Step inputs 
         // START Wizard Step inputs 
         div(ng-show="wizard.active(4)")
-          .row
-            .col-md-12
-              .form-group
-                label Publicly publish Questionnaire
-                  input(type="checkbox")
-              .form-group
-                label Publicly publish data
-                  input(type="checkbox")
-              .form-group
-                button Publish
-          ul.pager
-            li.previous
-              a(href='#', ng-click="wizard.go(3)")
-                span &larr; Previous
-        // END Wizard Step inputs 
+          .panel.panel-default
+            .panel-body
+              .row
+                .col-md-12
+                  .form-group.clearfix
+                    .checkbox.c-checkbox.pull-left.mt0
+                      label
+                        input(type='checkbox', ng-model="dgnr.publicQuestionnaire")
+                        span.fa.fa-check
+                        |  Publicly publish Questionnaire
+                  .form-group.clearfix
+                    .checkbox.c-checkbox.pull-left.mt0
+                      label
+                        input(type='checkbox', ng-model="dgnr.publicData")
+                        span.fa.fa-check
+                        |  Publicly publish Data
+                  .form-group.clearfix
+                    a(href="#" ng-click="dgnr.submitQuestionnaire()") Publish
+              ul.pager
+                li.previous
+                  a(href='#', ng-click="wizard.go(3)")
+                    span &larr; Previous
+            // END Wizard Step inputs 
 // END panel 
