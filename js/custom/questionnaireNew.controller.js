@@ -10,9 +10,9 @@
         .module('app.questions')
         .controller('questionnaireNewCtrl', questionnaireNewCtrl);
     /*jshint -W055 */
-    questionnaireNewCtrl.$inject = ['$http'];//'ui-sortable'
+    questionnaireNewCtrl.$inject = ['$http', '$state'];//'ui-sortable'
     
-    function questionnaireNewCtrl($http) {
+    function questionnaireNewCtrl($http, $state) {
       window.$scope = this
       $scope.questionnaire = {
         'name': '',
@@ -176,7 +176,7 @@
         console.log("Submitting Questionnaire")
         $http.post("/api/questionnaires/", $scope.questionnaire).success(function(data, status) {
             console.log(data, status)
-            $scope.hello = data;
+            $state.go('app.questionnaire', {questionnaireId: data.quickCode})
         })
       }
 
