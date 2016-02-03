@@ -15,10 +15,10 @@
     function questionnaireNewCtrl($http) {
       window.$scope = this
       $scope.questionnaire = {
-        'dateAdded': '',
         'name': '',
         'description': '',
-        'serverId': '',
+        'publicQuestionnaire': true,
+        'publicData': true,
         'sections': [
           {
             'title': 'Sample Section 1',
