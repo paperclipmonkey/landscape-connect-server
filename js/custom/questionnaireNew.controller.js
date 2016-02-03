@@ -180,63 +180,18 @@
         })
       }
 
-      $scope.draggableOptions = {
-        connectWith: '.connected-drop-target-sortable',
-        stop: function (e, ui) {
-          // if the element is removed from the first container
-          if (ui.item.sortable.source.hasClass('draggable-element-container') &&
-            ui.item.sortable.droptarget &&
-            ui.item.sortable.droptarget !== ui.item.sortable.source &&
-            ui.item.sortable.droptarget.hasClass('connected-drop-target-sortable')) {
-            // restore the removed item
-            ui.item.sortable.sourceModel.push(angular.copy(ui.item.sortable.model))
-            $scope.selectedQuestion = [ui.item.sortable.model]
-          }
-        }
-      }
+      $scope.sectionOptions = {}
 
-      $scope.sectionOptions = {
-        stop: function (e, ui) {
-          // if the element is removed from the first container
-          if (ui.item.sortable.source.hasClass('draggable-element-container') &&
-            ui.item.sortable.droptarget &&
-            ui.item.sortable.droptarget !== ui.item.sortable.source &&
-            ui.item.sortable.droptarget.hasClass('connected-drop-target-sortable')) {
-            // restore the removed item
-            ui.item.sortable.sourceModel.push(angular.copy(ui.item.sortable.model))
-            $scope.selectedQuestion = [ui.item.sortable.model]
-          }
-        }
-      }
-
-      $scope.questionOptions = {
-        stop: function (e, ui) {
-          // if the element is removed from the first container
-          if (ui.item.sortable.source.hasClass('draggable-element-container') &&
-            ui.item.sortable.droptarget &&
-            ui.item.sortable.droptarget !== ui.item.sortable.source &&
-            ui.item.sortable.droptarget.hasClass('connected-drop-target-sortable')) {
-            // restore the removed item
-            ui.item.sortable.sourceModel.push(angular.copy(ui.item.sortable.model))
-            //$scope.selectedQuestion = [ui.item.sortable.model]
-          }
-        }
-      }
-
-
-      $scope.sortableOptions = {}
+      $scope.questionOptions = {}
 
       $scope.import = function (json) {
-        $scope.questionnaire = json
+        $scope.questionnaire.sections = json.sections
         $scope.$apply()
       }
 
       $scope.export = function () {
         console.log($scope.questionnaire)
       }
-
-
-      ////////////////
 
       var activate = function() {
         // BootstrapTour is not compatible with z-index based layout

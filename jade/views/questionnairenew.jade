@@ -67,14 +67,22 @@ h3 New Questionnaire
             .col-lg-6.minheight10.form(tour-step='', order='2', title='Questions', content='Inside each section there are questions.', placement='right')
               .panel.panel-default
                 .panel-body
+                  //- - - - - - - - New Questions - - - - -
                   .newquestionbuttons.row(ng-hide='dgnr.selectedSection == null', tour-step='', order='3', title='New question', content='Click to add a new question to the selected section', placement='right')
                     .btn.screen.col-md-3(ng-repeat='arr in dgnr.draggables track by $index', ng-model='arr')
                       .btn.btn-info(ng-click='dgnr.newQuestionClick(questionType)', ng-repeat='questionType in arr')
                         i.fa(ng-class="{'fa-check-square': questionType.type == 'multi','fa-circle-o': questionType.type == 'radio', 'fa-font': questionType.type == 'text', 'fa-quote-left': questionType.type == 'textarea'}")
-                  .apps-container.screen.connected-drop-target-sortable(ui-sortable='dgnr.sortableOptions', ng-model='dgnr.selectedSection')
-                    .form-group.formelementlistitem.alert.question(ng-repeat='question in dgnr.selectedSection.questions track by $index', ng-class='{"alert-info": question === dgnr.selectedQuestion}', ng-click='dgnr.selectQuestion(question)')
-                      label.movable {{question.title}}
+                  //- - - - - - - Questions list - - - - -
+                  .apps-container.screen.draggable-element-container(ui-sortable='dgnr.questionOptions', ng-model='dgnr.selectedSection.questions')
+                    //- //- - - - - - Nothing selected - - - - - 
+                    //- div(ng-if='dgnr.selectedSection == null')
+                    //-   p Please create a new section or select a section from the right hand-side
+                    //- - - - Each question - - - - - - - - -
+                    .form-group.formelementlistitem.alert.question(ng-click='dgnr.selectQuestion(question)' ng-class='{"alert-info": question === dgnr.selectedQuestion}' ng-repeat='question in dgnr.selectedSection.questions track by $index')
+                      em.fa.fa-reorder.fa-fw.text-muted.mr-log.moveicon
+                      | {{question.title}}
                       em.fa.fa-times.deleteicon(ng-click='dgnr.removeQuestion(question)')
+                      //- - - - - Different types of questions - - - - - -
                       input.form-control(ng-if="question.type === 'text'", type='text', placeholder='')
                       textarea.form-control(ng-if="question.type === 'textarea'", type='text', placeholder='')
                       div(ng-if="question.type === 'radio'")
@@ -93,7 +101,7 @@ h3 New Questionnaire
                 .panel-body
                   h2 Properties
                   .apps-container.screen
-                    // Question details
+                    //- Question details
                     div(ng-if='dgnr.selectedQuestion != null')
                       .form-group
                         label(for='title') Question
@@ -111,14 +119,15 @@ h3 New Questionnaire
                         label(for='title') Required
                         input.form-control(type='checkbox', ng-model='dgnr.selectedQuestion.required')
                         p.help-block Require this question to be answered
-                    // Section details
+                    //- Section details
                     div(ng-if='dgnr.selectedQuestion == null && dgnr.selectedSection != null')
                       .form-group
                         label(for='title') Section title
                         input.form-control(type='text', ng-model='dgnr.selectedSection.title', placeholder='Title')
-                    // Questionnaire details
+                    //- Questionnaire details
                     div(ng-if='dgnr.selectedQuestion == null && dgnr.selectedSection == null')
-                    // import / export
+                      p Select a section
+                    //- import / export
                     //- .app
                     //-   .form-group
                     //-     label(for='title') Data
