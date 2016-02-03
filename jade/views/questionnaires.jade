@@ -18,5 +18,6 @@ h3
             a(href="#/app/questionnaires/{{model.quickCode}}"){{model.name}}
           td(data-title="'Description'") {{model.description}}
           td(data-title="'QuickCode'") {{model.quickCode}}
+          td(data-title="'Onwer'") {{model.owner}}
           td(data-title="'Url'")
             span(ng-class="{ 'plus': model.money >= 0,'minus': model.money < 0 }") {{model.website}}

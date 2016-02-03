@@ -31,11 +31,11 @@ h3 New Questionnaire
               legend Start
               // START row 
               p Title
-              input.mb-lg.form-control.input-lg(type="text", ng-model='dgnr.questionnaire.name', placeholder='Title')
+              input.mb-lg.form-control.input-lg(type="text", ng-model='questionnaire.name', placeholder='Title')
               p Project Website
-              input.mb-lg.form-control.input-lg(type="text", ng-model='dgnr.questionnaire.website', placeholder='http://')
+              input.mb-lg.form-control.input-lg(type="text", ng-model='questionnaire.website', placeholder='http://')
               p Description
-              textarea.form-control(rows='6', ng-model='dgnr.questionnaire.description')
+              textarea.form-control(rows='6', ng-model='questionnaire.description')
               .clearfix
             ul.pager
               li.next
@@ -48,6 +48,11 @@ h3 New Questionnaire
           // START QBuilder
           h2 Form builder
           a.btn.btn-primary.mb-lg(ng-click='tour.restart(true)') Start Tour!
+          //- <select ng-change="selectQuestionnaire()" ng-model="selectedQuestionnaire" ng-options="o.name for o in populateOptions track by o.quickCode"></select><br />
+          //-select(ng-model="selectedQuestionnaire")
+            //-option(ng-value="{{option.quickCode}}" ng-repeat="option in populateOptions track by $index"){{option.name}}
+          <pre>{{selectedQuestionnaire | json}}</pre>
+
           div.row
             //- - - - - - - - - Sections - - - - - - - - - 
             .col-lg-3.sections
@@ -55,32 +60,32 @@ h3 New Questionnaire
                 .panel-body
                   h2 Sections
                   div
-                    .screen.draggable-element-container.list-group(ui-sortable='dgnr.sectionOptions', ng-model='dgnr.questionnaire.sections')
-                      .alert.section(ng-click='dgnr.sectionClick(section)', ng-class='{"alert-info": section === dgnr.selectedSection}', ng-repeat='section in dgnr.questionnaire.sections track by $index')
+                    .screen.draggable-element-container.list-group(ui-sortable='sectionOptions', ng-model='questionnaire.sections')
+                      .alert.section(ng-click='sectionClick(section)', ng-class='{"alert-info": section === selectedSection}', ng-repeat='section in questionnaire.sections track by $index')
                         em.fa.fa-reorder.fa-fw.text-muted.mr-log.moveicon
                         | {{section.title}}
-                        em.fa.fa-times.deleteicon(ng-click='dgnr.removeSection(section)')
+                        em.fa.fa-times.deleteicon(ng-click='removeSection(section)')
                     .form-group
-                      input.form-control(ng-model='dgnr.sectionToAdd', ng-keyup='$event.keyCode == 13 ? dgnr.addSection() : true', type='text', placeholder='Add Section')                
+                      input.form-control(ng-model='sectionToAdd', ng-keyup='$event.keyCode == 13 ? addSection() : true', type='text', placeholder='Add Section')                
             //- - - - - - - - - Questions - - - - - - - - -
             .col-lg-6.minheight10.form(tour-step='', order='2', title='Questions', content='Inside each section there are questions.', placement='right')
               .panel.panel-default
                 .panel-body
                   //- - - - - - - - New Questions - - - - -
-                  .newquestionbuttons.row(ng-hide='dgnr.selectedSection == null', tour-step='', order='3', title='New question', content='Click to add a new question to the selected section', placement='right')
-                    .btn.screen.col-md-3(ng-repeat='arr in dgnr.draggables track by $index', ng-model='arr')
-                      .btn.btn-info(ng-click='dgnr.newQuestionClick(questionType)', ng-repeat='questionType in arr')
+                  .newquestionbuttons.row(ng-hide='selectedSection == null', tour-step='', order='3', title='New question', content='Click to add a new question to the selected section', placement='right')
+                    .btn.screen.col-md-3(ng-repeat='arr in draggables track by $index', ng-model='arr')
+                      .btn.btn-info(ng-click='newQuestionClick(questionType)', ng-repeat='questionType in arr')
                         i.fa(ng-class="{'fa-check-square': questionType.type == 'multi','fa-circle-o': questionType.type == 'radio', 'fa-font': questionType.type == 'text', 'fa-quote-left': questionType.type == 'textarea'}")
                   //- - - - - - Nothing selected - - - - - 
-                  div(ng-if='dgnr.selectedSection == null')
+                  div(ng-if='selectedSection == null')
                     p Please create a new section or select a section from the right hand-side
                   //- - - - - - - Questions list - - - - -
-                  .apps-container.screen.draggable-element-container(ui-sortable='dgnr.questionOptions', ng-model='dgnr.selectedSection.questions')
+                  .apps-container.screen.draggable-element-container(ui-sortable='questionOptions', ng-model='selectedSection.questions')
                     //- - - - Each question - - - - - - - - -
-                    .form-group.formelementlistitem.alert.question(ng-click='dgnr.selectQuestion(question)' ng-class='{"alert-info": question === dgnr.selectedQuestion}' ng-repeat='question in dgnr.selectedSection.questions track by $index')
+                    .form-group.formelementlistitem.alert.question(ng-click='selectQuestion(question)' ng-class='{"alert-info": question === selectedQuestion}' ng-repeat='question in selectedSection.questions track by $index')
                       em.fa.fa-reorder.fa-fw.text-muted.mr-log.moveicon
                       | {{question.title}}
-                      em.fa.fa-times.deleteicon(ng-click='dgnr.removeQuestion(question)')
+                      em.fa.fa-times.deleteicon(ng-click='removeQuestion(question)')
                       //- - - - - Different types of questions - - - - - -
                       div(ng-if="question.type === 'text'")
                         input.form-control(type='text', placeholder='')
@@ -103,36 +108,36 @@ h3 New Questionnaire
                   h2 Properties
                   .apps-container.screen
                     //- Question details
-                    div(ng-if='dgnr.selectedQuestion != null')
+                    div(ng-if='selectedQuestion != null')
                       .form-group
                         label(for='title') Question
-                        input.form-control(type='text', ng-model='dgnr.selectedQuestion.title', placeholder='Title')
-                      .form-group.screen.draggable-element-container.list-group(ui-sortable='dgnr.questionOptions' ng-show='dgnr.selectedQuestion.choices', ng-if="dgnr.selectedQuestion.type === 'multi' || dgnr.selectedQuestion.type === 'radio'")
+                        input.form-control(type='text', ng-model='selectedQuestion.title', placeholder='Title')
+                      .form-group.screen.draggable-element-container.list-group(ui-sortable='questionOptions' ng-show='selectedQuestion.choices', ng-if="selectedQuestion.type === 'multi' || selectedQuestion.type === 'radio'")
                         label(for='title') choices
-                        div(ng-repeat='choice in dgnr.selectedQuestion.choices')
+                        div(ng-repeat='choice in selectedQuestion.choices')
                           .list-group-item
                             em.fa.fa-reorder.fa-fw.text-muted.mr-log.moveicon
                             | {{choice.choice}}
-                            em.fa.fa-times.deleteicon(ng-click='dgnr.removeOption(dgnr.selectedQuestion, choice)')
+                            em.fa.fa-times.deleteicon(ng-click='removeOption(selectedQuestion, choice)')
                         .form-group
-                          input.form-control(ng-model='dgnr.choiceToAdd', ng-keyup='$event.keyCode == 13 ? dgnr.addOption() : true', type='text', placeholder='Add Choice')
+                          input.form-control(ng-model='choiceToAdd', ng-keyup='$event.keyCode == 13 ? addOption() : true', type='text', placeholder='Add Choice')
                       .form-group
                         label(for='title') Required
-                        input.form-control(type='checkbox', ng-model='dgnr.selectedQuestion.required')
+                        input.form-control(type='checkbox', ng-model='selectedQuestion.required')
                         p.help-block Require this question to be answered
                     //- Section details
-                    div(ng-if='dgnr.selectedQuestion == null && dgnr.selectedSection != null')
+                    div(ng-if='selectedQuestion == null && selectedSection != null')
                       .form-group
                         label(for='title') Section title
-                        input.form-control(type='text', ng-model='dgnr.selectedSection.title', placeholder='Title')
+                        input.form-control(type='text', ng-model='selectedSection.title', placeholder='Title')
                     //- Questionnaire details
-                    div(ng-if='dgnr.selectedQuestion == null && dgnr.selectedSection == null')
+                    div(ng-if='selectedQuestion == null && selectedSection == null')
                       p Select a section
                     //- import / export
                     //- .app
                     //-   .form-group
                     //-     label(for='title') Data
-                    //-     textarea.importexport(rows='10', questionnaireJsonDirective='', ng-model-options="{ updateOn: 'blur', debounce: { 'default': 500, 'blur': 0 } }", ng-model='dgnr.questionnaire')
+                    //-     textarea.importexport(rows='10', questionnaireJsonDirective='', ng-model-options="{ updateOn: 'blur', debounce: { 'default': 500, 'blur': 0 } }", ng-model='questionnaire')
 
 
         // END Wizard Step inputs 
@@ -148,14 +153,14 @@ h3 New Questionnaire
                   .col-md-12
                     .form-group
                       label(for='title') Intro title
-                      input.form-control(type='text', ng-model='dgnr.questionnaire.introTitle', placeholder='Welcome to...')
+                      input.form-control(type='text', ng-model='questionnaire.introTitle', placeholder='Welcome to...')
                     .form-group
                       label(for='title') Intro description
-                      textarea.form-control(rows='6', ng-model='dgnr.questionnaire.introDescription', placeholder='Help us build a picture of...')
+                      textarea.form-control(rows='6', ng-model='questionnaire.introDescription', placeholder='Help us build a picture of...')
                     .form-group
                       label(for='title') Intro image
-                      img.img-responsive(data-ng-src='{{dgnr.questionnaire.introImage}}', data-err-src='images/png/avatar.png')
-                      input.form-control(type='file', ng-model='dgnr.questionnaire.introImage', accept='image/jpeg', app-filereader='')
+                      img.img-responsive(data-ng-src='{{questionnaire.introImage}}', data-err-src='images/png/avatar.png')
+                      input.form-control(type='file', ng-model='questionnaire.introImage', accept='image/jpeg', app-filereader='')
                       p.help-block .jpg file with max dimensions of 600px x 600px
                 // END row 
               ul.pager
@@ -180,17 +185,17 @@ h3 New Questionnaire
                   .form-group.clearfix
                     .checkbox.c-checkbox.pull-left.mt0
                       label
-                        input(type='checkbox', ng-model="dgnr.questionnaire.publicQuestionnaire")
+                        input(type='checkbox', ng-model="questionnaire.publicQuestionnaire")
                         span.fa.fa-check
                         |  Publicly publish Questionnaire
                   .form-group.clearfix
                     .checkbox.c-checkbox.pull-left.mt0
                       label
-                        input(type='checkbox', ng-model="dgnr.questionnaire.publicData")
+                        input(type='checkbox', ng-model="questionnaire.publicData")
                         span.fa.fa-check
                         |  Publicly publish Data
                   .form-group.clearfix
-                    a(ng-click="dgnr.submitQuestionnaire()") Publish
+                    a(ng-click="submitQuestionnaire()") Publish
               ul.pager
                 li.previous
                   a(ng-click="wizard.go(3)")

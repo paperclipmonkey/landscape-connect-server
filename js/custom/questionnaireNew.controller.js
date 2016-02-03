@@ -10,10 +10,10 @@
         .module('app.questions')
         .controller('questionnaireNewCtrl', questionnaireNewCtrl);
     /*jshint -W055 */
-    questionnaireNewCtrl.$inject = ['$http', '$state'];//'ui-sortable'
+    questionnaireNewCtrl.$inject = ['$scope', '$http', '$state'];//'ui-sortable'
     
-    function questionnaireNewCtrl($http, $state) {
-      window.$scope = this
+    function questionnaireNewCtrl($scope, $http, $state) {
+      window.myScope = $scope
       $scope.questionnaire = {
         'name': '',
         'description': '',
@@ -110,6 +110,37 @@
         return [x]
       })
 
+      $scope.populateOptions = [];
+
+      $scope.populatePopulationOptions = function(){
+        $http.get("/api/questionnaires/").success(function(data, status) {
+            console.log(data.result)
+            $scope.populateOptions = data.result;
+            //$scope.selectedQuestionnaire = $scope.populateOptions[0]
+        })
+      }
+
+      $scope.selectedQuestionnaire = {};
+
+
+      // $scope.$watch("", function(oldo,newo){
+      //   console.log(oldo, newo)
+      //   console.log('selected Questionnaire')
+      // }, true);
+
+      // $scope.$watch('selectedQuestionnaire',
+      // function () {
+      //           return $scope.selectedQuestionnaire.quickCode;
+      //       },
+      // function() {
+      //   console.log('hey, selected Questionnaire changed has changed!', $scope.selectedQuestionnaire);
+      // }, true);
+
+      $scope.selectQuestionnaire = function(a){
+        console.log("Selected")
+        console.log($scope.selectedQuestionnaire)
+      }
+
       $scope.deselectQuestion = function () {
         $scope.selectedQuestion = null
       }
@@ -194,6 +225,7 @@
       }
 
       var activate = function() {
+        $scope.populatePopulationOptions()
         // BootstrapTour is not compatible with z-index based layout
         // so adding position:static for this case makes the browser
         // to ignore the property
@@ -208,5 +240,3 @@
       activate();
     }
 })();
-
-
