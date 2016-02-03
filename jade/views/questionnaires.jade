@@ -5,7 +5,7 @@ h3
   | Questionnaires
   small Questionnaires owned by you
 
-.container-fluid(ng-controller="NGTableCtrl as table")
+.container-fluid(ng-controller="questionnairesCtrl as table")
   // Ajax Example
   .panel.panel-default
     .panel-heading
@@ -17,5 +17,6 @@ h3
           td(data-title="'Name'")
             a(href="#/app/questionnaires/{{model._id}}"){{model.name}}
           td(data-title="'Description'") {{model.description}}
+          td(data-title="'QuickCode'") {{model.quickCode}}
           td(data-title="'Url'")
             span(ng-class="{ 'plus': model.money >= 0,'minus': model.money < 0 }") {{model.website}}
