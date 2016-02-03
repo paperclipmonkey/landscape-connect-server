@@ -71,29 +71,31 @@ h3 New Questionnaire
                     .btn.screen.col-md-3(ng-repeat='arr in dgnr.draggables track by $index', ng-model='arr')
                       .btn.btn-info(ng-click='dgnr.newQuestionClick(questionType)', ng-repeat='questionType in arr')
                         i.fa(ng-class="{'fa-check-square': questionType.type == 'multi','fa-circle-o': questionType.type == 'radio', 'fa-font': questionType.type == 'text', 'fa-quote-left': questionType.type == 'textarea'}")
+                  //- - - - - - Nothing selected - - - - - 
+                  div(ng-if='dgnr.selectedSection == null')
+                    p Please create a new section or select a section from the right hand-side
                   //- - - - - - - Questions list - - - - -
                   .apps-container.screen.draggable-element-container(ui-sortable='dgnr.questionOptions', ng-model='dgnr.selectedSection.questions')
-                    //- //- - - - - - Nothing selected - - - - - 
-                    //- div(ng-if='dgnr.selectedSection == null')
-                    //-   p Please create a new section or select a section from the right hand-side
                     //- - - - Each question - - - - - - - - -
                     .form-group.formelementlistitem.alert.question(ng-click='dgnr.selectQuestion(question)' ng-class='{"alert-info": question === dgnr.selectedQuestion}' ng-repeat='question in dgnr.selectedSection.questions track by $index')
                       em.fa.fa-reorder.fa-fw.text-muted.mr-log.moveicon
                       | {{question.title}}
                       em.fa.fa-times.deleteicon(ng-click='dgnr.removeQuestion(question)')
                       //- - - - - Different types of questions - - - - - -
-                      input.form-control(ng-if="question.type === 'text'", type='text', placeholder='')
-                      textarea.form-control(ng-if="question.type === 'textarea'", type='text', placeholder='')
+                      div(ng-if="question.type === 'text'")
+                        input.form-control(type='text', placeholder='')
+                      div(ng-if="question.type === 'textarea'")
+                        textarea.form-control(type='text', placeholder='')
                       div(ng-if="question.type === 'radio'")
                         .radio(ng-repeat='choice in question.choices')
                           label
                             input(type='radio', name='{{question.title}}', value='{{choice.choice}}')
-                            |                   {{choice.choice}}
+                            | {{choice.choice}}
                       div(ng-if="question.type === 'multi'")
                         .checkbox(ng-repeat='choice in question.choices')
                           label
                             input(type='checkbox', value='{{choice.choice}}')
-                            |                   {{choice.choice}}
+                            | {{choice.choice}}
             //- - - - - - - - - Properties - - - - - - - - -
             .col-lg-3.properties(tour-step='', order='4', title='Properties', content='Edit section and Question properties', placement='left')
               .panel.panel-default
