@@ -29,6 +29,7 @@ module.exports = (function (app) {
     introDescription: {type: String},
     website: {type: String},
     sections: {type: Array},
+    owner: {type: String}
   })
 
   NSchema.pre('save', checkHasQuickCode)

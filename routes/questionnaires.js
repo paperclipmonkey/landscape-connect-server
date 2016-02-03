@@ -16,6 +16,11 @@ module.exports = function (app) {
 
     var Model = mongoose.model(modelName)
     var instance = new Model(toInsert)
+
+    //Questionnaire specific code
+    instance.owner = req.user._id
+    // End Specific code
+
     instance.save(function (err) {
       if (err) {
         eventServer.emit(objName + ':error', err)
