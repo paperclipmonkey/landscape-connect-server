@@ -125,7 +125,8 @@ module.exports = (function () {
 
   app.get('/api/questionnaires', middleware.ensureAuthenticated, routes.questionnaires.list)
   app.get('/api/questionnaires/:id', middleware.ensureAuthenticated, routes.questionnaires.read)
-  app.delete('/api/questionnaires/:id', middleware.ensureIsSuper, routes.questionnaires.remove)
+  app.get('/api/questionnaires/:id/qr', middleware.ensureAuthenticated, routes.questionnaires.qr)
+  app.delete('/api/questionnaires/:id', middleware.ensureAuthenticated, routes.questionnaires.remove)
   app.post('/api/questionnaires/:id', middleware.ensureAuthenticated, routes.questionnaires.update)
   app.post('/api/questionnaires/', middleware.check_nonce, multipart, middleware.saveUploadedFile, routes.questionnaires.create)
 

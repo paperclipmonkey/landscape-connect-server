@@ -16,19 +16,55 @@ require('datejs')
   "sections": [
 */
 
+var schemaName = "questionnaire"
+
 module.exports = (function (app) {
   var NSchema = new Schema({
     name: {type: String},
-    quickCode: {type: String},
+    quickCode: {type: String, index: { unique: true }},
     description: {type: String},
     publicQuestionnaire: {type: Boolean},
     publicData: {type: Boolean},
     introTitle: {type: String},
     introDescription: {type: String},
-    serverId: {type: String},
     website: {type: String},
     sections: {type: Array},
   })
 
-  return mongoose.model('questionnaire', NSchema)
+  NSchema.pre('save', checkHasQuickCode)
+
+  function checkHasQuickCode(next){
+    console.log("Check has code")
+    if (!this.quickCode){
+      uniqueOrAgain(this, next)
+    } else {
+      next()
+    }
+  }
+
+  function uniqueOrAgain(cx, next){
+    console.log("Unique or again")
+    cx.quickCode = makeid(5);
+    mongoose.models[schemaName].findOne({quickCode : cx.quickCode},function(err, obj) {
+      if(err) {
+          next(err)
+      } else if(obj) {
+          uniqueOrAgain(cx, next)
+      } else {
+          next();
+      }
+    });
+  }
+
+  function makeid(length){
+    var text = "";
+    var possible = "ABCDEF0123456789";
+
+    for( var i=0; i < length; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    console.log("Code", text)
+    return text;
+  }
+
+  return mongoose.model(schemaName, NSchema)
 })()
