@@ -47,7 +47,7 @@ h3 New Questionnaire
         div(ng-show="wizard.active(2)" tour="",  backdrop="true")
           // START QBuilder
           h2 Form builder
-          button.btn.btn-primary.mb-lg(ng-click='tour.restart(true)') Start Tour!
+          a.btn.btn-primary.mb-lg(ng-click='tour.restart(true)') Start Tour!
           div.row
             //- - - - - - - - - Sections - - - - - - - - - 
             .col-lg-3.sections
@@ -61,8 +61,7 @@ h3 New Questionnaire
                         | {{section.title}}
                         em.fa.fa-times.deleteicon(ng-click='dgnr.removeSection(section)')
                     .form-group
-                      input.form-control(ng-model='dgnr.sectionToAdd', ng-keyup='$event.keyCode == 13 ? dgnr.addSection() : true', type='text', placeholder='Add Section')
-                
+                      input.form-control(ng-model='dgnr.sectionToAdd', ng-keyup='$event.keyCode == 13 ? dgnr.addSection() : true', type='text', placeholder='Add Section')                
             //- - - - - - - - - Questions - - - - - - - - -
             .col-lg-6.minheight10.form(tour-step='', order='2', title='Questions', content='Inside each section there are questions.', placement='right')
               .panel.panel-default
