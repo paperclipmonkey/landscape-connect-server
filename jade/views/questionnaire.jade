@@ -4,7 +4,7 @@
     .panel.panel-default
       .panel-heading
         .bb
-          h2.text-lg {{$scope.route}}. 
+          h2.text-lg {{questionnaire.name}}
           p.clearfix
             span.pull-left
               small.mr-sm By 
@@ -14,7 +14,7 @@
                 strong 56
                 span Comments
       .panel-body.text-md
-        p Praesent bibendum eros urna, in mattis est. Curabitur a purus urna, sit amet auctor erat. Praesent pellentesque augue eu tellus facilisis pretium. Aenean sollicitudin facilisis tortor eu mollis. Vivamus feugiat faucibus enim. Sed ut semper leo. Etiam feugiat risus massa. Nunc et magna in metus pharetra ultricies ac sit amet justo. Donec eu dolor sem, non auctor sapien. Suspendisse nisl nulla, interdum at fermentum eget, adipiscing in elit.
+        p {{questionnaire.description}}
         p Proin est sapien, convallis non hendrerit nec, laoreet ut ipsum. Praesent blandit venenatis mauris ac cursus. Nulla commodo interdum magna consectetur lacinia. Maecenas vitae adipiscing mauris. Nam sodales sollicitudin adipiscing. 
         br
         .row
@@ -101,41 +101,29 @@
               button.btn.btn-effect-ripple.btn-primary(type='submit') Send Comment
   // Blog Sidebar
   .col-lg-3
-    // Search
+    // Install
     .panel.panel-default
-      .panel-heading Search
+      .panel-heading Install
       .panel-body
         form.form-horizontal
           .input-group
-            input.form-control(type='text', placeholder='Search for...')
-            span.input-group-btn
-              button.btn.btn-default(type='button')
-                em.fa.fa-search
+            p Install using the Quick Code
+            {{questionnaire.quickCode}}
+            p Or scan the QR code
+            img(src="/api/questionnaires/{{questionnaire._id}}/qr")
     // Categories
     .panel.panel-default
-      .panel-heading Categories
+      .panel-heading Tasks
       .panel-body
         ul.list-unstyled
           li
-            a(href="") 
+            a(href="" ng-click="delete()") 
               em.fa.fa-angle-right.fa-fw
-              | Smartphones
+              | Delete
           li
             a(href="") 
               em.fa.fa-angle-right.fa-fw
-              | Mobiles
-          li
-            a(href="") 
-              em.fa.fa-angle-right.fa-fw
-              | Tech
-          li
-            a(href="") 
-              em.fa.fa-angle-right.fa-fw
-              | Inpiration
-          li
-            a(href="") 
-              em.fa.fa-angle-right.fa-fw
-              | Workspace
+              | Deactivate
     // Tag Cloud
     .panel.panel-default(ng-controller="WordCloudController as wc")
       .panel-heading Tag Cloud
