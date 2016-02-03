@@ -37,7 +37,7 @@ module.exports = function (app) {
   }
 
   var qr = function(req, res, next) {
-    mongoose.model(modelName).findOne({_id: req.params.id}, function (err, doc) {
+    mongoose.model(modelName).findOne({quickCode: req.params.id}, function (err, doc) {
       if (err) return next(err)
       var qr = buildQrImgPipe("http://3equals.co.uk/lc-json/" + req.params.quickCode + ".json")
       qr.pipe(res)
@@ -61,7 +61,7 @@ module.exports = function (app) {
 
   var remove = function (req, res, next) {
     console.log("Removing")
-    mongoose.model(modelName).findByIdAndRemove(req.params.id, function (err, doc) {
+    mongoose.model(modelName).findOneAndRemove({quickCode: req.params.id}, function (err, doc) {
       if (err) return next(err)
       eventServer.emit(objName + ':delete', doc)
       console.log("Removed")
@@ -70,7 +70,7 @@ module.exports = function (app) {
   }
 
   var update = function (req, res, next) {
-      mongoose.model(modelName).findOneAndUpdate({_id: req.params.id}, req.body, {'new': true}, function (err, doc) {
+      mongoose.model(modelName).findOneAndUpdate({quickCode: req.params.id}, req.body, {'new': true}, function (err, doc) {
           if (err) return next(err)
           eventServer.emit(objName + ':update', doc)
           res.json(doc)
@@ -78,7 +78,7 @@ module.exports = function (app) {
   }
 
   var read = function (req, res, next) {
-    mongoose.model(modelName).findOne({_id: req.params.id}, function (err, doc) {
+    mongoose.model(modelName).findOne({quickCode: req.params.id}, function (err, doc) {
       if (err) return next(err)
       res.send(doc)
     })
