@@ -3,11 +3,11 @@ section#plans.plan-table
   .container
     // SECTION HEADER
     .section-header.wow.fadeIn.animated(data-wow-offset='15', data-wow-duration='1.3s')
-      h2 Available Options
+      h2 Plans
       .section-description 
-        u Pay once
-        | , get lifetime 
-        u free updates.
+        | Signup now for a free account or upgrade to a full account
+        //- | , get lifetime 
+        //- u free updates.
     // END SECTION HEADER
     .row
       // PLAN
@@ -15,7 +15,9 @@ section#plans.plan-table
         .plan
           h3.plan-header Free 
           .plan-price
-            h2 Free
+              sup: small £
+              | 0
+              span.plan-period /mo
           ul.plan-features
             li
               em.fa.fa-check
