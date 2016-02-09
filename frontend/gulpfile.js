@@ -10,7 +10,6 @@ var gulp        = require('gulp'),
     changed     = require('gulp-changed'),
     prettify    = require('gulp-html-prettify'),
     rename      = require('gulp-rename'),
-    flip        = require('css-flip'),
     through     = require('through2'),
     gutil       = require('gulp-util'),
     minifyCSS   = require('gulp-minify-css'),
@@ -143,24 +142,6 @@ gulp.task('styles:site', function() {
         .pipe(gulp.dest(build.styles));
 });
 
-// SITE RTL
-gulp.task('styles:site:rtl', function() {
-    return gulp.src(source.styles.site.main)
-        .pipe( useSourceMaps ? sourcemaps.init() : gutil.noop())
-        .pipe(less({
-            paths: [source.styles.site.dir]
-        }))
-        .on("error", handleError)
-        .pipe(flipcss())
-        .pipe( isProduction ? minifyCSS() : gutil.noop() )
-        .pipe( useSourceMaps ? sourcemaps.write() : gutil.noop())
-        .pipe(rename(function(path) {
-            path.basename += "-rtl";
-            return path;
-        }))
-        .pipe(gulp.dest(build.styles));
-});
-
 // LESS THEMES
 gulp.task('styles:themes', function() {
     return gulp.src(source.styles.themes.main)
@@ -207,7 +188,7 @@ gulp.task('watch', function() {
   livereload.listen();
 
   gulp.watch(source.scripts.watch,           ['scripts:site']);
-  gulp.watch(source.styles.site.watch,       ['styles:site', 'styles:site:rtl']);
+  gulp.watch(source.styles.site.watch,       ['styles:site']);
   gulp.watch(source.styles.themes.watch,     ['styles:themes']);
   gulp.watch(source.bootstrap.watch,         ['styles:site']); //bootstrap
   gulp.watch(source.templates.pages.watch,   ['templates:pages']);
@@ -238,7 +219,6 @@ gulp.task('usesources', function(){ useSourceMaps = true; });
 // default (no minify)
 gulp.task('start',[
           'styles:site',
-          'styles:site:rtl',
           'styles:themes',
           'templates:pages'
           // 'watch'
@@ -265,26 +245,4 @@ gulp.task('done', function(){
 function handleError(err) {
   console.log(err.toString());
   this.emit('end');
-}
-
-// Mini gulp plugin to flip css (rtl)
-function flipcss(opt) {
-  
-  if (!opt) opt = {};
-
-  // creating a stream through which each file will pass
-  var stream = through.obj(function(file, enc, cb) {
-    if(file.isNull()) return cb(null, file);
-
-    if(file.isStream()) {
-        console.log("todo: isStream!");
-    }
-
-    var flippedCss = flip(String(file.contents), opt);
-    file.contents = new Buffer(flippedCss);
-    cb(null, file);
-  });
-
-  // returning the file stream
-  return stream;
 }

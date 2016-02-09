@@ -5,7 +5,6 @@
   "private": true,
   "dependencies": {},
   "devDependencies": {
-    "css-flip": "git://github.com/geedmo/css-flip",
     "gulp": "3.9",
     "gulp-changed": "^1.0.0",
     "gulp-concat": "^2.4.1",
@@ -32,5 +31,11 @@
     "liftoff": "2.2.0",
     "tildify": "1.1.2",
     "interpret": "1.0.0"
+  },
+  "scripts": {
+    "prestart": "bower install",
+    "start": "npm install",
+    "poststart": "gulp",
+    "clean": "rm -r node_modules && rm -r bower_components"
   }
 }
