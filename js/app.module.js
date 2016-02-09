@@ -39,7 +39,6 @@
             'app.pages',
             'app.tables',
             'app.extras',
-            'app.mailbox',
             'app.utils',
             'app.questions'
         ]);
