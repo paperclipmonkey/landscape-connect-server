@@ -357,11 +357,11 @@ gulp.task('usesources', function(){ useSourceMaps = true; });
 
 // default (no minify)
 gulp.task('default', gulpsync.sync([
+          'bower',
           'vendor',
           'assets',
           'frontend',
           //'watch',
-          'bower',
           'serveprod'
         ]), function(){
 
