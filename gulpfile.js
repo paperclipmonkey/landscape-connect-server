@@ -4,6 +4,7 @@ var args        = require('yargs').argv,
     through     = require('through2'),
     gulp        = require('gulp'),
     $           = require('gulp-load-plugins')(),
+    shell       = require('gulp-shell'),
     gulpsync    = $.sync(gulp),
     PluginError = $.util.PluginError,
     del         = require('del');
@@ -29,7 +30,7 @@ var ignored_files = '!'+hidden_files;
 
 // MAIN PATHS
 var paths = {
-  app:     'public/app/',
+  app:     'public/app/app/',
   markup:  'jade/',
   styles:  'less/',
   scripts: 'js/'
@@ -47,13 +48,13 @@ var vendor = {
   // vendor scripts required to start the app
   base: {
     source: require('./vendor.base.json'),
-    dest: 'public/app/js',
+    dest: 'public/app/app/js',
     name: 'base.js'
   },
   // vendor scripts to make the app work. Usually via lazy loading
   app: {
     source: require('./vendor.json'),
-    dest: 'public/vendor'
+    dest: 'public/app/vendor'
   }
 };
 
@@ -84,7 +85,7 @@ var build = {
   scripts: paths.app + 'js',
   styles:  paths.app + 'css',
   templates: {
-    index: './',
+    index: 'public/app/',
     views: paths.app,
     cache: paths.app + 'js/' + 'templates.js',
   }
@@ -357,7 +358,9 @@ gulp.task('usesources', function(){ useSourceMaps = true; });
 gulp.task('default', gulpsync.sync([
           'vendor',
           'assets',
-          'watch'
+          'frontend',
+          'watch',
+          'serveprod'
         ]), function(){
 
   log('************');
@@ -375,7 +378,18 @@ gulp.task('assets',[
           'templates:views'
         ]);
 
+gulp.task('serveprod', function() {
+  var app = require('./app')
+  var server = app.listen(process.env.PORT, function () {
+    console.log('Listening on port %d', server.address().port)
+  })
+})
 
+gulp.task('frontend', shell.task([
+    'bower install',
+    'npm install',
+    'gulp'
+  ], {cwd: "frontend"}))
 /////////////////////
 
 

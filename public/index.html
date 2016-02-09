@@ -1,25 +1,642 @@
 <!DOCTYPE html>
-<html lang="en" data-ng-app="angle">
+<html lang="en">
 
 <head>
-   <meta charset="utf-8">
+   <meta charset="UTF-8">
+   <meta name="description" content="Landing Page Template">
+   <meta name="keywords" content="bootstrap, app, theme">
+   <meta name="author" content="@themicon">
    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-   <meta name="description" content="{{app.description}}">
-   <meta name="keywords" content="app, responsive, angular, bootstrap, dashboard, admin">
-   <title data-ng-bind="::pageTitle()">Angle - Angular Bootstrap Admin Template</title>
-   <!-- Bootstrap styles-->
-   <link rel="stylesheet" href="app/css/bootstrap.css">
-   <!-- Application styles-->
-   <link rel="stylesheet" href="app/css/app.css">
-   <!-- Themes-->
-   <link rel="stylesheet" ng-href="{{app.layout.theme}}" data-ng-if="app.layout.theme">
+   <title>Landscape Connect</title>
+   <!-- PREALOADER (loads asap)-->
+   <link rel="stylesheet" href="vendor/nprogress/nprogress.css">
+   <script src="vendor/nprogress/nprogress.js"></script>
+   <!-- FAVICON-->
+   <link rel="icon" href="img/favicon/favicon.ico">
+   <link rel="apple-touch-icon" href="img/favicon/apple-touch-icon.png">
+   <link rel="apple-touch-icon" sizes="57x57" href="img/favicon/apple-touch-icon-57x57-precomposed.png">
+   <link rel="apple-touch-icon" sizes="72x72" href="img/favicon/apple-touch-icon-72x72-precomposed.png">
+   <link rel="apple-touch-icon" sizes="114x114" href="img/favicon/apple-touch-icon-114x114-precomposed.png">
+   <link rel="apple-touch-icon" sizes="144x144" href="img/favicon/apple-touch-icon-144x144-precomposed.png">
+   <!-- FONT-->
+   <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,400italic" rel="stylesheet" type="text/css">
+   <!-- ICONS-->
+   <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+   <script src="vendor/jquery.browser/dist/jquery.browser.js"></script>
+   <script>
+      if ( window.jQBrowser.mobile && top.location != location) top.location.href = document.location.href;
+   </script>
+   <!-- VENDOR CSS-->
+   <link rel="stylesheet" href="vendor/owl.carousel/dist/assets/owl.carousel.css">
+   <link rel="stylesheet" href="vendor/owl.carousel/dist/assets/owl.theme.default.css">
+   <link rel="stylesheet" href="vendor/Nivo-Lightbox/nivo-lightbox.css">
+   <link rel="stylesheet" href="vendor/Nivo-Lightbox/themes/default/default.css">
+   <link rel="stylesheet" href="vendor/animate.css/animate.css">
+   <!-- SITE CSS-->
+   <link rel="stylesheet" href="css/styles.css" id="stylescss">
+   <link rel="stylesheet" href="css/theme-b.css">
+   <!--[if lt IE 9]><script src="js/html5shiv.js"></script><script src="js/respond.min.js"></script><![endif]-->
 </head>
 
-<body data-ng-class="{ 'layout-fixed' : app.layout.isFixed, 'aside-collapsed' : app.layout.isCollapsed, 'layout-boxed' : app.layout.isBoxed, 'layout-fs': app.useFullLayout, 'hidden-footer': app.hiddenFooter, 'layout-h': app.layout.horizontal, 'aside-float': app.layout.isFloat, 'offsidebar-open': app.offsidebarOpen, 'aside-toggled': app.asideToggled}">
-   <div data-preloader></div>
-   <div data-ui-view="" data-autoscroll="false" class="wrapper"></div>
-   <script src="app/js/base.js"></script>
-   <script src="app/js/app.js"></script>
+<body>
+   <!-- WEBSITE PRELOADER-->
+   <div class="preloader">
+      <div class="loading">Loading ...</div>
+   </div>
+   <!-- START HEADER-->
+   <header id="header" class="header novideo">
+      <div class="full-screen">
+         <!-- START STICKY NAVBAR-->
+         <div class="navbar navbar-default navbar-fixed-top navbar-sticky">
+            <div class="container">
+               <div class="navbar-header">
+                  <button type="button" data-toggle="collapse" data-target="#navbar-main" class="navbar-toggle">
+                     <span class="sr-only">Toggle navigation</span>
+                     <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                  </button>
+                  <a href="#" class="navbar-brand">
+                     <img src="img/logo-dark.png" alt="">
+                  </a>
+               </div>
+               <!-- MENU-->
+               <div id="navbar-main" class="navbar-collapse collapse">
+                  <ul class="nav navbar-nav navbar-right main-navbar">
+                     <li><a href="#header">Home</a>
+                     </li>
+                     <li><a href="#versions">Versions</a>
+                     </li>
+                     <li><a href="#features">Features</a>
+                     </li>
+                     <li><a href="#shots">Shots</a>
+                     </li>
+                     <li><a href="#plans">Plans</a>
+                     </li>
+                     <li><a href="#download">Download</a>
+                     </li>
+                     <li>
+                        <a href="/app/">
+                           <strong>Login</strong>
+                        </a>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+         <!-- END STICKY NAVBAR-->
+         <div class="container">
+            <!-- MAIN LOGO-->
+            <div class="top-logo">
+               <img src="img/logo.png" alt="">
+            </div>
+            <div class="row">
+               <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                  <!-- INTRO MESSAGE-->
+                  <div class="intro-section">
+                     <h1 class="intro">Engage with users of your landscape</h1>
+                     <!--h5 Available on //a.buy-link(href="https://wrapbootstrap.com/theme/angle-bootstrap-admin-app-angularjs-WB04HF123") WrapBootstrap-->
+                     <!-- DEMO BUTTON-->
+                     <div class="text-center"><a href="https://play.google.com/store/apps/details?id=com.accenture.android.rbs6nations&amp;hl=en_GB" class="btn btn-lg btn-theme"><i class="icon-app-download"></i><span><em class="fa fa-android"></em>Download for Android</span></a>
+                        <a
+                        href="#features" class="btn btn-lg btn-theme"><i class="icon-app-download"></i>
+                           <span>
+                              <strong>Learn More</strong>
+                           </span>
+                           </a>
+                     </div>
+                  </div>
+                  <div class="intro-shot">
+                     <img src="img/header.shot.png" alt="Header shot" data-no-retina="" class="img-responsive">
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </header>
+   <!-- END HEADER-->
+   <!-- START APP SHOTS-->
+   <section id="versions" class="versions">
+      <div class="container">
+         <!-- START SECTION HEADER-->
+         <div data-wow-offset="120" data-wow-duration="1.3s" class="section-header wow fadeIn animated">
+            <!-- SECTION TITLE-->
+            <h2>Forget clipboards</h2>
+            <div class="section-description">Built from the ground up to be perfect for collecting great quality landscape data</div>
+         </div>
+         <!-- END SECTION HEADER-->
+         <div class="row bottom-space">
+            <div class="col-md-4 text-center">
+               <img src="img/versions/angularjs.png" alt="" data-no-retina="" data-wow-offset="15" data-wow-duration=".5s" class="wow zoomIn animated img-responsive version-pic">
+               <h4>Questionnaire bank</h4>
+               <p>
+                  <small>Questionnaires can optionally be published publicly, and are accessible online.</small>
+               </p><a href="/questionnaires/" class="btn btn-sm btn-default">Live Demo</a>
+            </div>
+            <div class="col-md-4 text-center">
+               <img src="img/versions/html5.png" alt="" data-no-retina="" data-wow-offset="15" data-wow-duration=".5s" class="wow zoomIn animated img-responsive version-pic">
+               <h4>Static HTML5 + Seed</h4>
+               <p>
+                  <small>A project based on jQuery and HTML5 for non Angular users. This version will simplify any integration with many other popular frameworks on the web.</small>
+               </p><a href="../../backend-jquery/" class="btn btn-sm btn-default">Live Demo</a>
+            </div>
+            <div class="col-md-4 text-center">
+               <img src="img/versions/angular-material.png" alt="" data-no-retina="" data-wow-offset="15" data-wow-duration=".5s" class="wow zoomIn animated img-responsive version-pic">
+               <h4>Angular Material</h4>
+               <p>
+                  <small>An implementation of Material Design in Angular.js with a set of reusable, well-tested, and accessible UI components based on the Material Design system.</small>
+               </p><a href="../../material/" class="btn btn-sm btn-default">Live Demo</a>
+            </div>
+         </div>
+         <div class="row bottom-space">
+            <div class="col-md-3 text-center">
+               <img src="img/versions/vs.png" alt="" data-no-retina="" data-wow-offset="15" data-wow-duration=".5s" class="wow zoomIn animated img-responsive version-pic">
+               <h4>Visual Studio MVC5 + Seed</h4>
+               <p>
+                  <small>MVC5 for Visual Studio 2013. Modular JavaScript and all assets bundle ready to use. Also featuring an Entity demo using the theme components.</small>
+               </p><a href="http://themicon-001-site1.smarterasp.net/" class="btn btn-sm btn-default">Live Demo</a>
+            </div>
+            <div class="col-md-3 text-center">
+               <img src="img/versions/ror.png" alt="" data-no-retina="" data-wow-offset="15" data-wow-duration=".5s" class="wow zoomIn animated img-responsive version-pic">
+               <h4>Ruby on Rails + Seed</h4>
+               <p>
+                  <small>Modular JavaScript and SASS stylesheets. Developed to serve assets per controller, avoid bloating your views with unnecessary requests. Heroku ready!.</small>
+               </p><a href="https://angle-on-rails.herokuapp.com/" class="btn btn-sm btn-default">Live Demo</a>
+            </div>
+            <div class="col-md-3 text-center">
+               <img src="img/versions/meanjs.png" alt="" data-no-retina="" data-wow-offset="15" data-wow-duration=".5s" class="wow zoomIn animated img-responsive version-pic">
+               <h4>MeanJS Seed</h4>
+               <p>
+                  <small>A full-stack JavaScript solution that helps you build fast, robust and maintainable web apps. Supports LESS, modular JavaScript and Swig templates.</small>
+               </p><a href="https://angle-on-mean.herokuapp.com/" class="btn btn-sm btn-default">Live Demo</a>
+            </div>
+            <div class="col-md-3 text-center">
+               <img src="img/versions/meteor.png" alt="" data-no-retina="" data-wow-offset="15" data-wow-duration=".5s" class="wow zoomIn animated img-responsive version-pic">
+               <h4>MeteorJS</h4>
+               <p>
+                  <small>Meteor is a complete open source platform for building web and mobile apps in pure JavaScript. Based on Node.js with support for LESS stylesheets.</small>
+               </p><a href="https://45.55.64.191" class="btn btn-sm btn-default">Live Demo</a>
+            </div>
+         </div>
+         <div class="text-center">
+            <p>
+               <img src="img/versions/sass.png" alt="" data-no-retina="" data-wow-offset="15" data-wow-duration=".5s" class="wow zoomIn animated">Main projects also includes Sass version !</p>
+         </div>
+      </div>
+   </section>
+   <!-- START FEATURE LIST-->
+   <section id="features" class="features-list">
+      <div class="container">
+         <!-- START SECTION HEADER-->
+         <div data-wow-offset="120" data-wow-duration="1.3s" class="section-header wow fadeIn animated">
+            <!-- SECTION TITLE-->
+            <h2>Full of Features</h2>
+            <div class="section-description">Donec mauris arcu, vestibulum ac hendrerit ut, convallis cursus libero.</div>
+         </div>
+         <!-- END SECTION HEADER-->
+         <div class="row">
+            <!-- START FEATURES LEFT-->
+            <div class="col-md-4 col-sm-4 features-left">
+               <!-- FEATURE-->
+               <div class="feature">
+                  <!-- FEATURE ICON-->
+                  <div data-wow-offset="15" data-wow-duration="1.3s" class="feature-icon wow fadeIn animated">
+                     <span class="fa-stack fa-lg">
+                        <em class="fa fa-circle fa-stack-2x"></em>
+                        <em class="fa fa-random fa-stack-1x fa-inverse"></em>
+                     </span>
+                  </div>
+                  <!-- FEATURE TEXT-->
+                  <div class="feature-details">
+                     <h4 class="main-color">Customisable</h4>
+                     <p>Customisale form styles incorporating four different input types</p>
+                  </div>
+               </div>
+               <!-- FEATURE-->
+               <div class="feature">
+                  <!-- FEATURE ICON-->
+                  <div data-wow-offset="15" data-wow-duration="1.3s" class="feature-icon wow fadeIn animated">
+                     <span class="fa-stack fa-lg">
+                        <em class="fa fa-circle fa-stack-2x"></em>
+                        <em class="fa fa-rocket fa-stack-1x fa-inverse"></em>
+                     </span>
+                  </div>
+                  <!-- FEATURE TEXT-->
+                  <div class="feature-details">
+                     <h4 class="main-color">Fast data collection</h4>
+                     <p>completed forms are uploaded directly from the device, most likely before the user even gets back!</p>
+                  </div>
+               </div>
+               <!-- FEATURE-->
+               <div class="feature">
+                  <!-- FEATURE ICON-->
+                  <div data-wow-offset="15" data-wow-duration="1.3s" class="feature-icon wow fadeIn animated">
+                     <span class="fa-stack fa-lg">
+                        <em class="fa fa-circle fa-stack-2x"></em>
+                        <em class="fa fa-crosshairs fa-stack-1x fa-inverse"></em>
+                     </span>
+                  </div>
+                  <!-- FEATURE TEXT-->
+                  <div class="feature-details">
+                     <h4 class="main-color">Geolocated</h4>
+                     <p>A GPS fix is taken at the same time as the photo, ensuring high quality survey data</p>
+                  </div>
+               </div>
+            </div>
+            <!-- END FEATURES LEFT-->
+            <!-- START MOBILE MOCKUP-->
+            <div class="col-md-4 col-sm-4">
+               <div data-wow-offset="120" data-wow-duration="1.3s" class="mockup-mobile wow fadeIn animated">
+                  <img src="img/phone-minimal.png" alt="" data-no-retina>
+               </div>
+            </div>
+            <!-- END MOBILE MOCKUP-->
+            <!-- START FEATURES RIGHT-->
+            <div class="col-md-4 col-sm-4 features-right">
+               <!-- FEATURE-->
+               <div class="feature">
+                  <!-- FEATURE ICON-->
+                  <div data-wow-offset="15" data-wow-duration="1.3s" class="feature-icon wow fadeIn animated">
+                     <span class="fa-stack fa-lg">
+                        <em class="fa fa-circle fa-stack-2x"></em>
+                        <em class="fa fa-moon-o fa-stack-1x fa-inverse"></em>
+                     </span>
+                  </div>
+                  <!-- FEATURE TEXT-->
+                  <div class="feature-details">
+                     <h4 class="main-color">Works day and night</h4>
+                     <p>Our system is operational 24/7, taking returned questionnaires and saving them to our secure system</p>
+                  </div>
+               </div>
+               <!-- FEATURE-->
+               <div class="feature">
+                  <!-- FEATURE ICON-->
+                  <div data-wow-offset="15" data-wow-duration="1.3s" class="feature-icon wow fadeIn animated">
+                     <span class="fa-stack fa-lg">
+                        <em class="fa fa-circle fa-stack-2x"></em>
+                        <em class="fa fa-line-chart fa-stack-1x fa-inverse"></em>
+                     </span>
+                  </div>
+                  <!-- FEATURE TEXT-->
+                  <div class="feature-details">
+                     <h4 class="main-color">Data analytics</h4>
+                     <p>Landscape connect comes with tailored data analytics to help show important features in the data.</p>
+                  </div>
+               </div>
+               <!-- FEATURE-->
+               <div class="feature">
+                  <!-- FEATURE ICON-->
+                  <div data-wow-offset="15" data-wow-duration="1.3s" class="feature-icon wow fadeIn animated">
+                     <span class="fa-stack fa-lg">
+                        <em class="fa fa-circle fa-stack-2x"></em>
+                        <em class="fa fa-database fa-stack-1x fa-inverse"></em>
+                     </span>
+                  </div>
+                  <!-- FEATURE TEXT-->
+                  <div class="feature-details">
+                     <h4 class="main-color">Publishing tools</h4>
+                     <p>Turn on open data sharing to instantly publish the data collected as an open data set.</p>
+                  </div>
+               </div>
+            </div>
+            <!-- END FEATURES RIGHT-->
+         </div>
+      </div>
+   </section>
+   <!-- END FEATURE LIST-->
+   <!-- START PIC TEXT LEFT-->
+   <section id="desc2" class="pic-text pic-text-left">
+      <div class="container">
+         <div class="row">
+            <!-- LEFT PIC-->
+            <div data-wow-offset="15" data-wow-duration="1.2s" class="col-md-6 wow fadeInLeft animated">
+               <div class="mockup-mobile">
+                  <img src="img/ipad-air.png" alt="" data-no-retina>
+               </div>
+            </div>
+            <!-- RIGHT TEXT-->
+            <div class="col-md-6">
+               <!-- SECTION TITLE-->
+               <h2>Simple administrative dashboard</h2>
+               <p>Creating a new form has never been simpler. Simply drag and drop form elements on to the questionnaire. Collecting data back from questionnaires is done automatically as soon as the device has an internet connection.</p>
+               <!-- FEATURE LIST-->
+               <ul class="featured-list">
+                  <li>
+                     <span class="fa-stack fa-lg">
+                        <em class="fa fa-circle fa-stack-2x"></em>
+                        <em class="fa fa-code fa-stack-1x fa-inverse"></em>
+                     </span>
+                     <p>No need to learn code</p>
+                  </li>
+                  <li>
+                     <span class="fa-stack fa-lg">
+                        <em class="fa fa-circle fa-stack-2x"></em>
+                        <em class="fa fa-bullhorn fa-stack-1x fa-inverse"></em>
+                     </span>
+                     <p>Engage users by automatically creating reports</p>
+                  </li>
+                  <li>
+                     <span class="fa-stack fa-lg">
+                        <em class="fa fa-circle fa-stack-2x"></em>
+                        <em class="fa fa-compass fa-stack-1x fa-inverse"></em>
+                     </span>
+                     <p>Multiple layout options</p>
+                  </li>
+                  <li>
+                     <span class="fa-stack fa-lg">
+                        <em class="fa fa-circle fa-stack-2x"></em>
+                        <em class="fa fa-paint-brush fa-stack-1x fa-inverse"></em>
+                     </span>
+                     <p>Customisable splash screen</p>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </div>
+   </section>
+   <!-- END PIC TEXT LEFT-->
+   <!-- START PIC TEXT RIGHT-->
+   <section id="desc1" class="pic-text pic-text-right">
+      <div class="container">
+         <div class="row">
+            <!-- LEFT TEXT-->
+            <div class="col-md-6">
+               <!-- SECTION TITLE-->
+               <h2>Android Phone and Tablet compatible</h2>
+               <p>The app is compatible with both Android Phones and Tablets running 4.1 honeycomb and higher. This is over 90% of the Android market.</p>
+               <p>Users can bring their own device or</p>
+               <p>Praesent nec metus eu urna tempor varius id quis mauris. Mauris porttitor tincidunt odio, id facilisis tortor auctor et. In urna nisl, convallis et malesuada quis, scelerisque at est.</p>
+               <p>Vivamus et urna magna. Suspendisse tincidunt orci nec arcu semper imperdiet volutpat elit faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                  <br>
+                  <br>
+               </p>
+               <p>
+                  <em>Laoreet vitae pretium eget, lobortis sit amet ante.</em>
+               </p>
+            </div>
+            <!-- RIGHT PIC-->
+            <div data-wow-offset="15" data-wow-duration="1.2s" class="col-md-6 wow fadeInRight animated">
+               <div class="mockup-mobile">
+                  <img src="img/iphone-angle.png" alt="" data-no-retina>
+               </div>
+            </div>
+            <!-- /END PHONES IMAGE-->
+         </div>
+      </div>
+   </section>
+   <!-- END PIC TEXT RIGHT-->
+   <!-- START APP SHOTS-->
+   <section id="shots" class="appshots">
+      <div class="container">
+         <!-- SECTION HEADER-->
+         <div class="section-header">
+            <h2>Open source the data</h2>
+            <div class="section-description">Optionally enable open downloading of the uploaded data directly from the dashboard. Keep users engaged with easily viewable statictics generated by a field day.</div>
+         </div>
+         <!-- END SECTION HEADER-->
+         <div class="row">
+            <div id="appshots" class="owl-carousel owl-theme">
+               <div class="shot">
+                  <a href="img/shots/01.jpg" data-lightbox-gallery="appshots">
+                     <img src="img/shots/01.jpg" alt="App Shot" data-no-retina>
+                  </a>
+               </div>
+               <div class="shot">
+                  <a href="img/shots/03.jpg" data-lightbox-gallery="appshots">
+                     <img src="img/shots/03.jpg" alt="App Shot" data-no-retina>
+                  </a>
+               </div>
+               <div class="shot">
+                  <a href="img/shots/02.jpg" data-lightbox-gallery="appshots">
+                     <img src="img/shots/02.jpg" alt="App Shot" data-no-retina>
+                  </a>
+               </div>
+               <div class="shot">
+                  <a href="img/shots/04.jpg" data-lightbox-gallery="appshots">
+                     <img src="img/shots/04.jpg" alt="App Shot" data-no-retina>
+                  </a>
+               </div>
+               <div class="shot">
+                  <a href="img/shots/01.jpg" data-lightbox-gallery="appshots">
+                     <img src="img/shots/01.jpg" alt="App Shot" data-no-retina>
+                  </a>
+               </div>
+               <div class="shot">
+                  <a href="img/shots/03.jpg" data-lightbox-gallery="appshots">
+                     <img src="img/shots/03.jpg" alt="App Shot" data-no-retina>
+                  </a>
+               </div>
+               <div class="shot">
+                  <a href="img/shots/02.jpg" data-lightbox-gallery="appshots">
+                     <img src="img/shots/02.jpg" alt="App Shot" data-no-retina>
+                  </a>
+               </div>
+               <div class="shot">
+                  <a href="img/shots/04.jpg" data-lightbox-gallery="appshots">
+                     <img src="img/shots/04.jpg" alt="App Shot" data-no-retina>
+                  </a>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <!-- END APP SHOTS-->
+   <!-- START TESTIMONIAL SLIDER-->
+   <section id="feedbacks" class="feedbacks">
+      <div data-wow-offset="15" data-wow-duration="1.3s" class="container wow fadeIn animated">
+         <div id="feedback-carousel" class="owl-carousel owl-theme text-center">
+            <!-- FEEDBACK-->
+            <div class="feedback-client">
+               <div class="feedback-client-picture">
+                  <img src="img/clients/01.jpg" alt="" data-no-retina class="img-thumbnail img-circle">
+               </div>
+               <div class="feedback-client-msg">Etiam feugiat risus massa. Etiam nisi dui, sodales ut dignissim vitae, eleifend non nisi. Donec ipsum enim, fermentum sed viverra et, vulputate eget libero. Sed elementum venenatis ullamcorper. Phasellus faucibus placerat luctus.</div>
+               <div
+               class="feedback-client-name">Martin Fowler</div>
+            <div class="feedback-client-company">Artist, Ngcompany</div>
+         </div>
+         <!-- FEEDBACK-->
+         <div class="feedback-client">
+            <div class="feedback-client-picture">
+               <img src="img/clients/02.jpg" alt="" data-no-retina class="img-thumbnail img-circle">
+            </div>
+            <div class="feedback-client-msg">Etiam feugiat risus massa. Etiam nisi dui, sodales ut dignissim vitae, eleifend non nisi. Donec ipsum enim, fermentum sed viverra et, vulputate eget libero. Sed elementum venenatis ullamcorper. Phasellus faucibus placerat luctus.</div>
+            <div
+            class="feedback-client-name">Mathew Rogers</div>
+         <div class="feedback-client-company">Designer, Ngcompany</div>
+      </div>
+      <!-- FEEDBACK-->
+      <div class="feedback-client">
+         <div class="feedback-client-picture">
+            <img src="img/clients/03.jpg" alt="" data-no-retina class="img-thumbnail img-circle">
+         </div>
+         <div class="feedback-client-msg">Etiam feugiat risus massa. Etiam nisi dui, sodales ut dignissim vitae, eleifend non nisi. Donec ipsum enim, fermentum sed viverra et, vulputate eget libero. Sed elementum venenatis ullamcorper. Phasellus faucibus placerat luctus.</div>
+         <div class="feedback-client-name">Bradley Jimenez</div>
+         <div class="feedback-client-company">Coder, Ngcompany</div>
+      </div>
+      </div>
+      </div>
+   </section>
+   <!-- END TESTIMONIAL SLIDER-->
+   <!-- START PLAN TABLE-->
+   <section id="plans" class="plan-table">
+      <div class="container">
+         <!-- SECTION HEADER-->
+         <div data-wow-offset="15" data-wow-duration="1.3s" class="section-header wow fadeIn animated">
+            <h2>Available Options</h2>
+            <div class="section-description"> <u>Pay once</u>, get lifetime <u>free updates.</u>
+            </div>
+         </div>
+         <!-- END SECTION HEADER-->
+         <div class="row">
+            <!-- PLAN-->
+            <div data-wow-offset="15" data-wow-duration="1.3s" class="col-md-4 col-sm-4 wow fadeIn animated">
+               <div class="plan">
+                  <h3 class="plan-header">Free</h3>
+                  <div class="plan-price">
+                     <h2>Free</h2>
+                  </div>
+                  <ul class="plan-features">
+                     <li>
+                        <em class="fa fa-check"></em>Unlimited questionnaires</li>
+                     <li>
+                        <em class="fa fa-check"></em>Release data publicly</li>
+                     <li>
+                        <em class="fa fa-check"></em>Support FAQ</li>
+                     <li>
+                        <em class="fa fa-check"></em>Free Updates</li>
+                     <li>
+                        <em class="fa fa-times plan-feature-disable"></em>Limited to 20 questions</li>
+                     <li>
+                        <em class="fa fa-times plan-feature-disable"></em>Private data collection</li>
+                  </ul>
+                  <hr>
+                  <div class="text-center">
+                     <button type="button" class="btn btn-theme">Choose</button>
+                  </div>
+               </div>
+            </div>
+            <!-- PLAN-->
+            <div data-wow-offset="15" data-wow-duration="1.3s" class="col-md-4 col-sm-4 wow fadeIn animated">
+               <div class="plan">
+                  <h3 class="plan-header">Small</h3>
+                  <div class="plan-price">
+                     <h2><sup><small>£</small></sup>50
+                        <span class="plan-period">/mo</span>
+                     </h2>
+                  </div>
+                  <ul class="plan-features">
+                     <li>
+                        <em class="fa fa-check"></em>Unlimited questionnaires</li>
+                     <li>
+                        <em class="fa fa-check"></em>Release data publicly</li>
+                     <li>
+                        <em class="fa fa-check"></em>Support FAQ</li>
+                     <li>
+                        <em class="fa fa-check"></em>Free Updates</li>
+                     <li>
+                        <em class="fa fa-check"></em>Unlimited questions</li>
+                     <li>
+                        <em class="fa fa-check"></em>10 Private questionnaires</li>
+                  </ul>
+                  <hr>
+                  <!--p.plan-description The perfect price for all your project solutions.-->
+                  <div class="text-center">
+                     <button type="button" class="btn btn-theme">Choose</button>
+                  </div>
+               </div>
+            </div>
+            <!-- PLAN-->
+            <div data-wow-offset="15" data-wow-duration="1.3s" class="col-md-4 col-sm-4 wow fadeIn animated">
+               <div class="plan">
+                  <h3 class="plan-header">Extended</h3>
+                  <div class="plan-price">
+                     <h2><sup><small>£</small></sup>250
+                        <span class="plan-period">/mo</span>
+                     </h2>
+                  </div>
+                  <ul class="plan-features">
+                     <li>
+                        <em class="fa fa-check"></em>Unlimited questionnaires</li>
+                     <li>
+                        <em class="fa fa-check"></em>Release data publicly</li>
+                     <li>
+                        <em class="fa fa-check"></em>Support FAQ</li>
+                     <li>
+                        <em class="fa fa-check"></em>Free Updates</li>
+                     <li>
+                        <em class="fa fa-check"></em>Unlimited questions</li>
+                     <li>
+                        <em class="fa fa-check"></em>100 Private questionnaires</li>
+                  </ul>
+                  <hr>
+                  <div class="text-center">
+                     <button type="button" class="btn btn-theme">Choose</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <!-- END PLAN TABLE-->
+   <!-- START DOWNLOAD-->
+   <section id="download" class="download">
+      <div class="container">
+         <h2 data-wow-offset="15" data-wow-duration="1.2s" class="wow fadeInDown animated">Get the app now</h2>
+         <div data-wow-offset="15" data-wow-duration="1.2s" class="wow fadeInUp animated">
+            <a href="https://wrapbootstrap.com/theme/angle-bootstrap-admin-app-angularjs-WB04HF123" class="btn btn-lg btn-theme">
+               <em class="fa fa-android"></em>Play Store</a>
+            <a href="https://wrapbootstrap.com/theme/angle-bootstrap-admin-app-angularjs-WB04HF123" class="btn btn-lg btn-theme">
+               <em class="fa fa-plus-square-o"></em>Create questionnaire</a>
+         </div>
+      </div>
+   </section>
+   <!-- END DOWNLOAD-->
+   <!-- START FOOTER-->
+   <footer id="footer">
+      <div class="container">
+         <div class="row">
+            <div class="col-sm-6">
+               <ul class="footer-nav">
+                  <li><a href="#header" class="scrollto">Home</a>
+                  </li>
+                  <li><a href="#features" class="scrollto">Features</a>
+                  </li>
+                  <li><a href="#plans" class="scrollto">Plans</a>
+                  </li>
+                  <li><a href="#download" class="scrollto">Download</a>
+                  </li>
+                  <li><a href="/app/">Login</a>
+                  </li>
+               </ul>
+            </div>
+            <div class="col-sm-6">
+               <!-- COPYRIGHT-->
+               <p class="copyright">Landscape Connect &copy; 2016</p>
+            </div>
+         </div>
+      </div>
+   </footer>
+   <!-- END FOOTER-->
+   <!-- VENDOR SCRIPTS-->
+   <script src="vendor/jquery/dist/jquery.min.js"></script>
+   <script src="vendor/jquery.easing/js/jquery.easing.js"></script>
+   <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
+   <script src="vendor/waitForImages/dist/jquery.waitforimages.min.js"></script>
+   <script src="vendor/smoothscroll/smoothscroll.js"></script>
+   <script src="vendor/owl.carousel/dist/owl.carousel.js"></script>
+   <script src="vendor/Nivo-Lightbox/nivo-lightbox.js"></script>
+   <script src="vendor/html5shiv/dist/html5shiv.js"></script>
+   <script src="vendor/respond/src/respond.js"></script>
+   <script src="vendor/retina.js/dist/retina.js"></script>
+   <script src="vendor/jquery.scrollTo/jquery.scrollTo.js"></script>
+   <script src="vendor/wow/dist/wow.js"></script>
+   <script src="vendor/matchMedia/matchMedia.js"></script>
+   <script src="vendor/background-video/jquery.backgroundvideo.js"></script>
+   <script src="vendor/jQuery-One-Page-Nav/jquery.nav.js"></script>
+   <script src="vendor/jQuery-Storage-API/jquery.storageapi.js"></script>
+   <!-- SITE SCRIPTS-->
+   <script src="js/scripts.js"></script>
 </body>
 
 </html>
