@@ -6340,6 +6340,10 @@ header .full-screen {
 .bottom-space {
   margin-bottom: 80px;
 }
+.version-pic .fa {
+  font-size: 150px;
+  text-shadow: 2px 2px 2px #CCC;
+}
 /* ========================================================================
    Component: Features
  ========================================================================== */
