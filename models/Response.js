@@ -7,7 +7,7 @@ require('datejs')
   lat // - Number
   lng // - Number
   locAcc // - In metres
-  questionnaireId // - Id of questionnaire
+  questionnaireQuickCode // - Id of questionnaire
   photo // - URL for S3
 */
 
@@ -16,9 +16,9 @@ module.exports = (function (app) {
     timestamp: {type: Number},
     lat: {type: Number},
     lng: {type: Number},
-    locAcc: {type: Number},
-    questionnaireId: {type: Boolean},
-    photo: {type: String}
+    locAcc: {type: Number},//m
+    questionnaire: {type: String},
+    photo: {type: String}//URL
   })
 
   return mongoose.model('response', NSchema)

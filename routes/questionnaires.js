@@ -42,9 +42,9 @@ module.exports = function (app) {
   }
 
   var qr = function(req, res, next) {
-    mongoose.model(modelName).findOne({quickCode: req.params.id}, function (err, doc) {
+    mongoose.model(modelName).findOne({serverId: req.params.id}, function (err, doc) {
       if (err) return next(err)
-      var qr = buildQrImgPipe("http://3equals.co.uk/lc-json/" + req.params.quickCode + ".json")
+      var qr = buildQrImgPipe("http://3equals.co.uk/lc-json/" + req.params.serverId + ".json")
       qr.pipe(res)
     })
   }
@@ -54,10 +54,10 @@ module.exports = function (app) {
     eventServer.emit(objName + ':list',{})
     var cback = function (err, results) {
       if (err) return next(err)
-      res.json({"result": results})
+      res.json({result:results})
     }
 
-    if (req.user.isSuper) {
+    if (req.user && req.user.isSuper) {
       mongoose.model(modelName).find({}, cback)
     } else {
       mongoose.model(modelName).find({}, cback)//user: req.user._id
@@ -66,7 +66,7 @@ module.exports = function (app) {
 
   var remove = function (req, res, next) {
     console.log("Removing")
-    mongoose.model(modelName).findOneAndRemove({quickCode: req.params.id}, function (err, doc) {
+    mongoose.model(modelName).findOneAndRemove({serverId: req.params.id}, function (err, doc) {
       if (err) return next(err)
       eventServer.emit(objName + ':delete', doc)
       console.log("Removed")
@@ -75,7 +75,7 @@ module.exports = function (app) {
   }
 
   var update = function (req, res, next) {
-      mongoose.model(modelName).findOneAndUpdate({quickCode: req.params.id}, req.body, {'new': true}, function (err, doc) {
+      mongoose.model(modelName).findOneAndUpdate({serverId: req.params.id}, req.body, {'new': true}, function (err, doc) {
           if (err) return next(err)
           eventServer.emit(objName + ':update', doc)
           res.json(doc)
@@ -83,7 +83,7 @@ module.exports = function (app) {
   }
 
   var read = function (req, res, next) {
-    mongoose.model(modelName).findOne({quickCode: req.params.id}, function (err, doc) {
+    mongoose.model(modelName).findOne({serverId: req.params.id}, function (err, doc) {
       if (err) return next(err)
       res.send(doc)
     })

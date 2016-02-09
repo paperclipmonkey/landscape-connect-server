@@ -15,6 +15,7 @@ module.exports = function (app) {
 
     var Model = mongoose.model(modelName)
     var instance = new Model(toInsert)
+
     instance.save(function (err) {
       if (err) {
         eventServer.emit(objName + ':error', err)
@@ -30,7 +31,7 @@ module.exports = function (app) {
     })
   }
 
-  var list = function (req, res, next) {
+  var list = function (req, res, next) { 
     eventServer.emit(objName + ':list',{})
     var cback = function (err, results) {
       if (err) return next(err)
@@ -40,7 +41,7 @@ module.exports = function (app) {
     if (req.user.isSuper) {
       mongoose.model(modelName).find({}, cback)
     } else {
-      mongoose.model(modelName).find({}, cback)//user: req.user._id
+      mongoose.model(modelName).find({questionnaireQuickCode: req.params.id}, cback)//user: req.user._id
     }
   }
 

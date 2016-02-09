@@ -5,13 +5,12 @@ require('datejs')
 /*
 "dateAdded": 1446587339,
   "name": "Natural England",
-  "quickCode": "FGHH21",
+  "serverId": "FGHH21",
   "description": "Natural England landscape questionnaire. This uses the Landscape Connect technology",
   "publicQuestionnaire": true,
   "publicData": true,
   "introTitle": "Add new landscape",
   "introDescription": "Welcome to the Natural England questionnaire. \n Let us walk you through the steps of sharing your landscape with us.",
-  "serverId": "11",
   "website": "http://www.google.co.uk/",
   "sections": [
 */
@@ -21,7 +20,7 @@ var schemaName = "questionnaire"
 module.exports = (function (app) {
   var NSchema = new Schema({
     name: {type: String},
-    quickCode: {type: String, index: { unique: true }},
+    serverId: {type: String, index: { unique: true }},
     description: {type: String},
     publicQuestionnaire: {type: Boolean},
     publicData: {type: Boolean},
@@ -32,11 +31,11 @@ module.exports = (function (app) {
     owner: {type: String}
   })
 
-  NSchema.pre('save', checkHasQuickCode)
+  NSchema.pre('save', checkHasserverId)
 
-  function checkHasQuickCode(next){
+  function checkHasserverId(next){
     console.log("Check has code")
-    if (!this.quickCode){
+    if (!this.serverId){
       uniqueOrAgain(this, next)
     } else {
       next()
@@ -45,8 +44,8 @@ module.exports = (function (app) {
 
   function uniqueOrAgain(cx, next){
     console.log("Unique or again")
-    cx.quickCode = makeid(5);
-    mongoose.models[schemaName].findOne({quickCode : cx.quickCode},function(err, obj) {
+    cx.serverId = makeid(5);
+    mongoose.models[schemaName].findOne({serverId : cx.serverId},function(err, obj) {
       if(err) {
           next(err)
       } else if(obj) {
