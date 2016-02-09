@@ -32,10 +32,5 @@
     "liftoff": "2.2.0",
     "tildify": "1.1.2",
     "interpret": "1.0.0"
-  },
-  "scripts": {
-    "prestart": "bower install",
-    "start": "npm install",
-    "poststart": "gulp"
   }
 }
