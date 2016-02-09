@@ -108,6 +108,17 @@ module.exports = (function () {
     return process.env.S3_URL
   })
 
+  //Public redirects
+  app.get('/questionnaires/', function(req,res){res.redirect("/app/#/page/questionnaires")})
+  app.get('/questionnaires/:id', function(req,res){
+    if(req.headers['user-agent'].indexOf('LandscapeConnect') !== -1){
+      return res.redirect("/api/questionnaires/" + req.params.id)
+    }
+    //Check if the request is from the app and redirect
+    return res.redirect("/app/#/page/questionnaires/" + req.params.id)
+  })
+
+  //Dashboard
   app.get('/api/dash/rating/average', middleware.ensureAuthenticated, routes.dashboard.dashboard_rating_average)
   app.get('/api/dash/rating/months', middleware.ensureAuthenticated, routes.dashboard.dashboard_rating_by_month)
   app.get('/api/dash/views/week', middleware.ensureAuthenticated, routes.dashboard.dashboard_views_week)
@@ -116,34 +127,36 @@ module.exports = (function () {
   app.get('/api/dash/views/words', middleware.ensureAuthenticated, routes.dashboard.dashboard_words)
   app.get('/api/dash/views/latest', middleware.ensureAuthenticated, routes.dashboard.dashboard_rating_average)
 
-
+  //Download
   app.post('/api/questionnaires/download/csv/', middleware.ensureAuthenticated, routes.download.views_download_csv)
   app.post('/api/questionnaires/download/kmz/', middleware.ensureAuthenticated, routes.download.views_download_kmz)
   app.post('/api/questionnaires/download/images/', middleware.ensureAuthenticated, routes.download.views_download_images)
   app.get('/api/questionnaires/:id/download/kmz', middleware.ensureAuthenticated, routes.download.view_download_kmz)
   app.get('/api/questionnaires/:id/download/image', middleware.ensureAuthenticated, routes.download.view_download_image)
 
-  app.get('/api/questionnaires', middleware.ensureAuthenticated, routes.questionnaires.list)
-  app.get('/api/questionnaires/:id', middleware.ensureAuthenticated, routes.questionnaires.read)
-  app.get('/api/questionnaires/:id/qr', middleware.ensureAuthenticated, routes.questionnaires.qr)
+  //Questionnaire
+  app.get('/api/questionnaires', routes.questionnaires.list)
+  app.get('/api/questionnaires/:id', routes.questionnaires.read)
+  app.get('/api/questionnaires/:id/qr', routes.questionnaires.qr)
   app.delete('/api/questionnaires/:id', middleware.ensureAuthenticated, routes.questionnaires.remove)
   app.post('/api/questionnaires/:id', middleware.ensureAuthenticated, routes.questionnaires.update)
   app.post('/api/questionnaires/', middleware.check_nonce, multipart, middleware.saveUploadedFile, routes.questionnaires.create)
 
 
+  //Responses
+  app.get('/api/questionnaires/:id/responses', routes.responses.list)
+  app.post('/api/questionnaires/:id/responses', routes.responses.create)
+
+  //Users
   app.get('/api/users', middleware.ensureIsSuper, routes.users.list)
   app.get('/api/users/:id', middleware.ensureAuthenticated, routes.users.read)
   app.post('/api/users/:id', middleware.ensureAuthenticated, multipart, routes.users.edit)
   app.delete('/api/users/:id', middleware.ensureAuthenticated, routes.users.remove)
 
-
-  app.get('/api/view/', routes.responses.list)
-  app.get('/api/account/details/', routes.users.me)
-  app.get('/api/account/menu/', routes.users.menu)
-  app.get('/api/view/:id', routes.responses.read)
-
-  app.post('/api/account/logout', routes.authenticate.logout)
-
+  //User login
+  app.get('/api/account/details/', middleware.ensureAuthenticated, routes.users.me)
+  app.get('/api/account/menu/', middleware.ensureAuthenticated, routes.users.menu)
+  app.post('/api/account/logout', middleware.ensureAuthenticated, routes.authenticate.logout)
   app.post('/api/account/register', routes.users.register)
   app.post('/api/account/login',
     pass.authenticate(

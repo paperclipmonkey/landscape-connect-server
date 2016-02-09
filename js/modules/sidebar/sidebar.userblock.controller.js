@@ -17,7 +17,7 @@
           //Download the user...
           //If can't download show login page instead
           $http
-            .get('api/account/details')
+            .get('/api/account/details')
             .then(function(response) {
               if(!response.data.account){
                 return $state.go('page.login');
@@ -55,7 +55,7 @@
           //Logout
           var logOutFunction = $rootScope.$on('logOut', function(/*event, args*/) {
             $http
-              .post('api/account/logout')
+              .post('/api/account/logout')
               .then(function(response) {
                 $state.go('page.login');
               }, function() {

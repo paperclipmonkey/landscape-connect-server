@@ -25,7 +25,7 @@
           vm.authMsg = '';
 
           $http
-            .get('api/account/details')
+            .get('/api/account/details')
             .then(function(response) {
               if(!response.data.account){
                 return;
@@ -40,7 +40,7 @@
             if(vm.loginForm.$valid) {
 
               $http
-                .post('api/account/login', {email: vm.account.email, password: vm.account.password})
+                .post('/api/account/login', {email: vm.account.email, password: vm.account.password})
                 .then(function(response) {
                   // assumes if ok, response is an object with some data, if not, a string with error
                   // customize according to your api
