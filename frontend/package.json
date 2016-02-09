@@ -6,7 +6,7 @@
   "dependencies": {},
   "devDependencies": {
     "css-flip": "git://github.com/geedmo/css-flip",
-    "gulp": "3.8.8",
+    "gulp": "3.9",
     "gulp-changed": "^1.0.0",
     "gulp-concat": "^2.4.1",
     "gulp-expect-file": "0.0.7",

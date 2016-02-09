@@ -5,7 +5,6 @@ var args        = require('yargs').argv,
     gulp        = require('gulp'),
     $           = require('gulp-load-plugins')(),
     shell       = require('gulp-shell'),
-    bower       = require('gulp-bower'),
     gulpsync    = $.sync(gulp),
     PluginError = $.util.PluginError,
     del         = require('del');
@@ -357,7 +356,6 @@ gulp.task('usesources', function(){ useSourceMaps = true; });
 
 // default (no minify)
 gulp.task('default', gulpsync.sync([
-          //'bower',
           'vendor',
           'assets',
           'frontend',
@@ -393,11 +391,6 @@ gulp.task('frontend', shell.task([
     'bower install',
     'gulp'
   ], {cwd: "frontend"}))
-
-// gulp.task('bower', function() {
-//   return bower();
-// });
-//- End custom
 
 
 // Error handler
