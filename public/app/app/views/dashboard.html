@@ -9,23 +9,11 @@
       <div class="panel widget bg-green">
          <div class="row row-table">
             <div class="col-xs-4 text-center bg-green-dark pv-lg">
-               <em class="icon-pencil-square-o fa-3x"></em>
+               <em class="icon-pencil fa-3x"></em>
             </div>
             <div class="col-xs-8 pv-lg">
                <div class="h2 mt0">5</div>
                <div class="text-uppercase">Questionnaires</div>
-            </div>
-         </div>
-      </div>
-      <!-- START widget-->
-      <div class="panel widget bg-primary">
-         <div class="row row-table">
-            <div class="col-xs-4 text-center bg-primary-dark pv-lg">
-               <em class="icon-cloud-upload fa-3x"></em>
-            </div>
-            <div class="col-xs-8 pv-lg">
-               <div class="h2 mt0">1700</div>
-               <div class="text-uppercase">Uploads</div>
             </div>
          </div>
       </div>
@@ -46,7 +34,20 @@
          </div>
       </div>
    </div>
-   <div class="col-lg-3 col-md-6 col-sm-12"></div>
+   <div class="col-lg-3 col-md-6 col-sm-12">
+      <!-- START widget-->
+      <div class="panel widget bg-primary">
+         <div class="row row-table">
+            <div class="col-xs-4 text-center bg-primary-dark pv-lg">
+               <em class="icon-cloud-upload fa-3x"></em>
+            </div>
+            <div class="col-xs-8 pv-lg">
+               <div class="h2 mt0">1700</div>
+               <div class="text-uppercase">Uploads</div>
+            </div>
+         </div>
+      </div>
+   </div>
    <div class="col-lg-3 col-md-6 col-sm-12">
       <!-- START date widget-->
       <div class="panel widget">
@@ -90,66 +91,6 @@
             <!-- END widget-->
          </div>
       </div>
-      <!-- END chart-->
-      <div class="row">
-         <div class="col-lg-12">
-            <div class="panel widget">
-               <div class="row row-table">
-                  <div class="col-md-2 col-sm-3 col-xs-6 text-center bg-info pv-xl">
-                     <em class="wi wi-day-sunny fa-4x"></em>
-                  </div>
-                  <div class="col-md-2 col-sm-3 col-xs-6 pv br">
-                     <div class="h1 m0 text-bold">32&deg;</div>
-                     <div class="text-uppercase">Clear</div>
-                  </div>
-                  <div class="col-md-2 col-sm-3 hidden-xs pv text-center br">
-                     <div class="text-info text-sm">10 AM</div>
-                     <div class="text-muted text-md">
-                        <em class="wi wi-day-cloudy"></em>
-                     </div>
-                     <div class="text-info">
-                        <em class="wi wi-sprinkles"></em>
-                        <span class="text-muted">20%</span>
-                     </div>
-                     <div class="text-muted">27&deg;</div>
-                  </div>
-                  <div class="col-md-2 col-sm-3 hidden-xs pv text-center br">
-                     <div class="text-info text-sm">11 AM</div>
-                     <div class="text-muted text-md">
-                        <em class="wi wi-day-cloudy"></em>
-                     </div>
-                     <div class="text-info">
-                        <em class="wi wi-sprinkles"></em>
-                        <span class="text-muted">30%</span>
-                     </div>
-                     <div class="text-muted">28&deg;</div>
-                  </div>
-                  <div class="col-md-2 hidden-sm hidden-xs pv text-center br">
-                     <div class="text-info text-sm">12 PM</div>
-                     <div class="text-muted text-md">
-                        <em class="wi wi-day-cloudy"></em>
-                     </div>
-                     <div class="text-info">
-                        <em class="wi wi-sprinkles"></em>
-                        <span class="text-muted">20%</span>
-                     </div>
-                     <div class="text-muted">30&deg;</div>
-                  </div>
-                  <div class="col-md-2 hidden-sm hidden-xs pv text-center">
-                     <div class="text-info text-sm">1 PM</div>
-                     <div class="text-muted text-md">
-                        <em class="wi wi-day-sunny-overcast"></em>
-                     </div>
-                     <div class="text-info">
-                        <em class="wi wi-sprinkles"></em>
-                        <span class="text-muted">0%</span>
-                     </div>
-                     <div class="text-muted">30&deg;</div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
       <div class="row">
          <div class="col-lg-4">
             <!-- START widget-->
@@ -157,7 +98,7 @@
                <div class="panel-body">
                   <div class="clearfix">
                      <h3 class="pull-left text-muted mt0">300</h3>
-                     <em class="pull-right text-muted fa fa-coffee fa-2x"></em>
+                     <em class="pull-right text-muted fa fa-cloud-upload fa-2x"></em>
                   </div>
                   <div sparkline="" data-type="line" data-height="80" data-width="100%" data-line-width="2" data-line-color="{{colorByName('purple')}}" data-spot-color="#888" data-min-spot-color="{{colorByName('purple')}}" data-max-spot-color="{{colorByName('purple')}}"
                   data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="3" values="1,3,4,7,5,9,4,4,7,5,9,6,4" data-resize="true" class="pv-lg"></div>
@@ -174,7 +115,7 @@
                <div class="panel-heading">
                   <div class="pull-right label label-danger">5</div>
                   <div class="pull-right label label-success">12</div>
-                  <div class="panel-title">Team messages</div>
+                  <div class="panel-title">App blog</div>
                </div>
                <!-- START list group-->
                <scrollable height="180" class="list-group">
@@ -182,12 +123,46 @@
                   <a href="#" class="list-group-item">
                      <div class="media-box">
                         <div class="pull-left">
-                           <img src="app/img/user/02.jpg" alt="Image" class="media-box-object img-circle thumb32" />
+                           <img src="app/img/user/03.jpg" alt="Image" class="media-box-object img-circle thumb32" />
                         </div>
                         <div class="media-box-body clearfix">
-                           <small class="pull-right">2h</small>
+                           <small class="pull-right">2d</small>
                            <strong class="media-box-heading text-primary">
-                              <span class="circle circle-success circle-lg text-left"></span>Catherine Ellis</strong>
+                              <span class="circle circle-success circle-lg text-left"></span>Michael Waterworth</strong>
+                           <p class="mb-sm">
+                              <small>A sample blog post from the blog. Here we can...</small>
+                           </p>
+                        </div>
+                     </div>
+                  </a>
+                  <!-- END list group item-->
+                  <!-- START list group item-->
+                  <a href="#" class="list-group-item">
+                     <div class="media-box">
+                        <div class="pull-left">
+                           <img src="app/img/user/03.jpg" alt="Image" class="media-box-object img-circle thumb32" />
+                        </div>
+                        <div class="media-box-body clearfix">
+                           <small class="pull-right">11d</small>
+                           <strong class="media-box-heading text-primary">
+                              <span class="circle circle-success circle-lg text-left"></span>Michael Waterworth</strong>
+                           <p class="mb-sm">
+                              <small>Cras sit amet nibh libero, in gravida nulla. Nulla facilisi.</small>
+                           </p>
+                        </div>
+                     </div>
+                  </a>
+                  <!-- END list group item-->
+                  <!-- START list group item-->
+                  <a href="#" class="list-group-item">
+                     <div class="media-box">
+                        <div class="pull-left">
+                           <img src="app/img/user/03.jpg" alt="Image" class="media-box-object img-circle thumb32" />
+                        </div>
+                        <div class="media-box-body clearfix">
+                           <small class="pull-right">4h</small>
+                           <strong class="media-box-heading text-primary">
+                              <span class="circle circle-danger circle-lg text-left"></span>Michael Waterworth</strong>
                            <p class="mb-sm">
                               <small>Cras sit amet nibh libero, in gravida nulla. Nulla...</small>
                            </p>
@@ -202,43 +177,9 @@
                            <img src="app/img/user/03.jpg" alt="Image" class="media-box-object img-circle thumb32" />
                         </div>
                         <div class="media-box-body clearfix">
-                           <small class="pull-right">3h</small>
-                           <strong class="media-box-heading text-primary">
-                              <span class="circle circle-success circle-lg text-left"></span>Jessica Silva</strong>
-                           <p class="mb-sm">
-                              <small>Cras sit amet nibh libero, in gravida nulla. Nulla facilisi.</small>
-                           </p>
-                        </div>
-                     </div>
-                  </a>
-                  <!-- END list group item-->
-                  <!-- START list group item-->
-                  <a href="#" class="list-group-item">
-                     <div class="media-box">
-                        <div class="pull-left">
-                           <img src="app/img/user/09.jpg" alt="Image" class="media-box-object img-circle thumb32" />
-                        </div>
-                        <div class="media-box-body clearfix">
-                           <small class="pull-right">4h</small>
-                           <strong class="media-box-heading text-primary">
-                              <span class="circle circle-danger circle-lg text-left"></span>Jessie Wells</strong>
-                           <p class="mb-sm">
-                              <small>Cras sit amet nibh libero, in gravida nulla. Nulla...</small>
-                           </p>
-                        </div>
-                     </div>
-                  </a>
-                  <!-- END list group item-->
-                  <!-- START list group item-->
-                  <a href="#" class="list-group-item">
-                     <div class="media-box">
-                        <div class="pull-left">
-                           <img src="app/img/user/12.jpg" alt="Image" class="media-box-object img-circle thumb32" />
-                        </div>
-                        <div class="media-box-body clearfix">
                            <small class="pull-right">1d</small>
                            <strong class="media-box-heading text-primary">
-                              <span class="circle circle-danger circle-lg text-left"></span>Rosa Burke</strong>
+                              <span class="circle circle-danger circle-lg text-left"></span>Michael Waterworth</strong>
                            <p class="mb-sm">
                               <small>Cras sit amet nibh libero, in gravida nulla. Nulla...</small>
                            </p>
@@ -250,12 +191,12 @@
                   <a href="#" class="list-group-item">
                      <div class="media-box">
                         <div class="pull-left">
-                           <img src="app/img/user/10.jpg" alt="Image" class="media-box-object img-circle thumb32" />
+                           <img src="app/img/user/03.jpg" alt="Image" class="media-box-object img-circle thumb32" />
                         </div>
                         <div class="media-box-body clearfix">
                            <small class="pull-right">2d</small>
                            <strong class="media-box-heading text-primary">
-                              <span class="circle circle-danger circle-lg text-left"></span>Michelle Lane</strong>
+                              <span class="circle circle-danger circle-lg text-left"></span>Michael Waterworth</strong>
                            <p class="mb-sm">
                               <small>Mauris eleifend, libero nec cursus lacinia...</small>
                            </p>
