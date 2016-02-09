@@ -1,0 +1,13 @@
+{
+  "name": "smoothscroll",
+  "homepage": "https://github.com/themicon/smoothscroll",
+  "_release": "5cffe7de65",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "5cffe7de65ddebddde7a35216470a107ec196151"
+  },
+  "_source": "git://github.com/themicon/smoothscroll.git",
+  "_target": "*",
+  "_originalSource": "themicon/smoothscroll"
+}
