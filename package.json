@@ -34,9 +34,7 @@
     "s3": "4.4.x",
     "should": "7.x",
     "supertest": "*",
-    "vows": "0.8.x"
-  },
-  "devDependencies": {
+    "vows": "0.8.x",
     "css-flip": "git://github.com/geedmo/css-flip",
     "del": "^1.2.0",
     "gulp": "^3.8.10",
@@ -71,6 +69,8 @@
     "marked": "^0.3.2",
     "through2": "^0.6.3",
     "yargs": "^3.7.2"
+  },
+  "devDependencies": {
   },
   "scripts": {
     "start": "heroku local:run node ./",
