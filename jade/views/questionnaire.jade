@@ -15,6 +15,7 @@
                 span Comments
       .panel-body.text-md
         p {{questionnaire.description}}
+
         p Proin est sapien, convallis non hendrerit nec, laoreet ut ipsum. Praesent blandit venenatis mauris ac cursus. Nulla commodo interdum magna consectetur lacinia. Maecenas vitae adipiscing mauris. Nam sodales sollicitudin adipiscing. 
         br
         .row
@@ -27,8 +28,6 @@
           .col-xs-3
             a(href=""): img.img-responsive(src="app/img/bg8.jpg")
         br
-        p Praesent tristique dui eu nunc fringilla et iaculis magna ornare. Proin sed erat sit amet metus rhoncus tincidunt. Vivamus commodo, tortor ut interdum posuere, urna risus aliquet purus, eu fringilla dui neque quis nisi. Proin posuere gravida ipsum, a pretium augue commodo eget. In id elit nulla. Donec nec magna a diam eleifend facilisis non in urna. Nam enim libero, lacinia a tristique a, accumsan sed purus. Phasellus ullamcorper rhoncus sagittis. 
-        p Sed eu rhoncus magna. Morbi non dui elementum nisl ultrices tincidunt. Nullam sagittis hendrerit erat, sit amet gravida ante tristique non. Nam arcu quam, aliquet eget varius sed, placerat et elit. Morbi nec luctus eros. Cras rutrum scelerisque auctor. Praesent malesuada erat ut tellus egestas sagittis. Etiam feugiat risus massa. Aliquam eget turpis eget dui eleifend suscipit ac sed dolor. Sed accumsan adipiscing enim. Sed auctor dignissim fringilla. Sed id turpis tellus. Nam vel tristique dolor. Ut scelerisque ligula tellus. Duis accumsan, est vel convallis dignissim, est massa pharetra ipsum, eu auctor nunc mi ac libero. Integer fermentum molestie massa at congue. Vestibulum congue tempus odio ac posuere. Integer lorem metus, rutrum non rhoncus sed, fringilla interdum urna. 
         hr
         .btn-group(role='group', aria-label='...')
           button.btn.btn-default(type='button')
@@ -43,63 +42,19 @@
             em.fa.fa-pinterest.text-muted
           button.btn.btn-default(type='button')
             em.fa.fa-share-alt.text-muted
-    .panel
-      .panel-heading 3 Comments
+    .panel.panel-default
+      .panel-heading Responses
       .panel-body
-        .media
-          .media-left
-            a(href='#')
-              img.media-object.img-circle.thumb64(src="app/img/user/01.jpg")
-          .media-body
-            h4#media-heading.media-heading
-              a(href="") Susan Grant
-              small 10 min
-              a.anchorjs-link(href='#media-heading')
-                span.anchorjs-icon
-            p Donec ac massa tortor. In hac habitasse platea dictumst. Nam blandit fringilla faucibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae nisi eget metus semper congue. 
-            p Fusce ullamcorper placerat tortor, placerat consequat diam cursus posuere. 
-        hr
-        .media
-          .media-left
-            a(href='#')
-              img.media-object.img-circle.thumb64(src="app/img/user/03.jpg")
-          .media-body.mb-lg
-            h4#media-heading.media-heading
-              a(href="") Dustin Dunn
-              small 20 min
-              a.anchorjs-link(href='#media-heading')
-                span.anchorjs-icon
-            | Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.        
-            hr
-            .media
-              .media-left
-                a(href='#')
-                  img.media-object.img-circle.thumb64(src="app/img/user/06.jpg")
-              .media-body
-                h4#nested-media-heading.media-heading
-                  a(href="") Marcus Gomez
-                  small 1 hour
-                  a.anchorjs-link(href='#nested-media-heading')
-                    span.anchorjs-icon
-                | Integer ac nisl et urna gravida malesuada. Vivamus fermentum libero vel felis aliquet interdum. 
-    .panel
-      .panel-heading
-        em.fa.fa-pencil.mr
-        | Add your Comment
-      .panel-body
-        form.form-horizontal(action='/')
-          .form-group
-            .col-xs-6
-              input#post-firstname.form-control(type='text', name='post-firstname', placeholder='Your firstname')
-            .col-xs-6
-              input#post-lastname.form-control(type='text', name='post-lastname', placeholder='Your lastname')
-          .form-group
-            .col-xs-12
-              textarea#post-comment.form-control(name='post-comment', rows='4', placeholder='Comment here..')
-          .form-group
-            .col-xs-12
-              button.btn.btn-effect-ripple.btn-primary(type='submit') Send Comment
-  // Blog Sidebar
+        table.table.table-striped.table-bordered.table-hover(ng-table='tableResponses')
+          tbody
+            tr(ng-repeat='model in $data') 
+              td(data-title="'Time'")
+                a(href="#/app/questionnaires/{{model.serverId}}") {{model.timestamp}}
+              td(data-title="'Lat'") {{model.lat}}
+              td(data-title="'Lng'") {{model.lng}}
+              td(data-title="'Photo'")
+                img(data-src="{{model.photo}}")
+      // Blog Sidebar
   .col-lg-3
     // Install
     .panel.panel-default
@@ -107,8 +62,8 @@
       .panel-body
         form.form-horizontal
           .input-group
-            p Install using the Quick Code
-            {{questionnaire.quickCode}}
+            p Install using the Quick Code 
+            h3 {{questionnaire.serverId}}
             p Or scan the QR code
             img(src="/api/questionnaires/{{questionnaire._id}}/qr")
     // Categories
@@ -125,14 +80,19 @@
               em.fa.fa-angle-right.fa-fw
               | Deactivate
     // Tag Cloud
-    .panel.panel-default(ng-controller="WordCloudController as wc")
-      .panel-heading Tag Cloud
+    .panel.panel-default
+      .panel-heading Properties
       .panel-body
-        jqcloud.center-block(words='wc.words', width='240', height='200', steps='7')
+        ul.list-unstyled
+          li Public: {{questionnaire.publicQuestionnaire}}
+          li Public data: {{questionnaire.publicData}}
+          li Website: {{questionnaire.website}}
     // Ads
     .panel.panel-default
-      .panel-heading Ads
+      .panel-heading Intro
       .panel-body
-        a(href="")
-          img.img-responsive.img-thumbnail(src="app/img/mockup.png")  
+        ul
+          li Title {{questionnaire.introTitle}}
+          li Description {{questionnaire.introDescription}}
+        img.img-responsive(data-ng-src='{{questionnaire.introImage}}', data-err-src='images/png/avatar.png')
 

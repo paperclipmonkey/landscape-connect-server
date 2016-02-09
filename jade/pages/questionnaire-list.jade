@@ -1,0 +1,25 @@
+.container-fluid.public.questionnaire-list(ng-controller="publicQuestionnairesCtrl as ctrl")
+  .row
+    .col-md-2
+      // Sidebar content
+      img(src='app/img/logo.png')
+      h1 Landscape Connect
+      h2 Questionnaire finder
+      |       Search: 
+      input(ng-model='query')
+      br
+      |       Sort by:
+      select(ng-model='orderProp')
+        option(value='name') Alphabetical
+        option(value='owner') Newest
+    .col-md-10
+      // Body content
+      ul.xi
+        li.thumbnail.questionnaire-listing(ng-repeat='xi in questionnaires | filter:query | orderBy:orderProp')
+          span.xi-title
+            a(href='#/page/questionnaires/{{xi.serverId}}') {{xi.name}}
+          span.description {{xi.description}}
+          span.owner
+            a(href='#/page/questionnaires/{{xi.serverId}}') {{xi.owner}}
+          span.serverId
+            a(href='#/page/questionnaires/{{xi.serverId}}') {{xi.serverId}}

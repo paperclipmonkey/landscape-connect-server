@@ -3,7 +3,7 @@ h3
     em.fa.fa-plus-circle.fa-fw.mr-sm
     | New Questionnaire
   | Questionnaires
-  small Questionnaires owned by you
+  small Questionnaires owned by you 
 
 .container-fluid(ng-controller="questionnairesCtrl as table")
   // Ajax Example
@@ -15,9 +15,9 @@ h3
       tbody
         tr(ng-repeat='model in $data') 
           td(data-title="'Name'")
-            a(href="#/app/questionnaires/{{model.quickCode}}"){{model.name}}
+            a(href="#/app/questionnaires/{{model.serverId}}") {{model.name}}
           td(data-title="'Description'") {{model.description}}
-          td(data-title="'QuickCode'") {{model.quickCode}}
-          td(data-title="'Onwer'") {{model.owner}}
+          td(data-title="'serverId'") {{model.serverId}}
+          td(data-title="'Owner'") {{model.owner}}
           td(data-title="'Url'")
             span(ng-class="{ 'plus': model.money >= 0,'minus': model.money < 0 }") {{model.website}}
