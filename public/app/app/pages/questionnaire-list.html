@@ -1,0 +1,30 @@
+<div ng-controller="publicQuestionnairesCtrl as ctrl" class="container-fluid public questionnaire-list">
+   <div class="row">
+      <div class="col-md-2">
+         <!-- Sidebar content-->
+         <img src="app/img/logo.png" />
+         <h1>Landscape Connect</h1>
+         <h2>Questionnaire finder</h2>Search:
+         <input ng-model="query" />
+         <br/>Sort by:
+         <select ng-model="orderProp">
+            <option value="name">Alphabetical</option>
+            <option value="owner">Newest</option>
+         </select>
+      </div>
+      <div class="col-md-10">
+         <!-- Body content-->
+         <ul class="xi">
+            <li ng-repeat="xi in questionnaires | filter:query | orderBy:orderProp" class="thumbnail questionnaire-listing">
+               <span class="xi-title"><a href="#/page/questionnaires/{{xi.serverId}}">{{xi.name}}</a>
+               </span>
+               <span class="description">{{xi.description}}</span>
+               <span class="owner"><a href="#/page/questionnaires/{{xi.serverId}}">{{xi.owner}}</a>
+               </span>
+               <span class="serverId"><a href="#/page/questionnaires/{{xi.serverId}}">{{xi.serverId}}</a>
+               </span>
+            </li>
+         </ul>
+      </div>
+   </div>
+</div>

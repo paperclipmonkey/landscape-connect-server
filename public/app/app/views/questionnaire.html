@@ -1,0 +1,145 @@
+<div class="row">
+   <!-- Blog Content-->
+   <div class="col-lg-9">
+      <div class="panel panel-default">
+         <div class="panel-heading">
+            <div class="bb">
+               <h2 class="text-lg">{{questionnaire.name}}</h2>
+               <p class="clearfix">
+                  <span class="pull-left">
+                     <small class="mr-sm">By <a href="">Erica Castro</a>
+                     </small>
+                     <small class="mr-sm">May 03, 2015</small>
+                     <small>
+                        <strong>56</strong>
+                        <span>Comments</span>
+                     </small>
+                  </span>
+               </p>
+            </div>
+         </div>
+         <div class="panel-body text-md">
+            <p>{{questionnaire.description}}</p>
+            <p>Proin est sapien, convallis non hendrerit nec, laoreet ut ipsum. Praesent blandit venenatis mauris ac cursus. Nulla commodo interdum magna consectetur lacinia. Maecenas vitae adipiscing mauris. Nam sodales sollicitudin adipiscing.</p>
+            <br/>
+            <div class="row">
+               <div class="col-xs-3">
+                  <a href="">
+                     <img src="app/img/bg4.jpg" class="img-responsive" />
+                  </a>
+               </div>
+               <div class="col-xs-3">
+                  <a href="">
+                     <img src="app/img/bg5.jpg" class="img-responsive" />
+                  </a>
+               </div>
+               <div class="col-xs-3">
+                  <a href="">
+                     <img src="app/img/bg7.jpg" class="img-responsive" />
+                  </a>
+               </div>
+               <div class="col-xs-3">
+                  <a href="">
+                     <img src="app/img/bg8.jpg" class="img-responsive" />
+                  </a>
+               </div>
+            </div>
+            <br/>
+            <hr/>
+            <div role="group" aria-label="..." class="btn-group">
+               <button type="button" class="btn btn-default">
+                  <em class="fa fa-facebook text-muted"></em>
+               </button>
+               <button type="button" class="btn btn-default">
+                  <em class="fa fa-twitter text-muted"></em>
+               </button>
+               <button type="button" class="btn btn-default">
+                  <em class="fa fa-google-plus text-muted"></em>
+               </button>
+               <button type="button" class="btn btn-default">
+                  <em class="fa fa-tumblr text-muted"></em>
+               </button>
+               <button type="button" class="btn btn-default">
+                  <em class="fa fa-pinterest text-muted"></em>
+               </button>
+               <button type="button" class="btn btn-default">
+                  <em class="fa fa-share-alt text-muted"></em>
+               </button>
+            </div>
+         </div>
+      </div>
+      <div class="panel panel-default">
+         <div class="panel-heading">Responses</div>
+         <div class="panel-body">
+            <table ng-table="tableResponses" class="table table-striped table-bordered table-hover">
+               <tbody>
+                  <tr ng-repeat="model in $data">
+                     <td data-title="'Time'"><a href="#/app/questionnaires/{{model.serverId}}">{{model.timestamp}}</a>
+                     </td>
+                     <td data-title="'Lat'">{{model.lat}}</td>
+                     <td data-title="'Lng'">{{model.lng}}</td>
+                     <td data-title="'Photo'">
+                        <img data-src="{{model.photo}}" />
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <!-- Blog Sidebar-->
+      </div>
+   </div>
+   <div class="col-lg-3">
+      <!-- Install-->
+      <div class="panel panel-default">
+         <div class="panel-heading">Install</div>
+         <div class="panel-body">
+            <form class="form-horizontal">
+               <div class="input-group">
+                  <p>Install using the Quick Code</p>
+                  <h3>{{questionnaire.serverId}}</h3>
+                  <p>Or scan the QR code</p>
+                  <img src="/api/questionnaires/{{questionnaire._id}}/qr" />
+               </div>
+            </form>
+         </div>
+      </div>
+      <!-- Categories-->
+      <div class="panel panel-default">
+         <div class="panel-heading">Tasks</div>
+         <div class="panel-body">
+            <ul class="list-unstyled">
+               <li>
+                  <a href="" ng-click="delete()">
+                     <em class="fa fa-angle-right fa-fw"></em>Delete</a>
+               </li>
+               <li>
+                  <a href="">
+                     <em class="fa fa-angle-right fa-fw"></em>Deactivate</a>
+               </li>
+            </ul>
+         </div>
+      </div>
+      <!-- Tag Cloud-->
+      <div class="panel panel-default">
+         <div class="panel-heading">Properties</div>
+         <div class="panel-body">
+            <ul class="list-unstyled">
+               <li>Public: {{questionnaire.publicQuestionnaire}}</li>
+               <li>Public data: {{questionnaire.publicData}}</li>
+               <li>Website: {{questionnaire.website}}</li>
+            </ul>
+         </div>
+      </div>
+      <!-- Ads-->
+      <div class="panel panel-default">
+         <div class="panel-heading">Intro</div>
+         <div class="panel-body">
+            <ul>
+               <li>Title {{questionnaire.introTitle}}</li>
+               <li>Description {{questionnaire.introDescription}}</li>
+            </ul>
+            <img data-ng-src="{{questionnaire.introImage}}" data-err-src="images/png/avatar.png" class="img-responsive" />
+         </div>
+      </div>
+   </div>
+</div>

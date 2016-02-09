@@ -1,0 +1,29 @@
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-md-2">
+         <!-- Sidebar content-->
+         <h1>Landscape Connect</h1>
+         <h2>Questionnaire finder</h2>Search:
+         <input ng-model="query" />
+         <br/>Sort by:
+         <select ng-model="orderProp">
+            <option value="name">Alphabetical</option>
+            <option value="age">Newest</option>
+         </select>
+      </div>
+      <div class="col-md-10">
+         <!-- Body content-->
+         <ul class="xi">
+            <li ng-repeat="xi in x | filter:query | orderBy:orderProp" class="thumbnail questionnaire-listing">
+               <span class="xi-title"><a href="#/questionnaires/{{xi.serverId}}">{{xi.name}}</a>
+               </span>
+               <span class="description">{{xi.description}}</span>
+               <span class="owner"><a href="#/questionnaires/{{xi.serverId}}">{{xi.owner}}</a>
+               </span>
+               <span class="serverId"><a href="#/questionnaires/{{xi.serverId}}">{{xi.serverId}}</a>
+               </span>
+            </li>
+         </ul>
+      </div>
+   </div>
+</div>

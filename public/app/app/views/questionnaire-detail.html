@@ -1,0 +1,34 @@
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-md-4">
+         <div class="questionnaire-images">
+            <img ng-src="{{'questionnaires/' + xi.serverId + '.png'}}" class="questionnaire" />
+            <div class="shortcode">Quick code:
+               <span class="code">{{xi.serverId}}</span>
+            </div>
+            <img data-ng-src="{{xi.introImage}}" data-err-src="images/png/avatar.png" class="img-responsive" />
+         </div>
+      </div>
+      <div class="col-md-8">
+         <h1>{{xi.name}}</h1>
+         <p>{{xi.description}}</p>
+         <ul class="specs">
+            <li>Created
+               <span class="date">{{xi.dateAdded}}</span>by
+               <span class="by">3Equals</span>
+            </li>
+            <li>Website
+               <span class="website"><a href="{{xi.website}}">{{xi.website}}</a>
+               </span>Public Data
+               <span class="publicData">{{xi.publicData}}</span>
+            </li>
+            <li>
+               <span>Sections</span>
+               <dl ng-repeat="section in xi.sections">
+                  <dd>{{section.title}}</dd>
+               </dl>
+            </li>
+         </ul>
+      </div>
+   </div>
+</div>

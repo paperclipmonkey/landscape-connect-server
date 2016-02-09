@@ -1,0 +1,34 @@
+<div ng-controller="publiQuestionnaireCtrl as ctrl" class="public questionnaire-list">
+   <div class="row">
+      <div class="col-md-4">
+         <div class="questionnaire-images">
+            <img ng-src="{{'/api/questionnaires/' + questionnaire.serverId + '/qr'}}" class="questionnaire" />
+            <div class="shortcode">Quick code:
+               <span class="code">{{questionnaire.serverId}}</span>
+            </div>
+            <img data-ng-src="{{questionnaire.introImage}}" data-err-src="images/png/avatar.png" class="img-responsive" />
+         </div>
+      </div>
+      <div class="col-md-8">
+         <h1>{{questionnaire.name}}</h1>
+         <p>{{questionnaire.description}}</p>
+         <ul class="specs">
+            <li>Created
+               <span class="date">{{questionnaire.dateAdded}}</span>by
+               <span class="by">3Equals</span>
+            </li>
+            <li>Website
+               <span class="website"><a href="{{xi.website}}">{{questionnaire.website}}</a>
+               </span>Public Data
+               <span class="publicData">{{questionnaire.publicData}}</span>
+            </li>
+            <li>
+               <span>Sections</span>
+               <dl ng-repeat="section in questionnaire.sections">
+                  <dd>{{section.title}}</dd>
+               </dl>
+            </li>
+         </ul>
+      </div>
+   </div>
+</div>

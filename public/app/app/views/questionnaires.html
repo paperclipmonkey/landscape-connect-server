@@ -1,0 +1,27 @@
+<h3>
+   <button type="button" ui-sref="app.questionnairenew" class="btn btn-primary pull-right">
+      <em class="fa fa-plus-circle fa-fw mr-sm"></em>New Questionnaire</button>Questionnaires
+   <small>Questionnaires owned by you</small>
+</h3>
+<div ng-controller="questionnairesCtrl as table" class="container-fluid">
+   <!-- Ajax Example-->
+   <div class="panel panel-default">
+      <div class="panel-heading">
+         <button ng-click="table.tableParams5.reload()" class="pull-right btn btn-purple btn-sm">Reload</button>
+      </div>
+      <table ng-table="table.tableParams5" class="table table-striped table-bordered table-hover">
+         <tbody>
+            <tr ng-repeat="model in $data">
+               <td data-title="'Name'"><a href="#/app/questionnaires/{{model.serverId}}">{{model.name}}</a>
+               </td>
+               <td data-title="'Description'">{{model.description}}</td>
+               <td data-title="'serverId'">{{model.serverId}}</td>
+               <td data-title="'Owner'">{{model.owner}}</td>
+               <td data-title="'Url'">
+                  <span ng-class="{ 'plus': model.money &gt;= 0,'minus': model.money &lt; 0 }">{{model.website}}</span>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</div>
