@@ -73,7 +73,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "heroku local:run node ./",
-    "test": "make test"
+    "postinstall": "bower install && gulp",
+    "start": "node ./",
+    "dev": "bower install && gulp && node ./"
   }
 }

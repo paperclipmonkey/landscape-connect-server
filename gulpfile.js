@@ -357,12 +357,12 @@ gulp.task('usesources', function(){ useSourceMaps = true; });
 
 // default (no minify)
 gulp.task('default', gulpsync.sync([
-          'bower',
+          //'bower',
           'vendor',
           'assets',
           'frontend',
           //'watch',
-          'serveprod'
+          //'serveprod'
         ]), function(){
 
   log('************');
@@ -381,12 +381,12 @@ gulp.task('assets',[
         ]);
 
 // - Custom added gulp tasks for LC
-gulp.task('serveprod', function() {
-  var app = require('./app')
-  var server = app.listen(process.env.PORT, function () {
-    console.log('Listening on port %d', server.address().port)
-  })
-})
+// gulp.task('serveprod', function() {
+//   var app = require('./app')
+//   var server = app.listen(process.env.PORT, function () {
+//     console.log('Listening on port %d', server.address().port)
+//   })
+// })
 
 gulp.task('frontend', shell.task([
     'npm install',
@@ -394,9 +394,9 @@ gulp.task('frontend', shell.task([
     'gulp'
   ], {cwd: "frontend"}))
 
-gulp.task('bower', function() {
-  return bower();
-});
+// gulp.task('bower', function() {
+//   return bower();
+// });
 //- End custom
 
 
