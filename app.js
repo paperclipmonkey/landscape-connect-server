@@ -121,11 +121,11 @@ module.exports = (function () {
   //Dashboard
   app.get('/api/dash/rating/average', middleware.ensureAuthenticated, routes.dashboard.dashboard_rating_average)
   app.get('/api/dash/rating/months', middleware.ensureAuthenticated, routes.dashboard.dashboard_rating_by_month)
-  app.get('/api/dash/views/week', middleware.ensureAuthenticated, routes.dashboard.dashboard_views_week)
-  app.get('/api/dash/views/months', middleware.ensureAuthenticated, routes.dashboard.dashboard_views_by_month)
-  app.get('/api/dash/views/total', middleware.ensureAuthenticated, routes.dashboard.dashboard_views_total)
-  app.get('/api/dash/views/words', middleware.ensureAuthenticated, routes.dashboard.dashboard_words)
-  app.get('/api/dash/views/latest', middleware.ensureAuthenticated, routes.dashboard.dashboard_rating_average)
+  app.get('/api/dash/responses/week', middleware.ensureAuthenticated, routes.dashboard.dashboard_views_week)
+  app.get('/api/dash/responses/months', middleware.ensureAuthenticated, routes.dashboard.dashboard_views_by_month)
+  app.get('/api/dash/responses/total', middleware.ensureAuthenticated, routes.dashboard.dashboard_views_total)
+  app.get('/api/dash/responses/words', middleware.ensureAuthenticated, routes.dashboard.dashboard_words)
+  app.get('/api/dash/responses/latest', middleware.ensureAuthenticated, routes.dashboard.dashboard_rating_average)
 
   //Download
   app.post('/api/questionnaires/download/csv/', middleware.ensureAuthenticated, routes.download.views_download_csv)
@@ -164,8 +164,11 @@ module.exports = (function () {
         function (err, user, info) {
           if(err) return res.sendStatus(401)
           if(!user) return res.sendStatus(401)
-          app.emit('user.login')
-          res.sendStatus(200) // Authentication successful. Redirect home.
+          req.logIn(user, function(err) {
+            if (err) { return next(err); }
+            app.emit('user.login')
+            res.sendStatus(200) // Authentication successful. Redirect home.
+          });
         }
       )(req, res, next)
     }

@@ -78,15 +78,15 @@ module.exports = function (app) {
 
   var edit = function (req, res, next) {
     var iModel = mongoose.model(modelName)
-    uploadFiles(req, req.params.id, function (err) {
-      if (err) { return callback(err) }
+    //uploadFiles(req, req.params.id, function (err) {
+    //  if (err) { return callback(err) }
       mongoose.model(modelName).findOne({_id: req.params.id}, function (err, doc) {
         if (err) return next(err)
         doc.set(req.body)
         doc.save()
         res.json(results.user)
       })
-    })
+    //})
   }
 
   var remove = function (req, res, next) {

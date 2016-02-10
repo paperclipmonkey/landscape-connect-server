@@ -13,8 +13,7 @@ module.exports = (function (app) {
     organisation: {type: String},
     phoneno: {type: String},
     isSuper: {type: Boolean, default: false, required: true},
-    emailOnView: {type: Boolean, default: false, required: true},
-    areas: {type: [], default: []},
+    emailOn: {type: Boolean, default: false, required: true},
     lastLogin: {type: Date, required: true, default: Date.now}
   })
 

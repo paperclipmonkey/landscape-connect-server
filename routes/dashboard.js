@@ -21,11 +21,11 @@ module.exports = function (app) {
     }
 
     if (req.user.isSuper) {
-      mongoose.model('feedback').find({}, cback)
+      mongoose.model('response').find({}, cback)
     } else {
       common.getQueryLocations(req.user.areas, function (err, q) {
         if (err) { return cback(err) }
-        mongoose.model('feedback').find({
+        mongoose.model('response').find({
           'loc': q
         }, cback)
       })
@@ -46,10 +46,10 @@ module.exports = function (app) {
     // }
 
   // if(req.user.isSuper){
-  // 	mongoose.model("feedback").find(['words'],{},cback)
+  // 	mongoose.model("response").find(['words'],{},cback)
   // } else {
   // 	common.getQueryLocations(req.user.areas, function(err, q){
-  // 		mongoose.model("feedback").find(['words'],{
+  // 		mongoose.model("response").find(['words'],{
   // 			'loc' : q
   // 		}, cback)
   // 	})
@@ -95,7 +95,7 @@ module.exports = function (app) {
     }
 
     var doQuery = function (filter) {
-      mongoose.model('feedback').aggregate(
+      mongoose.model('response').aggregate(
         filter,
         {
           $group: {
@@ -161,7 +161,7 @@ module.exports = function (app) {
     }
 
     var doQuery = function (filter) {
-      mongoose.model('feedback').aggregate(
+      mongoose.model('response').aggregate(
         filter,
         {
           $group: {
@@ -207,11 +207,11 @@ module.exports = function (app) {
     }
 
     if (req.user.isSuper) {
-      mongoose.model('feedback').count({}, cback)
+      mongoose.model('response').count({}, cback)
     } else {
       common.getQueryLocations(req.user.areas, function (err, q) {
         if (err) { return cback(err) }
-        mongoose.model('feedback').count({loc: q}, cback)
+        mongoose.model('response').count({loc: q}, cback)
       })
     }
   }
@@ -228,11 +228,11 @@ module.exports = function (app) {
     weekAgo.setDate(weekAgo.getDate() - 7)
 
     if (req.user.isSuper) {
-      mongoose.model('feedback').count({'ts': {'$gte': weekAgo}}, cback)
+      mongoose.model('response').count({'ts': {'$gte': weekAgo}}, cback)
     } else {
       common.getQueryLocations(req.user.areas, function (err, q) {
         if (err) { return cback(err) }
-        mongoose.model('feedback').count({'ts': {'$gte': weekAgo}, loc: q}, cback)
+        mongoose.model('response').count({'ts': {'$gte': weekAgo}, loc: q}, cback)
       })
     }
   }

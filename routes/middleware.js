@@ -58,7 +58,7 @@ function saveUploadedFile (req, res, next) {
 
 function ensureIsSuper (req, res, next) {
   if (req.isAuthenticated()) {
-    if (req.user.isSuper) {
+    if (req.user && req.user.isSuper) {
       return next()
     }
     return res.sendStatus(401)
@@ -111,22 +111,22 @@ function ensureAuthenticated (req, res, next) {
 
 var check_nonce = function (req, res, next) {
   // Ensure we have a new view - check NONCE from App
-  if (req.body.nonce) {
-    // Do lookup in DB for nonce. Does it exist already?
-    mongoose.model('feedback').find({nonce: req.body.nonce}, function (err, views) {
-      if (err) {
-        return res.json(500, err)
-      }
-      if (views.length < 1) {
-        return next()
-      } else {
-        res.json(views[0].toClient()) // JSON
-        return res.end()
-      }
-    })
-  } else {
+  // if (req.body.nonce) {
+  //   // Do lookup in DB for nonce. Does it exist already?
+  //   mongoose.model('feedback').find({nonce: req.body.nonce}, function (err, views) {
+  //     if (err) {
+  //       return res.json(500, err)
+  //     }
+  //     if (views.length < 1) {
+  //       return next()
+  //     } else {
+  //       res.json(views[0].toClient()) // JSON
+  //       return res.end()
+  //     }
+  //   })
+  // } else {
     return next()
-  }
+  //}
 }
 
 module.exports = {

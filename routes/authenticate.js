@@ -5,7 +5,7 @@ module.exports = function () {
 
   var logout = function (req, res) {
     req.session = null
-    res.json({})
+    res.sendStatus(200)
   }
   
   return {

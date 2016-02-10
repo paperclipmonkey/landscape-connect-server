@@ -3,7 +3,7 @@ var request = require('supertest')
 var server
 var users = {
   'super': {email: 'me@me.com', password: 'glastonbury'},
-  'nonsuper': {email: 'example+nonsuper@sample.com', password: 'pword'}
+  'nonsuper': {email: 'example+nonsuper@sample.com', password: 'pwordme'}
 }
 
 describe('Back-end admin', function () {
@@ -75,7 +75,7 @@ describe('Back-end admin', function () {
         phoneno: '01792',
         password: 'test'
       })
-      .expect(302)
+      .expect(200)
       .end(function (err, res) {
         userAdr = res.header.location
         done(err)
@@ -105,7 +105,7 @@ describe('Back-end admin', function () {
       .post('/api/users/new/')
       .send({
         fullname: 'test',
-        email: 'test@test.com',
+        email: 'test@test2.com',
         organisation: 'Test',
         phoneno: '01792'
       })
@@ -159,22 +159,21 @@ describe('Back-end admin', function () {
         rAgent
           .post('/api/account/login')
           .send(userLogin)
-          .expect(200)
-          .expect('location', '/api/', done)
+          .expect(200, done)
       })
 
       /* - - - - - - Questionnaires - - - - - */
-      it('GET /api/questionnaires should show private views', function (done) {
+      it('GET /api/questionnaires should show private questionnaires', function (done) {
         rAgent
           .get('/api/questionnaires/')
           .expect(200)
           .expect(/\bresult\b/, done)
       })
 
-      it('GET /api/questionnaires/:id with wrong id should give 400', function (done) {
+      it('GET /api/questionnaires/:id with wrong id should give 404', function (done) {
         rAgent
           .get('/api/questionnaires/:id')
-          .expect(400, done)
+          .expect(404, done)
       })
 
       /* - - - - Dashboard - - - - - */
@@ -190,35 +189,34 @@ describe('Back-end admin', function () {
           .expect(200, done)
       })
 
-      it('GET /api/dash/views/week should show total views this week', function (done) {
+      it('GET /api/dash/responses/week should show total responses this week', function (done) {
         rAgent
-          .get('/api/dash/views/week')
+          .get('/api/dash/responses/week')
           .expect(200, done)
       })
 
-      it('GET /api/dash/views/average should show total views this month', function (done) {
+      it('GET /api/dash/responses/average should show total responses this month', function (done) {
         rAgent
-          .get('/api/dash/views/months')
+          .get('/api/dash/responses/months')
           .expect(200, done)
       })
 
-      it('GET /api/dash/views/total should show total views', function (done) {
+      it('GET /api/dash/responses/total should show total responses', function (done) {
         rAgent
-          .get('/api/dash/views/total')
+          .get('/api/dash/responses/total')
           .expect(200, done)
       })
 
-      it('GET /api/dash/views/latest should show latest views', function (done) {
+      it('GET /api/dash/responses/latest should show latest responses', function (done) {
         rAgent
-          .get('/api/dash/views/latest')
+          .get('/api/dash/responses/latest')
           .expect(200, done)
       })
 
       it('POST /api/account/logout should logout & delete cookie', function (done) {
         rAgent
-          .get('/api/account/logout')
-          .expect(302)
-          .expect('location', '/api/login', done)
+          .post('/api/account/logout')
+          .expect(200, done)
       })
 
     })

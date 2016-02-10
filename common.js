@@ -146,7 +146,7 @@ module.exports = (function () {
     }
 
     // Super admins
-    mongoose.model('user').find({isSuper: true, emailOnView: true}, queryBack)
+    mongoose.model('user').find({isSuper: true, emailOn: true}, queryBack)
 
     // perform geoquery on areas - finding areas that the view relates to. Lookup area in users.
     var geoQuery = {
@@ -166,7 +166,7 @@ module.exports = (function () {
         areaIds.push(area._id.toString())
       })
 
-      mongoose.model('user').find({isSuper: false, emailOnView: true, areas: {$in: areaIds}}, queryBack)
+      mongoose.model('user').find({isSuper: false, emailOn: true, areas: {$in: areaIds}}, queryBack)
     })
   }
 

@@ -37,10 +37,10 @@ module.exports = function (app) {
       if (err) return next(err)
       res.json({"result": results})
     }
-
-    if (req.user.isSuper) {
-      mongoose.model(modelName).find({}, cback)
+    if (req.user && req.user.isSuper) {
+      mongoose.model(modelName).find({questionnaireQuickCode: req.params.id}, cback)
     } else {
+      //TODO - check if data is public for this questionnaire
       mongoose.model(modelName).find({questionnaireQuickCode: req.params.id}, cback)//user: req.user._id
     }
   }
@@ -64,6 +64,7 @@ module.exports = function (app) {
   var read = function (req, res, next) {
     mongoose.model(modelName).findOne({_id: req.params.id}, function (err, doc) {
       if (err) return next(err)
+      if (!doc) return sendStatus(404)
       res.send(doc)
     })
   }
