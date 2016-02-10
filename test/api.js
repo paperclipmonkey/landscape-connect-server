@@ -24,7 +24,7 @@ describe('Back-end admin', function () {
   /* - - - - - - - - - Super Admin - - - - - - */
   it('GET /api/account/details should give unauthorised', function (done) {
     rAgent
-      .get('/api/account/details/')
+      .get('/api/account/details')
       .expect(401, done)
   })
 
@@ -39,12 +39,12 @@ describe('Back-end admin', function () {
     rAgent
       .post('/api/account/login')
       .send(users.super)
-      .expect(204, done)
+      .expect(200, done)
   })
 
   it('GET /api/account/details should give account details', function (done) {
     rAgent
-      .get('/api/account/details/')
+      .get('/api/account/details')
       .expect(200, done)
   })
 
@@ -159,7 +159,7 @@ describe('Back-end admin', function () {
         rAgent
           .post('/api/account/login')
           .send(userLogin)
-          .expect(204)
+          .expect(200)
           .expect('location', '/api/', done)
       })
 
@@ -227,14 +227,16 @@ describe('Back-end admin', function () {
   // Super Admin
   runAs(users.super)
   // Normal Admin
-  runAs(users.nonsuper)
+  
+  //TODO - Add non-super used
+  //runAs(users.nonsuper)
 
   /* - - - - Non-Super admin - - - - - */
   it('POST /api/account/login as non-super should login & set cookie', function (done) {
     rAgent
       .post('/api/account/login')
       .send(users.nonsuper)
-      .expect(204, done)
+      .expect(200, done)
   })
 
   // it("GET /api/users as non-super shouldn't show users", function (done) {

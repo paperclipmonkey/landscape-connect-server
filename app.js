@@ -165,7 +165,7 @@ module.exports = (function () {
           if(err) return res.sendStatus(401)
           if(!user) return res.sendStatus(401)
           app.emit('user.login')
-          res.sendStatus(204) // Authentication successful. Redirect home.
+          res.sendStatus(200) // Authentication successful. Redirect home.
         }
       )(req, res, next)
     }
