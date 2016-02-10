@@ -6556,11 +6556,11 @@
                 .then(function(response) {
                   // assumes if ok, response is an object with some data, if not, a string with error
                   // customize according to your api
-                  if ( !response.data.account ) {
-                    vm.authMsg = 'Incorrect credentials.';
-                  }else{
+                  //if ( !response.data.account ) {
+                  //  vm.authMsg = 'Incorrect credentials.';
+                  //}else{
                     $state.go('app.dashboard');
-                  }
+                  //}
                 }, function() {
                   vm.authMsg = 'Server Request Error';
                 });

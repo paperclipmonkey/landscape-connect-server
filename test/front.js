@@ -7,6 +7,7 @@ describe('Front-end', function () {
   before(function (done) {
     server = app.listen(process.env.PORT, function () {
       rAgent = request.agent(app)
+      done()
     })
   })
 
