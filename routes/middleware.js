@@ -61,14 +61,14 @@ function ensureIsSuper (req, res, next) {
     if (req.user.isSuper) {
       return next()
     }
-    return res.redirect('/admin/')
+    return res.sendStatus(401)
   }
-  return res.redirect('/admin/login')
+  return res.sendStatus(401)
 }
 
 function ensureAuthenticated (req, res, next) {
   if (!req.isAuthenticated()) {
-    return res.redirect('/admin/login')
+    return res.sendStatus(401)
   }
 
   if (req.user.isSuper) { // If super admin allow access
