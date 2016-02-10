@@ -14,19 +14,14 @@ module.exports = (function () {
 
   passport.use(new LocalStrategy({usernameField: "email" },
     function (email, password, done) {
-      console.log(email, password);
       var shasum = crypto.createHash('sha1')
       // Need to find user object to grab salt
       userModel.findOne({email: email}, function (err, user1) {
         if (err) {
-          return done() // done(err)
+          return done(err, false) // done(err)
         }
         if (!user1) {
-          return done(null, false, {
-            'errors': {
-              'email': { type: 'Email is not registered.' }
-            }
-          });
+          return done(null, false, "No email");
         }
         shasum.update(user1.salt + '>><<' + password) // Salt + >><< + pw = salting
         var toQuery = {
@@ -35,15 +30,14 @@ module.exports = (function () {
         }
         userModel.findOne(toQuery, function (err, user2) {
           if(!user2){
-            return done(null, false, {
-              'errors': {
-                'password': { type: 'Password is incorrect.' }
-              }
-            });
+            return done(null, false);
+          }
+          if (err) {
+            return done(err, false) // done(err)
           }
           user2.lastLogin = new Date() // Update last logged in time
           user2.save()
-          done(err, user2)
+          done(null, user2)
         })
       })
     }

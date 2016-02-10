@@ -148,7 +148,7 @@ module.exports = (function () {
   app.post('/api/questionnaires/:id/responses', routes.responses.create)
 
   //Users
-  app.get('/api/users', middleware.ensureIsSuper, routes.users.list)
+  app.get('/api/users', middleware.ensureAuthenticated, routes.users.list)
   app.get('/api/users/:id', middleware.ensureAuthenticated, routes.users.read)
   app.post('/api/users/:id', middleware.ensureAuthenticated, multipart, routes.users.edit)
   app.delete('/api/users/:id', middleware.ensureAuthenticated, routes.users.remove)
@@ -158,27 +158,28 @@ module.exports = (function () {
   app.get('/api/account/menu/', middleware.ensureAuthenticated, routes.users.menu)
   app.post('/api/account/logout', middleware.ensureAuthenticated, routes.authenticate.logout)
   app.post('/api/account/register', routes.users.register)
-  app.post('/api/account/login',
-    pass.authenticate(
-      'local', {
-        failureRedirect: '/api/account/login',
-        failureFlash: true
-      }),
-    function (req, res) {
-      app.emit('user.login')
-      res.redirect('/api/account/details/') // Authentication successful. Redirect home.
+  app.post('/api/account/login', function(req,res,next){
+      pass.authenticate(
+        'local',
+        function (err, user, info) {
+          if(err) return res.sendStatus(401)
+          if(!user) return res.sendStatus(401)
+          app.emit('user.login')
+          res.sendStatus(204) // Authentication successful. Redirect home.
+        }
+      )(req, res, next)
     }
   )
 
   // Error handling
   app.use(function (err, req, res, next) {
-    if (!err) return next()
     if (process.env.DEBUG === 'true') {
-      console.error(err)
+      console.error('error', err)
       if (err.stack) {
         console.error(err.stack)
       }
     }
+    if (!err) return res.sendStatus(500)
     if (!res.headersSent) {
       res.sendStatus(400)
     }
