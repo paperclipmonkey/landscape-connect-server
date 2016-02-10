@@ -15,7 +15,6 @@
   "bower_components/html5shiv/dist/html5shiv.js",
   "bower_components/respond/src/respond.js",
   "bower_components/retina.js/dist/retina.js",
-  "bower_components/smoothscroll/smoothscroll.js",
   "bower_components/jquery.scrollTo/jquery.scrollTo.js",
   "bower_components/wow/dist/wow.js",
   "bower_components/matchMedia/matchMedia.js",
@@ -28,7 +27,6 @@
   "bower_components/owl.carousel/dist/assets/owl.theme.default.css",
   "bower_components/owl.carousel/dist/assets/ajax-loader.gif",
   "bower_components/owl.carousel/dist/assets/owl.video.play.png",
-  "bower_components/jQuery-Storage-API/jquery.storageapi.js",
   "bower_components/waitForImages/dist/jquery.waitforimages.min.js",
   "bower_components/jquery.browser/dist/jquery.browser.js"
 ]
