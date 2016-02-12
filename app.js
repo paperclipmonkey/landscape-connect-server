@@ -145,7 +145,7 @@ module.exports = (function () {
 
   //Responses
   app.get('/api/questionnaires/:id/responses', routes.responses.list)
-  app.post('/api/questionnaires/:id/responses', routes.responses.create)
+  app.post('/api/questionnaires/:id/responses', multipart, routes.responses.create)
 
   //Users
   app.get('/api/users', middleware.ensureAuthenticated, routes.users.list)
