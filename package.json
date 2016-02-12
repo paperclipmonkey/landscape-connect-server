@@ -76,6 +76,6 @@
     "postinstall": "bower install && gulp",
     "start": "node ./",
     "dev": "bower install && gulp && node ./",
-    "test": "heroku local:run mocha -e .env"
+    "test": "mocha"
   }
 }
