@@ -44,6 +44,7 @@ module.exports = function (app) {
   var qr = function(req, res, next) {
     //mongoose.model(modelName).findOne({serverId: req.params.id}, function (err, doc) {
       //if (err) return next(err)
+      console.log(process.env.SITE_URL)
       var qr = buildQrImgPipe(process.env.SITE_URL + '/questionnaires/' + req.params.id + ".json")
       qr.pipe(res)
     //})
