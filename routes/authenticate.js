@@ -1,7 +1,7 @@
 module.exports = function () {
-  var login = function (req, res) {
-    res.json(req.session.user)
-  }
+  //var pass = require('./authenticate')
+
+ // var login = 
 
   var logout = function (req, res) {
     req.session = null
@@ -9,7 +9,7 @@ module.exports = function () {
   }
   
   return {
-    login: login,
+    //login: login,
     logout: logout
   }
 }

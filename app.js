@@ -104,6 +104,21 @@ module.exports = (function () {
     return ret
   }
 
+  function loginFunction(req, res, next) {
+    pass.authenticate(
+      'local',
+      function (err, user, info) {
+        if(err) return res.sendStatus(401)
+        if(!user) return res.sendStatus(401)
+        req.logIn(user, function(err) {
+          if (err) { return next(err); }
+          app.emit('user.login')
+          res.sendStatus(200) // Authentication successful. Redirect home.
+        });
+      }
+    )(req, res, next)
+  }
+
   hbs.registerHelper('getStaticUrl', function () {
     return process.env.S3_URL
   })
@@ -159,22 +174,8 @@ module.exports = (function () {
   app.get('/api/account/details/', middleware.ensureAuthenticated, routes.users.me)
   app.get('/api/account/menu/', middleware.ensureAuthenticated, routes.users.menu)
   app.post('/api/account/logout', middleware.ensureAuthenticated, routes.authenticate.logout)
-  app.post('/api/account/register', routes.users.register)
-  app.post('/api/account/login', function(req,res,next){
-      pass.authenticate(
-        'local',
-        function (err, user, info) {
-          if(err) return res.sendStatus(401)
-          if(!user) return res.sendStatus(401)
-          req.logIn(user, function(err) {
-            if (err) { return next(err); }
-            app.emit('user.login')
-            res.sendStatus(200) // Authentication successful. Redirect home.
-          });
-        }
-      )(req, res, next)
-    }
-  )
+  app.post('/api/account/register', routes.users.register, loginFunction)
+  app.post('/api/account/login', loginFunction)
 
   // Error handling
   app.use(function (err, req, res, next) {
