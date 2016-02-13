@@ -207,7 +207,7 @@
         console.log("Submitting Questionnaire")
         $http.post("/api/questionnaires/", $scope.questionnaire).success(function(data, status) {
             console.log(data, status)
-            $state.go('app.questionnaire', {questionnaireId: data.quickCode})
+            $state.go('app.questionnaire', {questionnaireId: data.serverId})
         })
       }
 
