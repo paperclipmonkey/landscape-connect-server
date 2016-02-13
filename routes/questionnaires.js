@@ -42,12 +42,13 @@ module.exports = function (app) {
   }
 
   var qr = function(req, res, next) {
-    //mongoose.model(modelName).findOne({serverId: req.params.id}, function (err, doc) {
-      //if (err) return next(err)
+    mongoose.model(modelName).findOne({serverId: req.params.id}, function (err, doc) {
+      if (err) return next(err)
+      if (!doc) return next()
       //QR code is to the generic URL. From there depending on the user-agent either the app or JSON is displayed
-      var qr = buildQrImgPipe(process.env.SITE_URL + '/questionnaires/' + req.params.id)
+      var qr = buildQrImgPipe(process.env.SITE_URL + '/questionnaires/' + doc.serverId)
       qr.pipe(res)
-    //})
+    })
   }
 
 
