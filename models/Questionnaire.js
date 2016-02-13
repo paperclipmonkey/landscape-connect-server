@@ -26,6 +26,7 @@ module.exports = (function (app) {
     publicData: {type: Boolean},
     introTitle: {type: String},
     introDescription: {type: String},
+    introImage: {type: String},//B64 image
     website: {type: String},
     sections: {type: Array},
     owner: {type: String}

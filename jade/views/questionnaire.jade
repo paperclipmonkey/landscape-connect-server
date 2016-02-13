@@ -65,7 +65,7 @@
             p Install using the Quick Code 
             h3 {{questionnaire.serverId}}
             p Or scan the QR code
-            img(src="/api/questionnaires/{{questionnaire._id}}/qr")
+            img(src="/api/questionnaires/{{questionnaire.serverId}}/qr")
     // Categories
     .panel.panel-default
       .panel-heading Tasks
@@ -75,10 +75,10 @@
             a(href="" ng-click="delete()") 
               em.fa.fa-angle-right.fa-fw
               | Delete
-          li
-            a(href="") 
-              em.fa.fa-angle-right.fa-fw
-              | Deactivate
+          //- li
+          //-   a(href="") 
+          //-     em.fa.fa-angle-right.fa-fw
+          //-     | Deactivate
     // Tag Cloud
     .panel.panel-default
       .panel-heading Properties
@@ -86,7 +86,8 @@
         ul.list-unstyled
           li Public: {{questionnaire.publicQuestionnaire}}
           li Public data: {{questionnaire.publicData}}
-          li Website: {{questionnaire.website}}
+          li Website: 
+            a(href="{{questionnaire.website}}") {{questionnaire.website}}
     // Ads
     .panel.panel-default
       .panel-heading Intro

@@ -98,7 +98,7 @@
                   <p>Install using the Quick Code</p>
                   <h3>{{questionnaire.serverId}}</h3>
                   <p>Or scan the QR code</p>
-                  <img src="/api/questionnaires/{{questionnaire._id}}/qr" />
+                  <img src="/api/questionnaires/{{questionnaire.serverId}}/qr" />
                </div>
             </form>
          </div>
@@ -112,10 +112,6 @@
                   <a href="" ng-click="delete()">
                      <em class="fa fa-angle-right fa-fw"></em>Delete</a>
                </li>
-               <li>
-                  <a href="">
-                     <em class="fa fa-angle-right fa-fw"></em>Deactivate</a>
-               </li>
             </ul>
          </div>
       </div>
@@ -126,7 +122,8 @@
             <ul class="list-unstyled">
                <li>Public: {{questionnaire.publicQuestionnaire}}</li>
                <li>Public data: {{questionnaire.publicData}}</li>
-               <li>Website: {{questionnaire.website}}</li>
+               <li>Website: <a href="{{questionnaire.website}}">{{questionnaire.website}}</a>
+               </li>
             </ul>
          </div>
       </div>
