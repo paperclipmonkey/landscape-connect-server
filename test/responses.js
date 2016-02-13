@@ -12,7 +12,7 @@ describe('Responses', function () {
       // Delete all areas with name test - Unique test on Area names
       var mongoose = require('mongoose')
       var Questionnaire = mongoose.model('questionnaire')
-      Questionnaire.findOne({'name': 'One'}, function (err, qaire) {
+      Questionnaire.findOne({'name': 'AutoTest'}, function (err, qaire) {
         if(err) return done(err)
         if(!qaire) return done(new Error('No questionnaire'))
         testQId = qaire.serverId
@@ -35,20 +35,17 @@ describe('Responses', function () {
       .attach('photo', __dirname + '/data/example.jpg')
       .expect(200)
       .end(function(err, res){
-        console.log(res.res.body);
         if (err) return done(err)
         done()
-      });
+      })
   })
 
   it('GET /api/questionnaires/x/responses should show responses', function (done) {
     rAgent
       .get('/api/questionnaires/' + testQId + '/responses')
       .expect(200)
-      .expect(/\bresult\b/, function(err, res){
-        done()
-      })
-  })
+      .expect(/\bresult\b/, done())
+    })
 
   after(function () {
     server.close()
