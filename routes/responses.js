@@ -11,6 +11,7 @@ module.exports = function (app) {
 
   var create = function (req, res, next) {
     eventServer.emit(objName + ':creating', instance)
+    console.log('Creating response obj:', req.body)
     var toInsert = req.body
 
     var Model = mongoose.model(modelName)
@@ -38,10 +39,10 @@ module.exports = function (app) {
       res.json({"result": results})
     }
     if (req.user && req.user.isSuper) {
-      mongoose.model(modelName).find({questionnaireQuickCode: req.params.id}, cback)
+      mongoose.model(modelName).find({questionnaire: req.params.id}, cback)
     } else {
       //TODO - check if data is public for this questionnaire
-      mongoose.model(modelName).find({questionnaireQuickCode: req.params.id}, cback)//user: req.user._id
+      mongoose.model(modelName).find({questionnaire: req.params.id}, cback)//user: req.user._id
     }
   }
 
