@@ -111,7 +111,8 @@ module.exports = (function () {
   //Public redirects
   app.get('/questionnaires/', function(req,res){res.redirect("/app/#/page/questionnaires")})
   app.get('/questionnaires/:id', function(req,res){
-    if(req.headers['User-Agent'].indexOf('LandscapeConnect') !== -1){
+    console.log(req.headers)
+    if(req.headers['user-agent'] && req.headers['user-agent'].indexOf('LandscapeConnect') !== -1){
       return routes.questionnaires.read(req, res)
       //return res.redirect("/api/questionnaires/" + req.params.id)
     }
