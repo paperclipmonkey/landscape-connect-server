@@ -42,11 +42,11 @@ module.exports = function (app) {
   }
 
   var qr = function(req, res, next) {
-    mongoose.model(modelName).findOne({serverId: req.params.id}, function (err, doc) {
-      if (err) return next(err)
-      var qr = buildQrImgPipe("http://3equals.co.uk/lc-json/" + req.params.serverId + ".json")
+    //mongoose.model(modelName).findOne({serverId: req.params.id}, function (err, doc) {
+      //if (err) return next(err)
+      var qr = buildQrImgPipe(process.env.SITE_URL + '/questionnaires/' + req.params.id + ".json")
       qr.pipe(res)
-    })
+    //})
   }
 
 
