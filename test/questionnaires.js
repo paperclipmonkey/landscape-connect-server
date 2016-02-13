@@ -69,15 +69,16 @@ describe('Questionnaires', function () {
     rAgent
       .get('/questionnaires/x')
       .set('User-Agent', 'LandscapeConnectV1')
-      .expect(302, done)
+      .expect(/(test)/)
+      .expect(200, done)
   })
 
   it("GET /questionnaires/x as Android client V2 should show JSON", function (done) {
     rAgent
       .get('/questionnaires/x')
-      .set('User-Agent', 'LandscapeConnectV1')
-      .expect(302)
-      .expect('Location', /(api)/)
+      .set('User-Agent', 'LandscapeConnectV2')
+      .expect(200)
+      .expect(/(test)/)
       .end(function(err, res){
         if (err) return done(err);
         done();
