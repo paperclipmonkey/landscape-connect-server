@@ -32,15 +32,17 @@
               $http
                 .post('/api/account/register', {email: vm.account.email, password: vm.account.password})
                 .then(function(response) {
-                  // assumes if ok, response is an object with some data, if not, a string with error
-                  // customize according to your api
-                  if ( !response.data.account ) {
-                    vm.authMsg = response.data;
-                  }else{
+                  console.log("Signup response data: ", response)
+                  //Check against status code
+                  //If 200 then redirect to dashboard.
+                  //If !200 then display message directly
+                  if (response.status === 200) {
                     $state.go('app.dashboard');
+                  }else{
+                    vm.authMsg = response.data;
                   }
                 }, function() {
-                  vm.authMsg = 'Server Request Error';
+                  vm.authMsg = 'Server Error';
                 });
             }
             else {
