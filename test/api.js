@@ -2,7 +2,7 @@ var app = require('../app')
 var request = require('supertest')
 var server
 var users = {
-  'super': {email: 'me@me.com', password: 'glastonbury'},
+  'super': {email: 'me@me.com', password: 'mememe'},
   'nonsuper': {email: 'example+nonsuper@sample.com', password: 'pwordme'}
 }
 
