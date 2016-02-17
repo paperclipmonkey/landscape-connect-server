@@ -177,41 +177,41 @@ describe('Back-end admin', function () {
       })
 
       /* - - - - Dashboard - - - - - */
-      it('GET /api/dash/rating/average should show average rating', function (done) {
-        rAgent
-          .get('/api/dash/rating/average')
-          .expect(200, done)
-      })
+      // it('GET /api/dash/rating/average should show average rating', function (done) {
+      //   rAgent
+      //     .get('/api/dash/rating/average')
+      //     .expect(200, done)
+      // })
 
-      it('GET /api/dash/rating/months should show months rating', function (done) {
-        rAgent
-          .get('/api/dash/rating/months')
-          .expect(200, done)
-      })
+      // it('GET /api/dash/rating/months should show months rating', function (done) {
+      //   rAgent
+      //     .get('/api/dash/rating/months')
+      //     .expect(200, done)
+      // })
 
-      it('GET /api/dash/responses/week should show total responses this week', function (done) {
-        rAgent
-          .get('/api/dash/responses/week')
-          .expect(200, done)
-      })
+      // it('GET /api/dash/responses/week should show total responses this week', function (done) {
+      //   rAgent
+      //     .get('/api/dash/responses/week')
+      //     .expect(200, done)
+      // })
 
-      it('GET /api/dash/responses/average should show total responses this month', function (done) {
-        rAgent
-          .get('/api/dash/responses/months')
-          .expect(200, done)
-      })
+      // it('GET /api/dash/responses/average should show total responses this month', function (done) {
+      //   rAgent
+      //     .get('/api/dash/responses/months')
+      //     .expect(200, done)
+      // })
 
-      it('GET /api/dash/responses/total should show total responses', function (done) {
-        rAgent
-          .get('/api/dash/responses/total')
-          .expect(200, done)
-      })
+      // it('GET /api/dash/responses/total should show total responses', function (done) {
+      //   rAgent
+      //     .get('/api/dash/responses/total')
+      //     .expect(200, done)
+      // })
 
-      it('GET /api/dash/responses/latest should show latest responses', function (done) {
-        rAgent
-          .get('/api/dash/responses/latest')
-          .expect(200, done)
-      })
+      // it('GET /api/dash/responses/latest should show latest responses', function (done) {
+      //   rAgent
+      //     .get('/api/dash/responses/latest')
+      //     .expect(200, done)
+      // })
 
       it('POST /api/account/logout should logout & delete cookie', function (done) {
         rAgent

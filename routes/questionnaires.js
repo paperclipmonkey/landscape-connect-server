@@ -67,11 +67,9 @@ module.exports = function (app) {
   }
 
   var remove = function (req, res, next) {
-    console.log("Removing")
     mongoose.model(modelName).findOneAndRemove({serverId: req.params.id}, function (err, doc) {
       if (err) return next(err)
       eventServer.emit(objName + ':delete', doc)
-      console.log("Removed")
       res.sendStatus(200)
     })
   }

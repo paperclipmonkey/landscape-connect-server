@@ -8,13 +8,14 @@ var users = {
 
 describe('Questionnaires', function () {
   var rAgent
+  var questionnaire
   before(function (done) {
     server = app.listen(process.env.PORT, function () {
       rAgent = request.agent(app)
-      // Delete all areas with name test - Unique test on Area names
       var mongoose = require('mongoose')
       var Questionnaire = mongoose.model('questionnaire')
-      Questionnaire.remove({'name': 'test'}, function () {
+      Questionnaire.findOne({'name': 'Test'}, function (err, obj) {
+        questionnaire = obj
         done()
       })
     })
@@ -60,25 +61,25 @@ describe('Questionnaires', function () {
 
   it("GET /questionnaires/x as normal client should redirect to questionnaire page", function (done) {
     rAgent
-      .get('/questionnaires/x')
+      .get('/questionnaires/' + questionnaire.serverId)
       .expect(302)
       .expect(/(app)/, done)
   })
 
   it("GET /questionnaires/x as Android client V1 should show JSON", function (done) {
     rAgent
-      .get('/questionnaires/x')
+      .get('/questionnaires/' + questionnaire.serverId)
       .set('User-Agent', 'LandscapeConnectV1')
-      .expect(/(test)/)
+      .expect(/(Test)/)
       .expect(200, done)
   })
 
   it("GET /questionnaires/x as Android client V2 should show JSON", function (done) {
     rAgent
-      .get('/questionnaires/x')
+      .get('/questionnaires/' + questionnaire.serverId)
       .set('User-Agent', 'LandscapeConnectV2')
       .expect(200)
-      .expect(/(test)/)
+      .expect(/(Test)/)
       .end(function(err, res){
         if (err) return done(err);
         done();
