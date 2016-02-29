@@ -12,7 +12,7 @@ module.exports = (function () {
 
   var userModel = mongoose.model('user')
 
-  passport.use(new LocalStrategy({usernameField: "email" },
+  passport.use(new LocalStrategy({usernameField: 'email' },
     function (email, password, done) {
       var shasum = crypto.createHash('sha1')
       // Need to find user object to grab salt
@@ -21,7 +21,7 @@ module.exports = (function () {
           return done(err, false) // done(err)
         }
         if (!user1) {
-          return done(null, false, "No email");
+          return done(null, false, 'No email')
         }
         shasum.update(user1.salt + '>><<' + password) // Salt + >><< + pw = salting
         var toQuery = {
@@ -29,8 +29,8 @@ module.exports = (function () {
           'password': shasum.digest('hex')
         }
         userModel.findOne(toQuery, function (err, user2) {
-          if(!user2){
-            return done(null, false);
+          if (!user2) {
+            return done(null, false)
           }
           if (err) {
             return done(err, false) // done(err)

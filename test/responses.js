@@ -4,7 +4,7 @@ var server
 
 describe('Responses', function () {
   var rAgent,
-      testQId
+    testQId
 
   before(function (done) {
     server = app.listen(process.env.PORT, function () {
@@ -13,8 +13,8 @@ describe('Responses', function () {
       var mongoose = require('mongoose')
       var Questionnaire = mongoose.model('questionnaire')
       Questionnaire.findOne({'name': 'Test'}, function (err, qaire) {
-        if(err) return done(err)
-        if(!qaire) return done(new Error('No questionnaire'))
+        if (err) return done(err)
+        if (!qaire) return done(new Error('No questionnaire'))
         testQId = qaire.serverId
         done()
       })
@@ -25,16 +25,16 @@ describe('Responses', function () {
     rAgent
       .post('/api/questionnaires/' + testQId + '/responses')
       .field('questionnaire', testQId)
-      .field('timestamp', new Date().getTime())//Millis since epoch
-      .field('lat', (Math.random()*360) - 180)
-      .field('lng', (Math.random()*180) - 90)
-      .field('locAcc', Math.floor(Math.random()* 100))// 0 - 100 Integer test
+      .field('timestamp', new Date().getTime()) // Millis since epoch
+      .field('lat', (Math.random() * 360) - 180)
+      .field('lng', (Math.random() * 180) - 90)
+      .field('locAcc', Math.floor(Math.random() * 100)) // 0 - 100 Integer test
       .field('data[key]', 'value')
       .field('data[foo]', 'bar')
       .field('data[biz]', 'baz')
       .attach('photo', __dirname + '/data/example.jpg')
       .expect(200)
-      .end(function(err, res){
+      .end(function (err, res) {
         if (err) return done(err)
         done()
       })
@@ -45,7 +45,7 @@ describe('Responses', function () {
       .get('/api/questionnaires/' + testQId + '/responses')
       .expect(200)
       .expect(/\bresult\b/, done())
-    })
+  })
 
   after(function () {
     server.close()

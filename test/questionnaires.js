@@ -23,7 +23,7 @@ describe('Questionnaires', function () {
 
   /* - - - - Questionnaires - - - - - */
 
-  it("GET /api/questionnaires as normal client should show questionnaires", function (done) {
+  it('GET /api/questionnaires as normal client should show questionnaires', function (done) {
     rAgent
       .get('/api/questionnaires/')
       .expect(200)
@@ -48,25 +48,25 @@ describe('Questionnaires', function () {
   //     .expect(400, done)
   // })
 
-  //- - - - - - - - - - - - - - 
-  //Page redirects for normal clients and Android client app
-  //- - - - - - - - - - - - - -
+  // - - - - - - - - - - - - - - 
+  // Page redirects for normal clients and Android client app
+  // - - - - - - - - - - - - - -
 
-  it("GET /questionnaires/ as normal client should redirect to questionnaires page", function (done) {
+  it('GET /questionnaires/ as normal client should redirect to questionnaires page', function (done) {
     rAgent
       .get('/questionnaires/')
       .expect(302)
       .expect(/(app)/, done)
   })
 
-  it("GET /questionnaires/x as normal client should redirect to questionnaire page", function (done) {
+  it('GET /questionnaires/x as normal client should redirect to questionnaire page', function (done) {
     rAgent
       .get('/questionnaires/' + questionnaire.serverId)
       .expect(302)
       .expect(/(app)/, done)
   })
 
-  it("GET /questionnaires/x as Android client V1 should show JSON", function (done) {
+  it('GET /questionnaires/x as Android client V1 should show JSON', function (done) {
     rAgent
       .get('/questionnaires/' + questionnaire.serverId)
       .set('User-Agent', 'LandscapeConnectV1')
@@ -74,16 +74,16 @@ describe('Questionnaires', function () {
       .expect(200, done)
   })
 
-  it("GET /questionnaires/x as Android client V2 should show JSON", function (done) {
+  it('GET /questionnaires/x as Android client V2 should show JSON', function (done) {
     rAgent
       .get('/questionnaires/' + questionnaire.serverId)
       .set('User-Agent', 'LandscapeConnectV2')
       .expect(200)
       .expect(/(Test)/)
-      .end(function(err, res){
-        if (err) return done(err);
-        done();
-      });
+      .end(function (err, res) {
+        if (err) return done(err)
+        done()
+      })
   })
 
   after(function () {

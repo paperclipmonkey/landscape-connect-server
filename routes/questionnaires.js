@@ -7,8 +7,8 @@ var eventServer = require('../eventemitter')
 var qrLib = require('qr-image')
 
 module.exports = function (app) {
-  var objName = "Questionnaire"
-  var modelName = "questionnaire"
+  var objName = 'Questionnaire'
+  var modelName = 'questionnaire'
 
   var create = function (req, res, next) {
     eventServer.emit(objName + ':creating', instance)
@@ -17,8 +17,8 @@ module.exports = function (app) {
     var Model = mongoose.model(modelName)
     var instance = new Model(toInsert)
 
-    //Questionnaire specific code
-    instance.owner = req.user._id
+    // Questionnaire specific code
+    instance.owner = req.user
     // End Specific code
 
     instance.save(function (err) {
@@ -36,27 +36,26 @@ module.exports = function (app) {
     })
   }
 
-  function buildQrImgPipe(str){
-    var qr_svg = qrLib.image(str, { type: 'png' });
-    return qr_svg//.pipe(require('fs').createWriteStream(str.split("/").push() + '.png'));
+  function buildQrImgPipe (str) {
+    var qr_svg = qrLib.image(str, { type: 'png' })
+    return qr_svg // .pipe(require('fs').createWriteStream(str.split("/").push() + '.png'))
   }
 
-  var qr = function(req, res, next) {
+  var qr = function (req, res, next) {
     mongoose.model(modelName).findOne({serverId: req.params.id}, function (err, doc) {
       if (err) return next(err)
       if (!doc) return next()
-      //QR code is to the generic URL. From there depending on the user-agent either the app or JSON is displayed
+      // QR code is to the generic URL. From there depending on the user-agent either the app or JSON is displayed
       var qr = buildQrImgPipe(process.env.SITE_URL + '/questionnaires/' + doc.serverId)
       qr.pipe(res)
     })
   }
 
-
   var list = function (req, res, next) {
-    eventServer.emit(objName + ':list',{})
+    eventServer.emit(objName + ':list', {})
     var cback = function (err, results) {
       if (err) return next(err)
-      res.json({result:results})
+      res.json({result: results})
     }
 
     // if (req.user && req.user.isSuper) {
@@ -78,11 +77,11 @@ module.exports = function (app) {
   }
 
   var update = function (req, res, next) {
-      mongoose.model(modelName).findOneAndUpdate({serverId: req.params.id}, req.body, {'new': true}, function (err, doc) {
-          if (err) return next(err)
-          eventServer.emit(objName + ':update', doc)
-          res.json(doc)
-      })
+    mongoose.model(modelName).findOneAndUpdate({serverId: req.params.id}, req.body, {'new': true}, function (err, doc) {
+      if (err) return next(err)
+      eventServer.emit(objName + ':update', doc)
+      res.json(doc)
+    })
   }
 
   var read = function (req, res, next) {

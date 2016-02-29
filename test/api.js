@@ -31,7 +31,7 @@ describe('Back-end admin', function () {
   it('POST /api/account/login with wrong password should not login', function (done) {
     rAgent
       .post('/api/account/login')
-      .send({email: users.super.email, password: users.super.password + "1"})
+      .send({email: users.super.email, password: users.super.password + '1'})
       .expect(401, done)
   })
 
@@ -53,7 +53,7 @@ describe('Back-end admin', function () {
       .get('/api/account/menu')
       .expect(200)
       .expect(/\bMain Navigation\b/, done)
-  })  
+  })
 
   /* - - - - Users - - - - - */
 
@@ -225,9 +225,9 @@ describe('Back-end admin', function () {
   // Super Admin
   runAs(users.super)
   // Normal Admin
-  
-  //TODO - Add non-super used
-  //runAs(users.nonsuper)
+
+  // TODO - Add non-super used
+  // runAs(users.nonsuper)
 
   /* - - - - Non-Super admin - - - - - */
   it('POST /api/account/login as non-super should login & set cookie', function (done) {

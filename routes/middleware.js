@@ -125,8 +125,8 @@ var check_nonce = function (req, res, next) {
   //     }
   //   })
   // } else {
-    return next()
-  //}
+  return next()
+// }
 }
 
 module.exports = {

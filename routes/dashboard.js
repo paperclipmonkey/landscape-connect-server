@@ -4,7 +4,6 @@ var common = require('../common')
 require('date-utils')
 
 module.exports = function (app) {
-
   var rating_average = function (req, res, next) {
     var cback = function (err, results) {
       if (err) {

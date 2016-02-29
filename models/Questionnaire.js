@@ -15,7 +15,7 @@ require('datejs')
   "sections": [
 */
 
-var schemaName = "questionnaire"
+var schemaName = 'questionnaire'
 
 module.exports = (function (app) {
   var NSchema = new Schema({
@@ -26,45 +26,45 @@ module.exports = (function (app) {
     publicData: {type: Boolean},
     introTitle: {type: String},
     introDescription: {type: String},
-    introImage: {type: String},//B64 image
+    introImage: {type: String}, // B64 image
     website: {type: String},
     sections: {type: Array},
-    owner: {type: String}
+    owner: [{ type: Schema.Types.ObjectId, ref: 'user' }]
   })
 
   NSchema.pre('save', checkHasserverId)
 
-  function checkHasserverId(next){
-    console.log("Check has code")
-    if (!this.serverId){
+  function checkHasserverId (next) {
+    console.log('Check has code')
+    if (!this.serverId) {
       uniqueOrAgain(this, next)
     } else {
       next()
     }
   }
 
-  function uniqueOrAgain(cx, next){
-    console.log("Unique or again")
-    cx.serverId = makeid(5);
-    mongoose.models[schemaName].findOne({serverId : cx.serverId},function(err, obj) {
-      if(err) {
-          next(err)
-      } else if(obj) {
-          uniqueOrAgain(cx, next)
+  function uniqueOrAgain (cx, next) {
+    console.log('Unique or again')
+    cx.serverId = makeid(5)
+    mongoose.models[schemaName].findOne({serverId: cx.serverId}, function (err, obj) {
+      if (err) {
+        next(err)
+      } else if (obj) {
+        uniqueOrAgain(cx, next)
       } else {
-          next();
+        next()
       }
-    });
+    })
   }
 
-  function makeid(length){
-    var text = "";
-    var possible = "ABCDEF0123456789";
+  function makeid (length) {
+    var text = ''
+    var possible = 'ABCDEF0123456789'
 
-    for( var i=0; i < length; i++ )
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-    console.log("Code", text)
-    return text;
+    for ( var i = 0; i < length; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length))
+    console.log('Code', text)
+    return text
   }
 
   return mongoose.model(schemaName, NSchema)

@@ -6,8 +6,8 @@ var s3Client = require('../s3-client')
 var eventServer = require('../eventemitter')
 
 module.exports = function (app) {
-  var objName = "Response"
-  var modelName = "response"
+  var objName = 'Response'
+  var modelName = 'response'
 
   var create = function (req, res, next) {
     eventServer.emit(objName + ':creating', instance)
@@ -31,17 +31,17 @@ module.exports = function (app) {
     })
   }
 
-  var list = function (req, res, next) { 
-    eventServer.emit(objName + ':list',{})
+  var list = function (req, res, next) {
+    eventServer.emit(objName + ':list', {})
     var cback = function (err, results) {
       if (err) return next(err)
-      res.json({"result": results})
+      res.json({'result': results})
     }
     if (req.user && req.user.isSuper) {
       mongoose.model(modelName).find({questionnaire: req.params.id}, cback)
     } else {
-      //TODO - check if data is public for this questionnaire
-      mongoose.model(modelName).find({questionnaire: req.params.id}, cback)//user: req.user._id
+      // TODO - check if data is public for this questionnaire
+      mongoose.model(modelName).find({questionnaire: req.params.id}, cback) // user: req.user._id
     }
   }
 
@@ -54,11 +54,11 @@ module.exports = function (app) {
   }
 
   var update = function (req, res, next) {
-      mongoose.model(modelName).findOneAndUpdate({_id: req.params.id}, req.body, {'new': true}, function (err, doc) {
-          if (err) return next(err)
-          res.json(results.view)
-          eventServer.emit(objName + ':update', doc)
-      })
+    mongoose.model(modelName).findOneAndUpdate({_id: req.params.id}, req.body, {'new': true}, function (err, doc) {
+      if (err) return next(err)
+      res.json(results.view)
+      eventServer.emit(objName + ':update', doc)
+    })
   }
 
   var read = function (req, res, next) {

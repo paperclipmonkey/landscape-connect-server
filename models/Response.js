@@ -17,9 +17,9 @@ module.exports = (function (app) {
     timestamp: {type: Number},
     lat: {type: Number},
     lng: {type: Number},
-    locAcc: {type: Number},//m
+    locAcc: {type: Number}, // m
     questionnaire: {type: String},
-    photo: {type: String},//URL
+    photo: {type: String}, // URL
     data: {type: Object}
   })
 

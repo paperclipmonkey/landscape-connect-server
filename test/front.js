@@ -13,7 +13,7 @@ describe('Front-end', function () {
 
   /* - - - - Front-end - - - - - */
 
-  it("GET / should show front-end website", function (done) {
+  it('GET / should show front-end website', function (done) {
     rAgent
       .get('/')
       .expect(200)
