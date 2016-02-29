@@ -18,6 +18,8 @@ h3
             a(href="#/app/questionnaires/{{model.serverId}}") {{model.name}}
           td(data-title="'Description'") {{model.description}}
           td(data-title="'serverId'") {{model.serverId}}
-          td(data-title="'Owner'") {{model.owner}}
+          td(data-title="'Owner'")
+            a(href="model.owner._id") {{model.owner.email}}
           td(data-title="'Url'")
-            span(ng-class="{ 'plus': model.money >= 0,'minus': model.money < 0 }") {{model.website}}
+            a(href="model.website")
+              pre {{model.website}}

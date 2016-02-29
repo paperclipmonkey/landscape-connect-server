@@ -59,11 +59,14 @@ module.exports = function (app) {
       res.json({result:results})
     }
 
-    if (req.user && req.user.isSuper) {
-      mongoose.model(modelName).find({}, cback)
-    } else {
-      mongoose.model(modelName).find({}, cback)//user: req.user._id
-    }
+    // if (req.user && req.user.isSuper) {
+    mongoose.model(modelName).find({}).populate('owner', 'email _id').exec(function (err, res) {
+      // Link questionnaire with user
+      cback(err, res)
+    })
+  // } else {
+  //   mongoose.model(modelName).find({}).select('-owner').exec(cback)//user: req.user._id // {'owner': req.user._id}
+  // }
   }
 
   var remove = function (req, res, next) {

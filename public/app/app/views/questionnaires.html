@@ -16,9 +16,9 @@
                </td>
                <td data-title="'Description'">{{model.description}}</td>
                <td data-title="'serverId'">{{model.serverId}}</td>
-               <td data-title="'Owner'">{{model.owner}}</td>
-               <td data-title="'Url'">
-                  <span ng-class="{ 'plus': model.money &gt;= 0,'minus': model.money &lt; 0 }">{{model.website}}</span>
+               <td data-title="'Owner'"><a href="model.owner._id">{{model.owner.email}}</a>
+               </td>
+               <td data-title="'Url'"><a href="model.website"><pre>{{model.website}}</pre></a>
                </td>
             </tr>
          </tbody>
