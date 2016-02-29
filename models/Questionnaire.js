@@ -29,7 +29,7 @@ module.exports = (function (app) {
     introImage: {type: String}, // B64 image
     website: {type: String},
     sections: {type: Array},
-    owner: [{ type: Schema.Types.ObjectId, ref: 'user' }]
+    owner: { type: Schema.Types.ObjectId, ref: 'user' }
   })
 
   NSchema.pre('save', checkHasserverId)

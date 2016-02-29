@@ -16,9 +16,9 @@
                </td>
                <td data-title="'Description'">{{model.description}}</td>
                <td data-title="'serverId'">{{model.serverId}}</td>
-               <td data-title="'Owner'"><a href="model.owner._id">{{model.owner.email}}</a>
+               <td data-title="'Owner'"><a href="#/app/user/{{model.owner._id}}">{{model.owner.email}}</a>
                </td>
-               <td data-title="'Url'"><a href="model.website"><pre>{{model.website}}</pre></a>
+               <td data-title="'Project Url'"><a href="{{model.website}}">{{model.website}}</a>
                </td>
             </tr>
          </tbody>

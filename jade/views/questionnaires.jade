@@ -19,7 +19,6 @@ h3
           td(data-title="'Description'") {{model.description}}
           td(data-title="'serverId'") {{model.serverId}}
           td(data-title="'Owner'")
-            a(href="model.owner._id") {{model.owner.email}}
-          td(data-title="'Url'")
-            a(href="model.website")
-              pre {{model.website}}
+            a(href="#/app/user/{{model.owner._id}}") {{model.owner.email}}
+          td(data-title="'Project Url'")
+            a(href="{{model.website}}") {{model.website}}
