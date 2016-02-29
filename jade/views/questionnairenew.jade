@@ -26,9 +26,10 @@ h3 New Questionnaire
         // START Wizard Step inputs 
         div.panel.panel-default(ng-show="wizard.active(1)")
           .panel-body
-            p The basic details so people can find your Questionnaire
             fieldset
               legend Start
+              p The basic details so people can find your Questionnaire
+
               // START row 
               p Title
               input.mb-lg.form-control.input-lg(type="text", ng-model='questionnaire.name', placeholder='Title')
@@ -105,12 +106,13 @@ h3 New Questionnaire
             .col-lg-3.properties(tour-step='', order='4', title='Properties', content='Edit section and Question properties', placement='left')
               .panel.panel-default
                 .panel-body
-                  h2 Properties
+                  h2(ng-if='selectedQuestion != null') Question
+                  h2(ng-if='selectedQuestion == null') Section
                   .apps-container.screen
                     //- Question details
                     div(ng-if='selectedQuestion != null')
                       .form-group
-                        label(for='title') Question
+                        label(for='title') Title
                         input.form-control(type='text', ng-model='selectedQuestion.title', placeholder='Title')
                       .form-group.screen.draggable-element-container.list-group(ui-sortable='questionOptions' ng-show='selectedQuestion.choices', ng-if="selectedQuestion.type === 'multi' || selectedQuestion.type === 'radio'")
                         label(for='title') choices
@@ -128,7 +130,7 @@ h3 New Questionnaire
                     //- Section details
                     div(ng-if='selectedQuestion == null && selectedSection != null')
                       .form-group
-                        label(for='title') Section title
+                        label(for='title') Title
                         input.form-control(type='text', ng-model='selectedSection.title', placeholder='Title')
                     //- Questionnaire details
                     div(ng-if='selectedQuestion == null && selectedSection == null')

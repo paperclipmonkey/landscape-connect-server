@@ -29,9 +29,9 @@
             <!-- START Wizard Step inputs -->
             <div ng-show="wizard.active(1)" class="panel panel-default">
                <div class="panel-body">
-                  <p>The basic details so people can find your Questionnaire</p>
                   <fieldset>
                      <legend>Start</legend>
+                     <p>The basic details so people can find your Questionnaire</p>
                      <!-- START row -->
                      <p>Title</p>
                      <input type="text" ng-model="questionnaire.name" placeholder="Title" class="mb-lg form-control input-lg" />
@@ -113,11 +113,12 @@
                   <div tour-step="" order="4" title="Properties" content="Edit section and Question properties" placement="left" class="col-lg-3 properties">
                      <div class="panel panel-default">
                         <div class="panel-body">
-                           <h2>Properties</h2>
+                           <h2 ng-if="selectedQuestion != null">Question</h2>
+                           <h2 ng-if="selectedQuestion == null">Section</h2>
                            <div class="apps-container screen">
                               <div ng-if="selectedQuestion != null">
                                  <div class="form-group">
-                                    <label for="title">Question</label>
+                                    <label for="title">Title</label>
                                     <input type="text" ng-model="selectedQuestion.title" placeholder="Title" class="form-control" />
                                  </div>
                                  <div ui-sortable="questionOptions" ng-show="selectedQuestion.choices" ng-if="selectedQuestion.type === 'multi' || selectedQuestion.type === 'radio'" class="form-group screen draggable-element-container list-group">
@@ -140,7 +141,7 @@
                               </div>
                               <div ng-if="selectedQuestion == null &amp;&amp; selectedSection != null">
                                  <div class="form-group">
-                                    <label for="title">Section title</label>
+                                    <label for="title">Title</label>
                                     <input type="text" ng-model="selectedSection.title" placeholder="Title" class="form-control" />
                                  </div>
                               </div>
