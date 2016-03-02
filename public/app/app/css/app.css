@@ -11318,6 +11318,9 @@ flatdoc .button .badge {
 .questionnairenew .moveicon {
   cursor: move;
 }
+.questionnaire .max100 {
+  max-width: 100px;
+}
 .public {
   margin-top: 20px;
   /** Detail View **/

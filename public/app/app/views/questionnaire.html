@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row questionnaire">
    <!-- Blog Content-->
    <div class="col-lg-9">
       <div class="panel panel-default">
@@ -7,20 +7,15 @@
                <h2 class="text-lg">{{questionnaire.name}}</h2>
                <p class="clearfix">
                   <span class="pull-left">
-                     <small class="mr-sm">By <a href="">Erica Castro</a>
+                     <small class="mr-sm">By <a href="">{{questionnaire.owner.email}}</a>
                      </small>
-                     <small class="mr-sm">May 03, 2015</small>
-                     <small>
-                        <strong>56</strong>
-                        <span>Comments</span>
-                     </small>
+                     <small class="mr-sm">{{questionnaire.created | date:'medium'}}</small>
                   </span>
                </p>
             </div>
          </div>
          <div class="panel-body text-md">
             <p>{{questionnaire.description}}</p>
-            <p>Proin est sapien, convallis non hendrerit nec, laoreet ut ipsum. Praesent blandit venenatis mauris ac cursus. Nulla commodo interdum magna consectetur lacinia. Maecenas vitae adipiscing mauris. Nam sodales sollicitudin adipiscing.</p>
             <br/>
             <div class="row">
                <div class="col-xs-3">
@@ -46,6 +41,7 @@
             </div>
             <br/>
             <hr/>
+            <small class="mr-sm">Share</small>
             <div role="group" aria-label="..." class="btn-group">
                <button type="button" class="btn btn-default">
                   <em class="fa fa-facebook text-muted"></em>
@@ -55,12 +51,6 @@
                </button>
                <button type="button" class="btn btn-default">
                   <em class="fa fa-google-plus text-muted"></em>
-               </button>
-               <button type="button" class="btn btn-default">
-                  <em class="fa fa-tumblr text-muted"></em>
-               </button>
-               <button type="button" class="btn btn-default">
-                  <em class="fa fa-pinterest text-muted"></em>
                </button>
                <button type="button" class="btn btn-default">
                   <em class="fa fa-share-alt text-muted"></em>
@@ -74,12 +64,14 @@
             <table ng-table="tableResponses" class="table table-striped table-bordered table-hover">
                <tbody>
                   <tr ng-repeat="model in $data">
-                     <td data-title="'Time'"><a href="#/app/questionnaires/{{model.serverId}}">{{model.timestamp}}</a>
+                     <td data-title="'Time'"><a href="#/app/questionnaires/{{model.serverId}}">{{model.timestamp | date:'medium'}}</a>
                      </td>
                      <td data-title="'Lat'">{{model.lat}}</td>
                      <td data-title="'Lng'">{{model.lng}}</td>
                      <td data-title="'Photo'">
-                        <img data-src="{{model.photo}}" />
+                        <div ng-repeat="mediaItem in model.media">
+                           <img src="/api/media/{{mediaItem}}" class="max100" />
+                        </div>
                      </td>
                   </tr>
                </tbody>

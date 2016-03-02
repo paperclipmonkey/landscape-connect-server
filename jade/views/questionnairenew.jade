@@ -28,7 +28,7 @@ h3 New Questionnaire
           .panel-body
             fieldset
               legend Start
-              p The basic details so people can find your Questionnaire
+              p The basic details to uniquely identify your Questionnaire
 
               // START row 
               p Title
@@ -196,11 +196,12 @@ h3 New Questionnaire
                         input(type='checkbox', ng-model="questionnaire.publicData")
                         span.fa.fa-check
                         |  Publicly publish Data
-                  .form-group.clearfix
-                    a(ng-click="submitQuestionnaire()") Publish
               ul.pager
                 li.previous
                   a(ng-click="wizard.go(3)")
                     span &larr; Previous
+                li.next
+                  a(ng-click="submitQuestionnaire()")
+                    span Publish 
             // END Wizard Step inputs 
 // END panel 

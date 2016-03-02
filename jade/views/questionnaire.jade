@@ -1,4 +1,4 @@
-.row
+.row.questionnaire
   // Blog Content
   .col-lg-9
     .panel.panel-default
@@ -8,15 +8,13 @@
           p.clearfix
             span.pull-left
               small.mr-sm By 
-                a(href="") Erica Castro
-              small.mr-sm May 03, 2015
-              small 
-                strong 56
-                span Comments
+                a(href="") {{questionnaire.owner.email}}
+              small.mr-sm {{questionnaire.created | date:'medium'}}
+              //- small 
+              //-   strong {{$data.length}}
+              //-   span responses
       .panel-body.text-md
         p {{questionnaire.description}}
-
-        p Proin est sapien, convallis non hendrerit nec, laoreet ut ipsum. Praesent blandit venenatis mauris ac cursus. Nulla commodo interdum magna consectetur lacinia. Maecenas vitae adipiscing mauris. Nam sodales sollicitudin adipiscing. 
         br
         .row
           .col-xs-3
@@ -29,6 +27,7 @@
             a(href=""): img.img-responsive(src="app/img/bg8.jpg")
         br
         hr
+        small.mr-sm Share
         .btn-group(role='group', aria-label='...')
           button.btn.btn-default(type='button')
             em.fa.fa-facebook.text-muted
@@ -36,10 +35,10 @@
             em.fa.fa-twitter.text-muted
           button.btn.btn-default(type='button')
             em.fa.fa-google-plus.text-muted
-          button.btn.btn-default(type='button')
-            em.fa.fa-tumblr.text-muted
-          button.btn.btn-default(type='button')
-            em.fa.fa-pinterest.text-muted
+          //- button.btn.btn-default(type='button')
+          //-   em.fa.fa-tumblr.text-muted
+          //- button.btn.btn-default(type='button')
+          //-   em.fa.fa-pinterest.text-muted
           button.btn.btn-default(type='button')
             em.fa.fa-share-alt.text-muted
     .panel.panel-default
@@ -47,13 +46,14 @@
       .panel-body
         table.table.table-striped.table-bordered.table-hover(ng-table='tableResponses')
           tbody
-            tr(ng-repeat='model in $data') 
+            tr(ng-repeat='model in $data')
               td(data-title="'Time'")
-                a(href="#/app/questionnaires/{{model.serverId}}") {{model.timestamp}}
+                a(href="#/app/questionnaires/{{model.serverId}}") {{model.timestamp | date:'medium'}}
               td(data-title="'Lat'") {{model.lat}}
               td(data-title="'Lng'") {{model.lng}}
               td(data-title="'Photo'")
-                img(data-src="{{model.photo}}")
+                div(ng-repeat="mediaItem in model.media")
+                  img(src="/api/media/{{mediaItem}}" class="max100")
       // Blog Sidebar
   .col-lg-3
     // Install

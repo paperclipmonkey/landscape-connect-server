@@ -8208,7 +8208,7 @@
 
           vm.tableParams3 = new ngTableParams({
               page: 1,            // show first page
-              count: 10          // count per page
+              count: 100          // count per page
           }, {
               total: data.length, // length of data
               getData: function ($defer, params) {
@@ -9306,7 +9306,7 @@
 
             vm.tableResponses = new ngTableParams({
                 page: 1,            // show first page
-                count: 10,           // count per page
+                count: 100,           // count per page
                 filter: {
                     name: '',
                     quickCode: ''
@@ -9314,7 +9314,7 @@
                 }
                 }, {
                   total: 0,           // length of data
-                  counts: [],         // hide page counts control
+                  //counts: [],         // hide page counts control
                   getData: function($defer, params) {
                       // Service using cache to avoid mutiple requests
                       questionnairesDataService.getData( $defer, params, Api);
