@@ -8208,7 +8208,7 @@
 
           vm.tableParams3 = new ngTableParams({
               page: 1,            // show first page
-              count: 100          // count per page
+              count: 10          // count per page
           }, {
               total: data.length, // length of data
               getData: function ($defer, params) {
@@ -9294,6 +9294,18 @@
                 console.log(data, status)
                 $state.go('app.questionnaires')
             })
+        }
+
+        $scope.isImage = function(filename){
+          return ['jpg', 'jpeg', 'png', 'tiff'].indexOf(filename.split('.').pop()) != -1
+        }
+
+        $scope.isAudio = function(filename){
+          return ['aac', 'mp3'].indexOf(filename.split('.').pop()) != -1
+        }
+
+        $scope.getUrl = function(chunk){
+          return '/api/media/' + chunk
         }
 
         var vm = $scope;

@@ -53,7 +53,9 @@
               td(data-title="'Lng'") {{model.lng}}
               td(data-title="'Photo'")
                 div(ng-repeat="mediaItem in model.media")
-                  img(src="/api/media/{{mediaItem}}" class="max100")
+                  img(ng-src="/api/media/{{mediaItem}}" class="max100" ng-if="isImage(mediaItem)")
+                  audio(ng-if="isAudio(mediaItem)" controls)
+                    source(src="{{getUrl(mediaItem)}}")
       // Blog Sidebar
   .col-lg-3
     // Install

@@ -70,7 +70,10 @@
                      <td data-title="'Lng'">{{model.lng}}</td>
                      <td data-title="'Photo'">
                         <div ng-repeat="mediaItem in model.media">
-                           <img src="/api/media/{{mediaItem}}" class="max100" />
+                           <img ng-src="/api/media/{{mediaItem}}" ng-if="isImage(mediaItem)" class="max100" />
+                           <audio ng-if="isAudio(mediaItem)" controls="controls">
+                              <source src="{{getUrl(mediaItem)}}" />
+                           </audio>
                         </div>
                      </td>
                   </tr>
