@@ -12,6 +12,7 @@ require('datejs')
   "introTitle": "Add new landscape",
   "introDescription": "Welcome to the Natural England questionnaire. \n Let us walk you through the steps of sharing your landscape with us.",
   "website": "http://www.google.co.uk/",
+  "created: "8765432345678",
   "sections": [
 */
 
@@ -29,7 +30,8 @@ module.exports = (function (app) {
     introImage: {type: String}, // B64 image
     website: {type: String},
     sections: {type: Array},
-    owner: { type: Schema.Types.ObjectId, ref: 'user' }
+    owner: { type: Schema.Types.ObjectId, ref: 'user' },
+    created: {type: Date, default: Date.now}
   })
 
   NSchema.pre('save', checkHasserverId)

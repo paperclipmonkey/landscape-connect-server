@@ -156,11 +156,16 @@ module.exports = (function () {
   app.get('/api/questionnaires/:id/qr', routes.questionnaires.qr)
   app.delete('/api/questionnaires/:id', middleware.ensureAuthenticated, routes.questionnaires.remove)
   app.post('/api/questionnaires/:id', middleware.ensureAuthenticated, routes.questionnaires.update)
-  app.post('/api/questionnaires/', middleware.check_nonce, multipart, middleware.saveUploadedFile, routes.questionnaires.create)
+  app.post('/api/questionnaires/', routes.questionnaires.create)
+
+  // Response media
+  app.get('/api/media/:mid', function(req, res, next){
+    res.redirect(process.env.S3_URL + '/uploads/' + req.params.mid)
+  })
 
   // Responses
   app.get('/api/questionnaires/:id/responses', routes.responses.list)
-  app.post('/api/questionnaires/:id/responses', multipart, routes.responses.create)
+  app.post('/api/questionnaires/:id/responses', multipart, middleware.saveUploaded, routes.responses.create)
 
   // Users
   app.get('/api/users', middleware.ensureAuthenticated, routes.users.list)

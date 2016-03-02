@@ -8,7 +8,7 @@ require('datejs')
   lng // - Number
   locAcc // - In metres
   questionnaireQuickCode // - Id of questionnaire
-  photo // - URL for S3
+  media // - URL for S3
   data //JSON value for the data returned
 */
 
@@ -19,7 +19,7 @@ module.exports = (function (app) {
     lng: {type: Number},
     locAcc: {type: Number}, // m
     questionnaire: {type: String},
-    photo: {type: String}, // URL
+    media: [String], // URL
     data: {type: Object}
   })
 

@@ -16,6 +16,10 @@ module.exports = function (app) {
     var Model = mongoose.model(modelName)
     var instance = new Model(toInsert)
 
+    if(req.uploadedFileNames){
+      instance.media = req.uploadedFileNames
+    }
+
     instance.save(function (err) {
       if (err) {
         eventServer.emit(objName + ':error', err)

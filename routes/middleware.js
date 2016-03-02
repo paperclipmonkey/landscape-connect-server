@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
 var common = require('../common')
 var path = require('path')
+var async = require('async')
 
 // Sanitise inputs for non admins - This stops them from upgrading their own settings
 function sanitiseInput (req) {
@@ -33,24 +34,29 @@ function randomUUID () {
   return s.join('')
 }
 
-function saveUploadedFile (req, res, next) {
-  var filename = randomUUID() + '.jpg'
+//Save all files uploaded to server
+//Use media as variable name in 
+function saveUploaded (req, res, next) {
   var folder = 'uploads/'
-  var acceptedExtensions = ['.jpg', '.jpeg']
-
-  // Uploading in B64 as string
-  if (req.body && req.body.photo) {
-    var base64Data = req.body.photo
-    req.uploadedFileName = filename
-    common.saveB64ToS3(folder + filename, base64Data, next)
-  } else if (req.files && req.files.image && req.files.image.name) {
-    // Check file extension is kosher
-    if (acceptedExtensions.indexOf(path.extname(req.files.image.name)) === -1) {
-      console.log('Uploading with wrong extension')
-      return next(new Error('Wrong file extension'))
-    }
-    req.uploadedFileName = filename
-    common.saveFileToS3(folder + filename, req.files.image.path, next)
+  var acceptedExtensions = ['.jpg', '.jpeg', '.mp3', '.aac', '.png', '.tiff']
+  
+  //Loop over files in files
+  if (req.files && req.files) {
+    req.uploadedFileNames = []
+    async.forEachOf(req.files, function(item, key, callback){
+      var originalExt = path.extname(item.name).toLowerCase()
+      // Check file extension is kosher
+      if (acceptedExtensions.indexOf(originalExt) === -1) {
+        console.log('Uploading with wrong extension:' + originalExt)
+        return callback(new Error("Wrong extension"))
+      }
+      var newFilename = randomUUID() + originalExt
+      req.uploadedFileNames.push(newFilename)
+      common.saveFileToS3(folder + newFilename, item.path, callback)
+    }, function(err){
+      if(err) console.log("Error uploading", err)
+      return next()
+    })
   } else {
     return next()
   }
@@ -130,7 +136,7 @@ var check_nonce = function (req, res, next) {
 }
 
 module.exports = {
-  saveUploadedFile: saveUploadedFile,
+  saveUploaded: saveUploaded,
   ensureIsSuper: ensureIsSuper,
   ensureAuthenticated: ensureAuthenticated,
   check_nonce: check_nonce
