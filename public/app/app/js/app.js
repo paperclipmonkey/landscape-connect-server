@@ -9308,6 +9308,10 @@
           return '/api/media/' + chunk
         }
 
+        $scope.getPublicUrl = function(chunk){
+          return '/app/#/page/questionnaires/' + chunk
+        }
+
         var vm = $scope;
         vm.title = 'Controller';
 

@@ -90,6 +90,8 @@
           li Public data: {{questionnaire.publicData}}
           li Website: 
             a(href="{{questionnaire.website}}") {{questionnaire.website}}
+          li View public listing:
+            a(href="{{getPublicUrl(questionnaire.serverId)}}") View website
     // Ads
     .panel.panel-default
       .panel-heading Intro
