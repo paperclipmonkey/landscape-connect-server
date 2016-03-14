@@ -31,7 +31,8 @@ module.exports = (function (app) {
     website: {type: String},
     sections: {type: Array},
     owner: { type: Schema.Types.ObjectId, ref: 'user' },
-    created: {type: Date, default: Date.now}
+    created: {type: Date, default: Date.now},
+    uploadUrl: {type: String}
   })
 
   NSchema.pre('save', checkHasserverId)
@@ -54,6 +55,8 @@ module.exports = (function (app) {
       } else if (obj) {
         uniqueOrAgain(cx, next)
       } else {
+        //Create uploadUrl now we have a Unique ID
+        cx.uploadUrl = process.env.SITE_URL + '/questionnaires/' + cx.serverId + '/responses/'
         next()
       }
     })
