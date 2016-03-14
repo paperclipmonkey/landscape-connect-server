@@ -56,7 +56,7 @@ module.exports = (function (app) {
         uniqueOrAgain(cx, next)
       } else {
         //Create uploadUrl now we have a Unique ID
-        cx.uploadUrl = process.env.SITE_URL + '/questionnaires/' + cx.serverId + '/responses/'
+        cx.uploadUrl = process.env.SITE_URL + '/api/questionnaires/' + cx.serverId + '/responses/'
         next()
       }
     })
