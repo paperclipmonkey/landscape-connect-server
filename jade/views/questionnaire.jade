@@ -16,31 +16,34 @@
       .panel-body.text-md
         p {{questionnaire.description}}
         br
-        .row
-          .col-xs-3
-            a(href=""): img.img-responsive(src="app/img/bg4.jpg")
-          .col-xs-3
-            a(href=""): img.img-responsive(src="app/img/bg5.jpg")
-          .col-xs-3
-            a(href=""): img.img-responsive(src="app/img/bg7.jpg")
-          .col-xs-3
-            a(href=""): img.img-responsive(src="app/img/bg8.jpg")
-        br
-        hr
-        small.mr-sm Share
-        .btn-group(role='group', aria-label='...')
-          button.btn.btn-default(type='button')
-            em.fa.fa-facebook.text-muted
-          button.btn.btn-default(type='button')
-            em.fa.fa-twitter.text-muted
-          button.btn.btn-default(type='button')
-            em.fa.fa-google-plus.text-muted
-          //- button.btn.btn-default(type='button')
-          //-   em.fa.fa-tumblr.text-muted
-          //- button.btn.btn-default(type='button')
-          //-   em.fa.fa-pinterest.text-muted
-          button.btn.btn-default(type='button')
-            em.fa.fa-share-alt.text-muted
+        //- Display latest photos
+        //- hr
+        //- .h3 Latest photos
+        //- .row
+        //-   .col-xs-3
+        //-     a(href=""): img.img-responsive(src="app/img/bg4.jpg")
+        //-   .col-xs-3
+        //-     a(href=""): img.img-responsive(src="app/img/bg5.jpg")
+        //-   .col-xs-3
+        //-     a(href=""): img.img-responsive(src="app/img/bg7.jpg")
+        //-   .col-xs-3
+        //-     a(href=""): img.img-responsive(src="app/img/bg8.jpg")
+        //- br
+        //- hr
+        //- small.mr-sm Share
+        //- .btn-group(role='group', aria-label='...')
+        //-   button.btn.btn-default(type='button')
+        //-     em.fa.fa-facebook.text-muted
+        //-   button.btn.btn-default(type='button')
+        //-     em.fa.fa-twitter.text-muted
+        //-   button.btn.btn-default(type='button')
+        //-     em.fa.fa-google-plus.text-muted
+        //-   //- button.btn.btn-default(type='button')
+        //-   //-   em.fa.fa-tumblr.text-muted
+        //-   //- button.btn.btn-default(type='button')
+        //-   //-   em.fa.fa-pinterest.text-muted
+        //-   button.btn.btn-default(type='button')
+        //-     em.fa.fa-share-alt.text-muted
     .panel.panel-default
       .panel-heading Responses
       .panel-body
@@ -51,7 +54,7 @@
                 a(href="#/app/questionnaires/{{model.serverId}}") {{model.timestamp | date:'medium'}}
               td(data-title="'Lat'") {{model.lat}}
               td(data-title="'Lng'") {{model.lng}}
-              td(data-title="'Photo'")
+              td(data-title="'Media'")
                 div(ng-repeat="mediaItem in model.media")
                   img(ng-src="/api/media/{{mediaItem}}" class="max100" ng-if="isImage(mediaItem)")
                   audio(ng-if="isAudio(mediaItem)" controls)
