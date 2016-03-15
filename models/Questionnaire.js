@@ -25,6 +25,9 @@ module.exports = (function (app) {
     description: {type: String},
     publicQuestionnaire: {type: Boolean},
     publicData: {type: Boolean},
+    getLocation: {type: Boolean, default: true},
+    getLocationAccuracy: {type: Number, default: 50},//Metres
+    getInitialPhoto: {type: Boolean, default: true},
     introTitle: {type: String},
     introDescription: {type: String},
     introImage: {type: String}, // B64 image
