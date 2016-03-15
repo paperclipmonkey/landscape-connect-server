@@ -20,22 +20,22 @@ nav.navbar.topnavbar(role='navigation')
             em.icon-user
         // END User avatar toggle
         // START lock screen
-        li
-          a(ui-sref="page.lock", title="Lock screen")
-            em.icon-lock
+        //- li
+        //-   a(ui-sref="page.lock", title="Lock screen")
+        //-     em.icon-lock
         // END lock screen
       // END Left navbar
 
       // START Right Navbar
       ul.nav.navbar-nav.navbar-right
         // Search icon
-        li
-          a(href='', search-open)
-            em.icon-magnifier
+        //- li
+        //-   a(href='', search-open)
+        //-     em.icon-magnifier
         // Fullscreen (only desktops)
-        li.visible-lg
-          a(href='', toggle-fullscreen)
-            em.fa.fa-expand
+        //- li.visible-lg
+        //-   a(href='', toggle-fullscreen)
+        //-     em.fa.fa-expand
         // START Alert menu
         li.dropdown.dropdown-list(uib-dropdown="")
           a(uib-dropdown-toggle="")
@@ -86,12 +86,12 @@ nav.navbar.topnavbar(role='navigation')
       // END Right Navbar
     // END Nav wrapper
     
-    // START Search form
-    form.navbar-form(role='search', action="search.html")
-      .form-group.has-feedback
-        input.form-control(type='text', placeholder="{{ 'topbar.search.PLACEHOLDER' | translate }}")
-        .fa.fa-times.form-control-feedback(search-dismiss)
-      button.hidden.btn.btn-default(type='submit') Submit
-    // END Search form
+    //- // START Search form
+    //- form.navbar-form(role='search', action="search.html")
+    //-   .form-group.has-feedback
+    //-     input.form-control(type='text', placeholder="{{ 'topbar.search.PLACEHOLDER' | translate }}")
+    //-     .fa.fa-times.form-control-feedback(search-dismiss)
+    //-   button.hidden.btn.btn-default(type='submit') Submit
+    //- // END Search form
 
 // END Top Navbar
