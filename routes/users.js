@@ -22,7 +22,11 @@ module.exports = function (app) {
   }
 
   var me = function (req, res, next) {
-    res.json({account: req.user})
+    res.json({account: {
+        email: req.user.email,
+        username: req.user.username
+      }
+    })
   }
 
   var menu = function (req, res, next) {
