@@ -1,6 +1,6 @@
 /**=========================================================
  * Module: questionnaires.controller.js
- * Controller for questionnairess
+ * Controller for questionnaire
  =========================================================*/
 
 (function() {
