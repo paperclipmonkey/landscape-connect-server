@@ -17,60 +17,26 @@
          <div class="panel-body text-md">
             <p>{{questionnaire.description}}</p>
             <br/>
-            <div class="row">
-               <div class="col-xs-3">
-                  <a href="">
-                     <img src="app/img/bg4.jpg" class="img-responsive" />
-                  </a>
-               </div>
-               <div class="col-xs-3">
-                  <a href="">
-                     <img src="app/img/bg5.jpg" class="img-responsive" />
-                  </a>
-               </div>
-               <div class="col-xs-3">
-                  <a href="">
-                     <img src="app/img/bg7.jpg" class="img-responsive" />
-                  </a>
-               </div>
-               <div class="col-xs-3">
-                  <a href="">
-                     <img src="app/img/bg8.jpg" class="img-responsive" />
-                  </a>
-               </div>
-            </div>
-            <br/>
-            <hr/>
-            <small class="mr-sm">Share</small>
-            <div role="group" aria-label="..." class="btn-group">
-               <button type="button" class="btn btn-default">
-                  <em class="fa fa-facebook text-muted"></em>
-               </button>
-               <button type="button" class="btn btn-default">
-                  <em class="fa fa-twitter text-muted"></em>
-               </button>
-               <button type="button" class="btn btn-default">
-                  <em class="fa fa-google-plus text-muted"></em>
-               </button>
-               <button type="button" class="btn btn-default">
-                  <em class="fa fa-share-alt text-muted"></em>
-               </button>
-            </div>
          </div>
       </div>
       <div class="panel panel-default">
-         <div class="panel-heading">Responses</div>
+         <div class="panel-heading">
+            <button ng-click="downloadAll()" class="pull-right btn btn-purple btn-sm">Download</button>
+            <div class="panel-title">Responses</div>
+         </div>
          <div class="panel-body">
             <table ng-table="tableResponses" class="table table-striped table-bordered table-hover">
                <tbody>
                   <tr ng-repeat="model in $data">
-                     <td data-title="'Time'"><a href="#/app/questionnaires/{{model.serverId}}">{{model.timestamp | date:'medium'}}</a>
+                     <td data-title="'Time'"><a href="#/app/questionnaires/{{questionnaire.serverId}}/responses/{{model._id}}">{{model.timestamp | date:'medium'}}</a>
                      </td>
                      <td data-title="'Lat'">{{model.lat}}</td>
                      <td data-title="'Lng'">{{model.lng}}</td>
-                     <td data-title="'Photo'">
+                     <td data-title="'Media'">
                         <div ng-repeat="mediaItem in model.media">
-                           <img ng-src="/api/media/{{mediaItem}}" ng-if="isImage(mediaItem)" class="max100" />
+                           <a href="/api/media/{{mediaItem}}">
+                              <img ng-src="/api/media/{{mediaItem}}" ng-if="isImage(mediaItem)" class="max100" />
+                           </a>
                            <audio ng-if="isAudio(mediaItem)" controls="controls">
                               <source src="{{getUrl(mediaItem)}}" />
                            </audio>

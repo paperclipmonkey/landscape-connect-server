@@ -45,18 +45,21 @@
         //-   button.btn.btn-default(type='button')
         //-     em.fa.fa-share-alt.text-muted
     .panel.panel-default
-      .panel-heading Responses
+      .panel-heading
+        button(ng-click="downloadAll()" class="pull-right btn btn-purple btn-sm") Download
+        .panel-title Responses
       .panel-body
         table.table.table-striped.table-bordered.table-hover(ng-table='tableResponses')
           tbody
             tr(ng-repeat='model in $data')
               td(data-title="'Time'")
-                a(href="#/app/questionnaires/{{model.serverId}}") {{model.timestamp | date:'medium'}}
+                a(href="#/app/questionnaires/{{questionnaire.serverId}}/responses/{{model._id}}") {{model.timestamp | date:'medium'}}
               td(data-title="'Lat'") {{model.lat}}
               td(data-title="'Lng'") {{model.lng}}
               td(data-title="'Media'")
                 div(ng-repeat="mediaItem in model.media")
-                  img(ng-src="/api/media/{{mediaItem}}" class="max100" ng-if="isImage(mediaItem)")
+                  a(href="/api/media/{{mediaItem}}")
+                    img(ng-src="/api/media/{{mediaItem}}" class="max100" ng-if="isImage(mediaItem)")
                   audio(ng-if="isAudio(mediaItem)" controls)
                     source(src="{{getUrl(mediaItem)}}")
       // Blog Sidebar
