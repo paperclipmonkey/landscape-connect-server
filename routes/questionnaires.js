@@ -59,7 +59,7 @@ module.exports = function (app) {
     }
 
     // if (req.user && req.user.isSuper) {
-    mongoose.model(modelName).find({}).populate('owner', 'email _id').exec(function (err, res) {
+    mongoose.model(modelName).find({}).populate('owner', 'username _id').exec(function (err, res) {
       // Link questionnaire with user
       cback(err, res)
     })
