@@ -1,0 +1,77 @@
+.row.questionnaire
+  // Blog Content
+  .col-lg-9
+    .panel.panel-default
+      .panel-heading
+        .bb
+          h2.text-lg {{response.questionnaire.name}}
+          p.clearfix
+            span.pull-left
+              small.mr-sm By 
+                a(href="") {{response.questionnaire.owner.email}}
+              small.mr-sm {{response.questionnaire.created | date:'medium'}}
+              //- small 
+              //-   strong {{$data.length}}
+              //-   span responses
+      .panel-body.text-md
+        p {{response.questionnaire.description}}
+        br
+        //- Display latest photos
+        //- hr
+        //- .h3 Latest photosx§
+        //- .row
+        //-   .col-xs-3
+        //-     a(href=""): img.img-responsive(src="app/img/bg4.jpg")
+        //-   .col-xs-3
+        //-     a(href=""): img.img-responsive(src="app/img/bg5.jpg")
+        //-   .col-xs-3
+        //-     a(href=""): img.img-responsive(src="app/img/bg7.jpg")
+        //-   .col-xs-3
+        //-     a(href=""): img.img-responsive(src="app/img/bg8.jpg")
+        //- br
+        //- hr
+        //- small.mr-sm Share
+        //- .btn-group(role='group', aria-label='...')
+        //-   button.btn.btn-default(type='button')
+        //-     em.fa.fa-facebook.text-muted
+        //-   button.btn.btn-default(type='button')
+        //-     em.fa.fa-twitter.text-muted
+        //-   button.btn.btn-default(type='button')
+        //-     em.fa.fa-google-plus.text-muted
+        //-   //- button.btn.btn-default(type='button')
+        //-   //-   em.fa.fa-tumblr.text-muted
+        //-   //- button.btn.btn-default(type='button')
+        //-   //-   em.fa.fa-pinterest.text-muted
+        //-   button.btn.btn-default(type='button')
+        //-     em.fa.fa-share-alt.text-muted
+    .panel.panel-default(ng-repeat="(skey, sval) in response.data")
+      .panel-heading
+        .panel-title {{skey}}
+      .panel-body 
+        div(ng-repeat="(qkey, qval) in sval")
+          p {{qkey}}
+          p {{qval}}
+        //- Loop through the sections
+  .col-lg-3
+    // Tasks
+    .panel.panel-default
+      .panel-heading Tasks
+      .panel-body
+        ul.list-unstyled
+          li
+            a(href="" ng-click="delete()") 
+              em.fa.fa-angle-right.fa-fw
+              | Delete
+    // Location
+    .panel.panel-default
+      .panel-heading Location
+      .panel-body
+        ul.list-unstyled
+          li Location: {{response.lat}}, {{response.lng}}
+          li Accuracy: {{response.locAcc}}m
+    // Properties
+    .panel.panel-default
+      .panel-heading Properties
+      .panel-body
+        ul
+          li Date {{response.timestamp}}

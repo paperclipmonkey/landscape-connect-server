@@ -56,6 +56,13 @@
               controller: 'questionnaireCtrl',
               resolve: helper.resolveFor('ngTable', 'ngTableExport')
           })
+          .state('app.response', {
+              url: '/questionnaires/:questionnaireId/responses/:responseId',
+              title: 'Response',
+              templateUrl: helper.basepath('response.html'),
+              controller: 'responseCtrl',
+              resolve: helper.resolveFor('ngTable', 'ngTableExport')
+          })
           //
           // Single Page Routes
           // -----------------------------------

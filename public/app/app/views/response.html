@@ -1,0 +1,67 @@
+<div class="row questionnaire">
+   <!-- Blog Content-->
+   <div class="col-lg-9">
+      <div class="panel panel-default">
+         <div class="panel-heading">
+            <div class="bb">
+               <h2 class="text-lg">{{response.questionnaire.name}}</h2>
+               <p class="clearfix">
+                  <span class="pull-left">
+                     <small class="mr-sm">By <a href="">{{response.questionnaire.owner.email}}</a>
+                     </small>
+                     <small class="mr-sm">{{response.questionnaire.created | date:'medium'}}</small>
+                  </span>
+               </p>
+            </div>
+         </div>
+         <div class="panel-body text-md">
+            <p>{{response.questionnaire.description}}</p>
+            <br/>
+         </div>
+      </div>
+      <div ng-repeat="(skey, sval) in response.data" class="panel panel-default">
+         <div class="panel-heading">
+            <div class="panel-title">{{skey}}</div>
+         </div>
+         <div class="panel-body">
+            <div ng-repeat="(qkey, qval) in sval">
+               <p>{{qkey}}</p>
+               <p>{{qval}}</p>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="col-lg-3">
+      <!-- Tasks-->
+      <div class="panel panel-default">
+         <div class="panel-heading">Tasks</div>
+         <div class="panel-body">
+            <ul class="list-unstyled">
+               <li>
+                  <a href="" ng-click="delete()">
+                     <em class="fa fa-angle-right fa-fw"></em>Delete</a>
+               </li>
+            </ul>
+         </div>
+      </div>
+      <!-- Location-->
+      <div class="panel panel-default">
+         <div class="panel-heading">Location</div>
+         <div class="panel-body">
+            <ul class="list-unstyled">
+               <li>Location: {{response.lat}}, {{response.lng}}</li>
+               <li>Accuracy: {{response.locAcc}}m</li>
+            </ul>
+         </div>
+      </div>
+      <!-- Properties-->
+      <div class="panel panel-default">
+         <div class="panel-heading">Properties</div>
+         <div class="panel-body">
+            <ul>
+               <li>Date {{response.timestamp}}</li>
+            </ul>
+         </div>
+      </div>
+   </div>
+</div>

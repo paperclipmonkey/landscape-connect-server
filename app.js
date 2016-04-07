@@ -165,6 +165,7 @@ module.exports = (function () {
 
   // Responses
   app.get('/api/questionnaires/:id/responses', routes.responses.list)
+  app.get('/api/questionnaires/:qid/responses/:id', routes.responses.read)
   app.post('/api/questionnaires/:id/responses', multipart, middleware.saveUploaded, routes.responses.create)
 
   // Users
