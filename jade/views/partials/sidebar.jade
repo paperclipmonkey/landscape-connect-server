@@ -25,8 +25,8 @@ script(type='text/ng-template', id="sidebar-renderer.html")
                 .circle.circle-success.circle-lg
             // Name and Job
             .user-block-info
-              span.user-block-name {{ 'sidebar.WELCOME' | translate }} {{user.email}}
-              span.user-block-role {{user.password}}
+              span.user-block-name {{ 'sidebar.WELCOME' | translate }} {{user.username}}
+              span.user-block-role {{user.email}}
       // END user info
 
       // Iterates over all sidebar items

@@ -30,7 +30,7 @@
             if(vm.registerForm.$valid) {
 
               $http
-                .post('/api/account/register', {email: vm.account.email, password: vm.account.password})
+                .post('/api/account/register', {email: vm.account.email, password: vm.account.password, username: vm.account.username})
                 .then(function(response) {
                   console.log("Signup response data: ", response)
                   //Check against status code

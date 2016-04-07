@@ -8,6 +8,9 @@
       p.text-center.pv SIGNUP TO GET INSTANT ACCESS.
       form.form-validate.mb-lg(role='form', name="reg.registerForm", novalidate='', ng-submit="reg.register()")
         .form-group.has-feedback
+          label.text-muted Username
+          input.form-control(type='text', name="account_username" placeholder='Username', autocomplete="off", ng-model="reg.account.username", required='')
+        .form-group.has-feedback
           label.text-muted Email address
           input.form-control(type='email', name="account_email" placeholder='Enter email', autocomplete="off", ng-model="reg.account.email", required='')
           span.fa.fa-envelope.form-control-feedback.text-muted

@@ -8,7 +8,7 @@ module.exports = (function (app) {
     email: {type: String, required: true, unique: true, match: emailRegex},
     password: {type: String, required: true},
     salt: {type: String},
-    fullname: {type: String},
+    username: {type: String},
     photo: {type: String},
     organisation: {type: String},
     phoneno: {type: String},
