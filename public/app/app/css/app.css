@@ -11321,6 +11321,9 @@ flatdoc .button .badge {
 .questionnaire .max100 {
   max-width: 100px;
 }
+.response .section .question {
+  font-style: italic;
+}
 .public {
   margin-top: 20px;
   /** Detail View **/

@@ -13497,6 +13497,10 @@ flatdoc .button .badge {
   max-width: 100px;
 }
 
+.response .section .question {
+  font-style: italic;
+}
+
 .public {
   margin-top: 20px;
   /** Detail View **/

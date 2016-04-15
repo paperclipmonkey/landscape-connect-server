@@ -1,32 +1,32 @@
-<div class="row questionnaire">
+<div class="row response">
    <!-- Blog Content-->
    <div class="col-lg-9">
       <div class="panel panel-default">
          <div class="panel-heading">
             <div class="bb">
-               <h2 class="text-lg">{{response.questionnaire.name}}</h2>
+               <h2 class="text-lg">Response to {{questionnaire.name}}</h2>
                <p class="clearfix">
                   <span class="pull-left">
-                     <small class="mr-sm">By <a href="">{{response.questionnaire.owner.email}}</a>
+                     <small class="mr-sm">By <a href="">{{questionnaire.owner.email}}</a>
                      </small>
-                     <small class="mr-sm">{{response.questionnaire.created | date:'medium'}}</small>
+                     <small class="mr-sm">{{questionnaire.created | date:'medium'}}</small>
                   </span>
                </p>
             </div>
          </div>
          <div class="panel-body text-md">
-            <p>{{response.questionnaire.description}}</p>
+            <p>{{questionnaire.description}}</p>
             <br/>
          </div>
       </div>
-      <div ng-repeat="(skey, sval) in response.data" class="panel panel-default">
+      <div ng-repeat="(skey, sval) in response.data" class="panel panel-default section">
          <div class="panel-heading">
             <div class="panel-title">{{skey}}</div>
          </div>
          <div class="panel-body">
             <div ng-repeat="(qkey, qval) in sval">
-               <p>{{qkey}}</p>
-               <p>{{qval}}</p>
+               <h4 class="question">{{qkey}}</h4>
+               <p class="questionanswer">{{qval}}</p>
             </div>
          </div>
       </div>
@@ -59,7 +59,7 @@
          <div class="panel-heading">Properties</div>
          <div class="panel-body">
             <ul>
-               <li>Date {{response.timestamp}}</li>
+               <li>Date {{response.timestamp | date:'medium'}}</li>
             </ul>
          </div>
       </div>
