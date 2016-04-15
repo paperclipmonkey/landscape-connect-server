@@ -1,10 +1,10 @@
-.row.questionnaire
+.row.response
   // Blog Content
   .col-lg-9
     .panel.panel-default
       .panel-heading
         .bb
-          h2.text-lg {{response.questionnaire.name}}
+          h2.text-lg Response to {{response.questionnaire.name}}
           p.clearfix
             span.pull-left
               small.mr-sm By 
@@ -44,13 +44,13 @@
         //-   //-   em.fa.fa-pinterest.text-muted
         //-   button.btn.btn-default(type='button')
         //-     em.fa.fa-share-alt.text-muted
-    .panel.panel-default(ng-repeat="(skey, sval) in response.data")
+    .panel.panel-default.section(ng-repeat="(skey, sval) in response.data")
       .panel-heading
         .panel-title {{skey}}
-      .panel-body 
+      .panel-body
         div(ng-repeat="(qkey, qval) in sval")
-          p {{qkey}}
-          p {{qval}}
+          h4.question {{qkey}}
+          p.questionanswer {{qval}}
         //- Loop through the sections
   .col-lg-3
     // Tasks
@@ -74,4 +74,4 @@
       .panel-heading Properties
       .panel-body
         ul
-          li Date {{response.timestamp}}
+          li Date {{response.timestamp | date:'medium'}}
