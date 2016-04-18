@@ -144,11 +144,12 @@ module.exports = (function () {
   app.get('/api/dash/responses/latest', middleware.ensureAuthenticated, routes.dashboard.dashboard_rating_average)
 
   // Download
-  app.post('/api/questionnaires/download/csv/', middleware.ensureAuthenticated, routes.download.views_download_csv)
-  app.post('/api/questionnaires/download/kmz/', middleware.ensureAuthenticated, routes.download.views_download_kmz)
-  app.post('/api/questionnaires/download/images/', middleware.ensureAuthenticated, routes.download.views_download_images)
-  app.get('/api/questionnaires/:id/download/kmz', middleware.ensureAuthenticated, routes.download.view_download_kmz)
-  app.get('/api/questionnaires/:id/download/image', middleware.ensureAuthenticated, routes.download.view_download_image)
+  // app.post('/api/questionnaires/download/csv/', middleware.ensureAuthenticated, routes.download.download_csv)
+  // app.post('/api/questionnaires/download/kmz/', middleware.ensureAuthenticated, routes.download.download_kmz)
+  // app.post('/api/questionnaires/download/images/', middleware.ensureAuthenticated, routes.download.download_images)
+  app.get('/api/questionnaires/:id/download/csv', middleware.ensureAuthenticated, routes.download.download_csv)
+  app.get('/api/questionnaires/:id/download/kmz', middleware.ensureAuthenticated, routes.download.download_kmz)
+  app.get('/api/questionnaires/:id/download/images', middleware.ensureAuthenticated, routes.download.download_images)
 
   // Questionnaire
   app.get('/api/questionnaires', routes.questionnaires.list)

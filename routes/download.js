@@ -5,39 +5,56 @@ var json2csv = require('json2csv')
 var common = require('../common')
 
 module.exports = function (app) {
-  var views_download_csv = function (req, res, next) {
-    try {
-      var ids = JSON.parse(req.body.ids)
-    } catch (e) {
-      return res.sendStatus(400)
-    }
-    download_docs(ids, function (docs) {
-      try {
+  var download_csv = function (req, res, next) {
+    download_docs(req.params.id, function (docs) {
         if (docs.length === 0) {
           return next(new Error('Empty result'))
         }
-        var cDocs = []
-        for (var doc in docs) {
-          cDocs.push(docs[doc].toCsv())
-        }
-        json2csv({data: cDocs, fields: ['photo', 'comments', 'age', 'heading', 'knowarea', 'words', 'date', 'time', 'lat', 'lng', 'rating']}, function (err, csv) {
-          if (err) return res.sendStatus(500)
-          var filename = 'RateMyView.csv'
-          res.attachment(filename)
-          res.end(csv)
+        var cDocs = docs
+
+        mongoose.model('questionnaire').findOne({serverId: req.params.id}, function (err, doc) {
+          //Get the section and questions names in to a useable format
+          var dataFields = []
+          for(x in doc.sections){
+            for(y in doc.sections[x].questions){
+              dataFields.push(doc.sections[x].title + '/' + doc.sections[x].questions[y].title)
+            }
+          }
+          var fields = ['media', 'date', 'time', 'lat', 'lng'].concat(dataFields)
+
+          //Flatten the responses as well
+          for(mDoc in docs){
+            for(x in mDoc.data){
+              for(y in mDoc.data[x]){
+                mDoc[x + '/' + y] = mDoc.data[x][y]
+              }
+            }
+            delete mDoc.data
+          }
+          console.log(docs)
+          try {
+            json2csv({data: cDocs, fields: fields}, function (err, csv) {
+              if (err) return next(new Error('Failed to encode CSV'))
+              var filename = 'Landscape Connect.csv'
+              res.attachment(filename)
+              res.end(csv)
+            })
+          } catch (err) {
+            next(err)
+          }
         })
-      } catch (err) {
-        next(err)
-      }
+        // for (var doc in docs) {
+        //   cDocs.push(docs[doc].toCsv())
+        // }
     })
   }
 
-  var view_download_kmz = function (req, res) {
+  var download_kmz = function (req, res) {
     download_docs([req.params.id], packageKML, res)
   }
 
-  function download_docs (ids, fun, res) {
-    mongoose.model('feedback').find({_id: {$in: ids}}, function (err, docs) {
+  function download_docs (id, fun, res) {
+    mongoose.model('response').find({questionnaire: id}, function (err, docs) {
       if (err) {
         // next(err)
         console.log(new Error('Could not find docs'))
@@ -59,9 +76,9 @@ module.exports = function (app) {
     return zip
   }
 
-  var views_download_images = function (req, res) {
+  var download_images = function (req, res) {
     try {
-      var ids = JSON.parse(req.body.ids)
+      var ids = req.params.id
     } catch (e) {
       return res.sendStatus(400)
     }
@@ -78,7 +95,7 @@ module.exports = function (app) {
     })
   }
 
-  var views_download_kmz = function (req, res) {
+  var download_kmz = function (req, res) {
     try {
       var ids = JSON.parse(req.body.ids)
     } catch (e) {
@@ -116,7 +133,7 @@ module.exports = function (app) {
     })
   }
 
-  var view_download_image = function (req, res) {
+  var download_image = function (req, res) {
     mongoose.model('feedback').findOne({_id: req.params.id}).exec(function (err, doc) {
       if (err) {
         return res.sendStatus(500)
@@ -127,11 +144,10 @@ module.exports = function (app) {
   }
 
   return {
-    view_download_kmz: view_download_kmz,
-    view_download_image: view_download_image,
+    download_kmz: download_kmz,
+    download_image: download_image,
     download_docs: download_docs,
-    views_download_csv: views_download_csv,
-    views_download_images: views_download_images,
-    views_download_kmz: views_download_kmz
+    download_csv: download_csv,
+    download_images: download_images,
   }
 }
