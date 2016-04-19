@@ -46,7 +46,8 @@
         //-     em.fa.fa-share-alt.text-muted
     .panel.panel-default
       .panel-heading
-        button(ng-click="downloadAll()" class="pull-right btn btn-purple btn-sm") Download
+        //-button(ng-click="downloadAll()" class="pull-right btn btn-purple btn-sm") Download
+        button(href="/api/questionnaires/{{questionnaire.serverId}}/download/csv" class="pull-right btn btn-purple btn-sm") Download
         .panel-title Responses
       .panel-body
         table.table.table-striped.table-bordered.table-hover(ng-table='tableResponses')
