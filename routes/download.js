@@ -20,7 +20,7 @@ module.exports = function (app) {
               dataFields.push(doc.sections[x].title + '/' + doc.sections[x].questions[y].title)
             }
           }
-          var fields = ['media', 'timestamp', 'lat', 'lng'].concat(dataFields)
+          var fields = ['media', 'timestamp', 'lat', 'lng', 'locAcc'].concat(dataFields)
 
           docs2 = []
 
