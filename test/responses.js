@@ -22,6 +22,7 @@ describe('Responses', function () {
   })
 
   it('POST /api/questionnaires/x/responses should save new response', function (done) {
+    this.timeout(20000);
     rAgent
       .post('/api/questionnaires/' + testQId + '/responses')
       .field('questionnaire', testQId)
@@ -29,9 +30,9 @@ describe('Responses', function () {
       .field('lat', (Math.random() * 360) - 180)
       .field('lng', (Math.random() * 180) - 90)
       .field('locAcc', Math.floor(Math.random() * 100)) // 0 - 100 Integer test
-      .field('data[key]', 'value')
-      .field('data[foo]', 'bar')
-      .field('data[biz]', 'baz')
+      .field('data[Sample Section 1][Example Multi Select]', 'My name')
+      .field('data[Sample Section 1][Example Multiline Textarea]', '11tytwelve')
+      .field('data[Sample Section 2][Second Multi Select]', '50kmph')
       .attach('media1', __dirname + '/data/example1.jpg')
       .expect(200)
       .end(function (err, res) {
@@ -41,7 +42,7 @@ describe('Responses', function () {
   })
 
   it('POST /api/questionnaires/x/responses with multiple photos should save new response', function (done) {
-    this.timeout(5000);
+    this.timeout(20000);
     rAgent
       .post('/api/questionnaires/' + testQId + '/responses')
       .field('questionnaire', testQId)
@@ -49,9 +50,9 @@ describe('Responses', function () {
       .field('lat', (Math.random() * 360) - 180)
       .field('lng', (Math.random() * 180) - 90)
       .field('locAcc', Math.floor(Math.random() * 100)) // 0 - 100 Integer test
-      .field('data[key]', 'value')
-      .field('data[foo]', 'bar')
-      .field('data[biz]', 'baz')
+      .field('data[Sample Section 1][Example Multi Select]', 'My name')
+      .field('data[Sample Section 1][Example Multiline Textarea]', '11tytwelve')
+      .field('data[Sample Section 2][Second Multi Select]', '50kmph')
       .attach('media1', __dirname + '/data/example1.jpg')
       .attach('media2', __dirname + '/data/example2.jpg')
       .expect(200)
@@ -62,7 +63,7 @@ describe('Responses', function () {
   })
 
   it('POST /api/questionnaires/x/responses with MP3 should save new response', function (done) {
-    this.timeout(5000);
+    this.timeout(20000);
     rAgent
       .post('/api/questionnaires/' + testQId + '/responses')
       .field('questionnaire', testQId)
@@ -70,9 +71,9 @@ describe('Responses', function () {
       .field('lat', (Math.random() * 360) - 180)
       .field('lng', (Math.random() * 180) - 90)
       .field('locAcc', Math.floor(Math.random() * 100)) // 0 - 100 Integer test
-      .field('data[key]', 'value')
-      .field('data[foo]', 'bar')
-      .field('data[biz]', 'baz')
+      .field('data[Sample Section 1][Example Multi Select]', 'My name')
+      .field('data[Sample Section 1][Example Multiline Textarea]', '11tytwelve')
+      .field('data[Sample Section 2][Second Multi Select]', '50kmph')
       .attach('media1', __dirname + '/data/example1.mp3')
       .expect(200)
       .end(function (err, res) {

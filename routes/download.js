@@ -20,20 +20,15 @@ module.exports = function (app) {
               dataFields.push(doc.sections[x].title + '/' + doc.sections[x].questions[y].title)
             }
           }
-          var fields = ['media', 'date', 'time', 'lat', 'lng'].concat(dataFields)
+          var fields = ['media', 'timestamp', 'lat', 'lng'].concat(dataFields)
 
-          //Flatten the responses as well
-          for(mDoc in docs){
-            for(x in mDoc.data){
-              for(y in mDoc.data[x]){
-                mDoc[x + '/' + y] = mDoc.data[x][y]
-              }
-            }
-            delete mDoc.data
+          docs2 = []
+
+          for(var i = 0; i < docs.length; i++){
+            docs2.push(docs[i].dataToAttrs())
           }
-          console.log(docs)
           try {
-            json2csv({data: cDocs, fields: fields}, function (err, csv) {
+            json2csv({data: docs2, fields: fields}, function (err, csv) {
               if (err) return next(new Error('Failed to encode CSV'))
               var filename = 'Landscape Connect.csv'
               res.attachment(filename)
@@ -43,9 +38,6 @@ module.exports = function (app) {
             next(err)
           }
         })
-        // for (var doc in docs) {
-        //   cDocs.push(docs[doc].toCsv())
-        // }
     })
   }
 
