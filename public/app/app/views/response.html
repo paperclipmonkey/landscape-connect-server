@@ -14,12 +14,12 @@
       </div>
       <div ng-repeat="(skey, sval) in response.data" class="panel panel-default section">
          <div class="panel-heading">
-            <div class="panel-title">{{skey}}</div>
+            <div class="panel-title response-section-title">{{sval.key}}</div>
          </div>
          <div class="panel-body">
-            <div ng-repeat="(qkey, qval) in sval">
-               <h4 class="question">{{qkey}}</h4>
-               <p class="questionanswer">{{qval}}</p>
+            <div ng-repeat="(qkey, qval) in sval.value">
+               <h4 class="question">{{qval.key}}</h4>
+               <p class="questionanswer">{{qval.value}}</p>
             </div>
          </div>
       </div>

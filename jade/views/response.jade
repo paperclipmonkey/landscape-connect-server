@@ -38,11 +38,11 @@
         //-     em.fa.fa-share-alt.text-muted
     .panel.panel-default.section(ng-repeat="(skey, sval) in response.data")
       .panel-heading
-        .panel-title {{skey}}
+        .panel-title.response-section-title {{sval.key}}
       .panel-body
-        div(ng-repeat="(qkey, qval) in sval")
-          h4.question {{qkey}}
-          p.questionanswer {{qval}}
+        div(ng-repeat="(qkey, qval) in sval.value")
+          h4.question {{qval.key}}
+          p.questionanswer {{qval.value}}
         //- Loop through the sections
   .col-lg-3
     // Tasks
