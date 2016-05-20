@@ -13501,6 +13501,10 @@ flatdoc .button .badge {
   font-style: italic;
 }
 
+.response .section .panel-title {
+  font-size: 22px;
+}
+
 .public {
   margin-top: 20px;
   /** Detail View **/

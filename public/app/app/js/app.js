@@ -40,7 +40,8 @@
             'app.tables',
             'app.extras',
             'app.utils',
-            'app.questions'
+            'app.questions',
+            'app.users'
         ]);
 })();
 
@@ -129,18 +130,6 @@
     'use strict';
 
     angular
-        .module('app.loadingbar', []);
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('app.locale', []);
-})();
-(function() {
-    'use strict';
-
-    angular
         .module('app.maps', []);
 })();
 (function() {
@@ -175,6 +164,18 @@
 })();
 
 
+(function() {
+    'use strict';
+
+    angular
+        .module('app.loadingbar', []);
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.locale', []);
+})();
 (function() {
     'use strict';
 
@@ -2589,8 +2590,8 @@
         .module('app.dashboard')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['$scope', 'ChartData', '$timeout'];
-    function DashboardController($scope, ChartData, $timeout) {
+    DashboardController.$inject = ['$http','$scope', 'ChartData', '$timeout'];
+    function DashboardController($http, $scope, ChartData, $timeout) {
         var vm = this;
 
         activate();
@@ -2687,6 +2688,18 @@
             console.log('Panel #' + id + ' removed');
 
           });
+
+          //Custom code
+          vm.totalQuestionnaires = 0
+          $http.get('/api/dash/questionnaires/total').then(function(resp){
+            vm.totalQuestionnaires = resp.data.result;
+          });
+
+          vm.totalResponses = 0
+          $http.get('/api/dash/responses/total').then(function(resp){
+            vm.totalResponses = resp.data.result;
+          });
+
 
         }
     }
@@ -5736,103 +5749,6 @@
 
 })();
 
-(function() {
-    'use strict';
-
-    angular
-        .module('app.loadingbar')
-        .config(loadingbarConfig)
-        ;
-    loadingbarConfig.$inject = ['cfpLoadingBarProvider'];
-    function loadingbarConfig(cfpLoadingBarProvider){
-      cfpLoadingBarProvider.includeBar = true;
-      cfpLoadingBarProvider.includeSpinner = false;
-      cfpLoadingBarProvider.latencyThreshold = 500;
-      cfpLoadingBarProvider.parentSelector = '.wrapper > section';
-    }
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('app.loadingbar')
-        .run(loadingbarRun)
-        ;
-    loadingbarRun.$inject = ['$rootScope', '$timeout', 'cfpLoadingBar'];
-    function loadingbarRun($rootScope, $timeout, cfpLoadingBar){
-
-      // Loading bar transition
-      // ----------------------------------- 
-      var thBar;
-      $rootScope.$on('$stateChangeStart', function() {
-          if($('.wrapper > section').length) // check if bar container exists
-            thBar = $timeout(function() {
-              cfpLoadingBar.start();
-            }, 0); // sets a latency Threshold
-      });
-      $rootScope.$on('$stateChangeSuccess', function(event) {
-          event.targetScope.$watch('$viewContentLoaded', function () {
-            $timeout.cancel(thBar);
-            cfpLoadingBar.complete();
-          });
-      });
-
-    }
-
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('app.locale')
-        .config(localeConfig)
-        ;
-    localeConfig.$inject = ['tmhDynamicLocaleProvider'];
-    function localeConfig(tmhDynamicLocaleProvider){
-  
-      tmhDynamicLocaleProvider.localeLocationPattern('vendor/angular-i18n/angular-locale_{{locale}}.js');
-      // tmhDynamicLocaleProvider.useStorage('$cookieStore');
-
-    }
-})();
-/**=========================================================
- * Module: locale.js
- * Demo for locale settings
- =========================================================*/
-(function() {
-    'use strict';
-
-    angular
-        .module('app.locale')
-        .controller('LocalizationController', LocalizationController);
-
-    LocalizationController.$inject = ['$rootScope', 'tmhDynamicLocale', '$locale'];
-    function LocalizationController($rootScope, tmhDynamicLocale, $locale) {
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-          $rootScope.availableLocales = {
-            'en': 'English',
-            'es': 'Spanish',
-            'de': 'German',
-            'fr': 'French',
-            'ar': 'Arabic',
-            'ja': 'Japanese',
-            'ko': 'Korean',
-            'zh': 'Chinese'};
-          
-          $rootScope.model = {selectedLocale: 'en'};
-          
-          $rootScope.$locale = $locale;
-          
-          $rootScope.changeLocale = tmhDynamicLocale.set;
-        }
-    }
-})();
-
 /**=========================================================
  * Module: modals.js
  * Provides a simple way to implement bootstrap modals from templates
@@ -7176,6 +7092,103 @@
     }
 
 })();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.loadingbar')
+        .config(loadingbarConfig)
+        ;
+    loadingbarConfig.$inject = ['cfpLoadingBarProvider'];
+    function loadingbarConfig(cfpLoadingBarProvider){
+      cfpLoadingBarProvider.includeBar = true;
+      cfpLoadingBarProvider.includeSpinner = false;
+      cfpLoadingBarProvider.latencyThreshold = 500;
+      cfpLoadingBarProvider.parentSelector = '.wrapper > section';
+    }
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.loadingbar')
+        .run(loadingbarRun)
+        ;
+    loadingbarRun.$inject = ['$rootScope', '$timeout', 'cfpLoadingBar'];
+    function loadingbarRun($rootScope, $timeout, cfpLoadingBar){
+
+      // Loading bar transition
+      // ----------------------------------- 
+      var thBar;
+      $rootScope.$on('$stateChangeStart', function() {
+          if($('.wrapper > section').length) // check if bar container exists
+            thBar = $timeout(function() {
+              cfpLoadingBar.start();
+            }, 0); // sets a latency Threshold
+      });
+      $rootScope.$on('$stateChangeSuccess', function(event) {
+          event.targetScope.$watch('$viewContentLoaded', function () {
+            $timeout.cancel(thBar);
+            cfpLoadingBar.complete();
+          });
+      });
+
+    }
+
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.locale')
+        .config(localeConfig)
+        ;
+    localeConfig.$inject = ['tmhDynamicLocaleProvider'];
+    function localeConfig(tmhDynamicLocaleProvider){
+  
+      tmhDynamicLocaleProvider.localeLocationPattern('vendor/angular-i18n/angular-locale_{{locale}}.js');
+      // tmhDynamicLocaleProvider.useStorage('$cookieStore');
+
+    }
+})();
+/**=========================================================
+ * Module: locale.js
+ * Demo for locale settings
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.locale')
+        .controller('LocalizationController', LocalizationController);
+
+    LocalizationController.$inject = ['$rootScope', 'tmhDynamicLocale', '$locale'];
+    function LocalizationController($rootScope, tmhDynamicLocale, $locale) {
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          $rootScope.availableLocales = {
+            'en': 'English',
+            'es': 'Spanish',
+            'de': 'German',
+            'fr': 'French',
+            'ar': 'Arabic',
+            'ja': 'Japanese',
+            'ko': 'Korean',
+            'zh': 'Chinese'};
+          
+          $rootScope.model = {selectedLocale: 'en'};
+          
+          $rootScope.$locale = $locale;
+          
+          $rootScope.changeLocale = tmhDynamicLocale.set;
+        }
+    }
+})();
+
 /**=========================================================
  * Module: helpers.js
  * Provides helper functions for routes definition
@@ -7331,6 +7344,18 @@
               title: 'Documentation',
               templateUrl: helper.basepath('documentation.html'),
               resolve: helper.resolveFor('flatdoc')
+          })
+          .state('app.users', {
+              url: '/users',
+              title: 'Users',
+              templateUrl: helper.basepath('users.html'),
+              resolve: helper.resolveFor('ngTable', 'ngTableExport')
+          })
+          .state('app.user', {
+              url: '/user',
+              title: 'User',
+              templateUrl: helper.basepath('user.html'),
+              resolve: helper.resolveFor('ngTable', 'ngTableExport')
           })
           //
           // Single Page Routes
@@ -9764,6 +9789,9 @@
 
     angular
         .module('app.questions', []);
+
+    angular
+        .module('app.users', []);
 })();
 
 
@@ -10419,3 +10447,103 @@
         vm.title = 'Controller';
     }
 })();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.users')
+        .service('usersDataService', usersDataService);
+
+    function usersDataService() {
+        /* jshint validthis:true */
+        var self = this;
+        this.cache = null;
+        this.getData = getData;
+
+        ////////////////
+
+        function getData($defer, params, api) {
+          // if no cache, request data and filter
+          //if ( ! self.cache ) {
+            if ( api ) {
+              api.get(function(data){
+                self.cache = data;
+                filterdata($defer, params);
+              });
+            }
+          //}
+          // else {
+          //   filterdata($defer, params);
+          // }
+          
+          function filterdata($defer, params) {
+            var from = (params.page() - 1) * params.count();
+            var to = params.page() * params.count();
+            var filteredData = self.cache.result.slice(from, to);
+
+            params.total(self.cache.total);
+            $defer.resolve(filteredData);
+          }
+
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: questionnaires.controller.js
+ * Controller for questionnairess
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.users')
+        .controller('usersCtrl', usersCtrl);
+    /*jshint -W055 */
+    usersCtrl.$inject = ['$filter', 'ngTableParams', '$resource', '$timeout', 'usersDataService'];
+
+    function usersCtrl($filter, ngTableParams, $resource, $timeout, dataService) {
+        var vm = this;
+        vm.title = 'Controller';
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+            var Api = $resource('/api/users');
+
+            vm.tableParams5 = new ngTableParams({
+                page: 1,            // show first page
+                count: 10,           // count per page
+                filter: {
+                    name: '',
+                    quickCode: ''
+                    // name: 'M'       // initial filter
+                }
+                }, {
+                  total: 0,           // length of data
+                  counts: [],         // hide page counts control
+                  getData: function($defer, params) {
+                      
+                      // Service using cache to avoid mutiple requests
+                      dataService.getData( $defer, params, Api);
+                      
+                      /* direct ajax request to api (perform result pagination on the server)
+                      Api.get(params.url(), function(data) {
+                          $timeout(function() {
+                              // update table params
+                              params.total(data.total);
+                              // set new data
+                              $defer.resolve(data.result);
+                          }, 500);
+                      });
+                      */
+                  }
+                });
+        }
+    }
+})();
+
+
