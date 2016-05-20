@@ -40,7 +40,8 @@
             'app.tables',
             'app.extras',
             'app.utils',
-            'app.questions'
+            'app.questions',
+            'app.users'
         ]);
 })();
 

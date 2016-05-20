@@ -68,7 +68,7 @@ module.exports = function (app) {
       if (err) {
         return next(err)
       }
-      res.json(docs)
+      res.json({result: docs})
     })
   }
 

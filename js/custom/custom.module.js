@@ -17,5 +17,8 @@
 
     angular
         .module('app.questions', []);
+
+    angular
+        .module('app.users', []);
 })();
 
