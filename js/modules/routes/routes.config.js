@@ -70,6 +70,18 @@
               templateUrl: helper.basepath('documentation.html'),
               resolve: helper.resolveFor('flatdoc')
           })
+          .state('app.users', {
+              url: '/users',
+              title: 'Users',
+              templateUrl: helper.basepath('users.html'),
+              resolve: helper.resolveFor('ngTable', 'ngTableExport')
+          })
+          .state('app.user', {
+              url: '/user',
+              title: 'User',
+              templateUrl: helper.basepath('user.html'),
+              resolve: helper.resolveFor('ngTable', 'ngTableExport')
+          })
           //
           // Single Page Routes
           // -----------------------------------
