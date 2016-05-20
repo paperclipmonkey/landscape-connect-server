@@ -58,14 +58,26 @@ module.exports = function (app) {
       res.json({result: results})
     }
 
-    // if (req.user && req.user.isSuper) {
+    if (req.user && req.user.isSuper) {
     mongoose.model(modelName).find({}).populate('owner', 'username _id').exec(function (err, res) {
       // Link questionnaire with user
       cback(err, res)
     })
-  // } else {
-  //   mongoose.model(modelName).find({}).select('-owner').exec(cback)//user: req.user._id // {'owner': req.user._id}
-  // }
+    } else {
+      mongoose.model(modelName).find({owner: req.user._id}).select('-owner').exec(cback)//user: req.user._id // {'owner': req.user._id}
+    }
+  }
+
+  var list_public = function (req, res, next) {
+    eventServer.emit(objName + ':list', {})
+    var cback = function (err, results) {
+      if (err) return next(err)
+      res.json({result: results})
+    }
+
+    mongoose.model(modelName).find({public: true}).populate('owner', 'username _id').exec(function (err, res) {
+      cback(err, res)
+    })
   }
 
   var remove = function (req, res, next) {
