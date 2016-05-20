@@ -5,8 +5,8 @@
         .module('app.dashboard')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['$scope', 'ChartData', '$timeout'];
-    function DashboardController($scope, ChartData, $timeout) {
+    DashboardController.$inject = ['$http','$scope', 'ChartData', '$timeout'];
+    function DashboardController($http, $scope, ChartData, $timeout) {
         var vm = this;
 
         activate();
@@ -103,6 +103,18 @@
             console.log('Panel #' + id + ' removed');
 
           });
+
+          //Custom code
+          vm.totalQuestionnaires = 0
+          $http.get('/api/dash/questionnaires/total').then(function(resp){
+            vm.totalQuestionnaires = resp.data.result;
+          });
+
+          vm.totalResponses = 0
+          $http.get('/api/dash/responses/total').then(function(resp){
+            vm.totalResponses = resp.data.result;
+          });
+
 
         }
     }

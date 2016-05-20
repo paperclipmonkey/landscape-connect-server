@@ -4,6 +4,9 @@ var common = require('../common')
 require('date-utils')
 
 module.exports = function (app) {
+  var resModel = mongoose.model('response');
+  var qreModel = mongoose.model('questionnaire');
+
   var rating_average = function (req, res, next) {
     var cback = function (err, results) {
       if (err) {
@@ -30,6 +33,56 @@ module.exports = function (app) {
       })
     }
   }
+
+  var questionnaires_total = function (req, res, next) {
+      var cback = function(err, results){
+       if(err){
+       }
+       res.json({"result": results})
+      }
+
+    if(req.user.isSuper){
+      qreModel.where({}).count(cback)
+    } else {
+       qreModel.where('owner',req.user._id).count(cback)
+    }
+  }
+
+  var responses_total = function (req, res, next) {
+    var cback = function(err, results){
+      if(err){
+      }
+      res.json({"result": results})
+    }
+
+    if(req.user.isSuper){
+     resModel.where({}).count(cback)
+    } else {
+      qreModel.find({owner: req.user._id}, '_id', function (err, questionnaires) {
+        var k = questionnaires.map(function(o){return o._id.toString()})
+        resModel.where('questionnaire').in(k).count(cback)
+     })
+    }
+  }
+
+  var responses_latest = function (req, res, next) {
+    var limit = 10
+    var cback = function(err, results){
+      if(err){
+      }
+      res.json({"result": results})
+    }
+
+    if(req.user.isSuper){
+     resModel.where({}).limit(limit).exec(cback)
+    } else {
+      qreModel.find({owner: req.user._id}, '_id', function (err, questionnaires) {
+        var k = questionnaires.map(function(o){return o._id.toString()})
+        resModel.where('questionnaire').in(k).limit(limit).exec(cback)
+     })
+    }
+  }
+
 
   var words = function (req, res, next) {
     return next(new Error('Not implemented'))
@@ -237,6 +290,10 @@ module.exports = function (app) {
   }
 
   return {
+    questionnaires_total: questionnaires_total,
+    responses_total: responses_total,
+    responses_latest: responses_latest,
+    
     dashboard_rating_average: rating_average,
     dashboard_views_by_month: views_by_month,
     dashboard_rating_by_month: rating_by_month,

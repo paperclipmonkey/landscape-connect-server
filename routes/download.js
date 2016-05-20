@@ -57,12 +57,17 @@ module.exports = function (app) {
 
   function add_images (docs, zip) {
     var i = 0
+    var x = 0
     while (i < docs.length) {
-      try {
-        zip.append(common.downloadFromS3('uploads/' + docs[i].photo), {name: docs[i].photo})
-      } catch (err) {
-        console.log(err)
+      while (x < docs[i].media.length) {
+        try {
+          zip.append(common.downloadFromS3('uploads/' + docs[i].media[x]), {name: docs[i].media[x]})
+        } catch (err) {
+          console.log(err)
+        }
+        x++
       }
+      x = 0
       i++
     }
     return zip
