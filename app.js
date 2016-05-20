@@ -135,13 +135,13 @@ module.exports = (function () {
   })
 
   // Dashboard
-  app.get('/api/dash/rating/average', middleware.ensureAuthenticated, routes.dashboard.dashboard_rating_average)
-  app.get('/api/dash/rating/months', middleware.ensureAuthenticated, routes.dashboard.dashboard_rating_by_month)
-  app.get('/api/dash/responses/week', middleware.ensureAuthenticated, routes.dashboard.dashboard_views_week)
+  app.get('/api/dash/questionnaires/total', middleware.ensureAuthenticated, routes.dashboard.questionnaires_total)
+  app.get('/api/dash/responses/total', middleware.ensureAuthenticated, routes.dashboard.responses_total)
+  app.get('/api/dash/responses/latest', middleware.ensureAuthenticated, routes.dashboard.responses_latest)
+
   app.get('/api/dash/responses/months', middleware.ensureAuthenticated, routes.dashboard.dashboard_views_by_month)
   app.get('/api/dash/responses/total', middleware.ensureAuthenticated, routes.dashboard.dashboard_views_total)
   app.get('/api/dash/responses/words', middleware.ensureAuthenticated, routes.dashboard.dashboard_words)
-  app.get('/api/dash/responses/latest', middleware.ensureAuthenticated, routes.dashboard.dashboard_rating_average)
 
   // Download
   // app.post('/api/questionnaires/download/csv/', middleware.ensureAuthenticated, routes.download.download_csv)
