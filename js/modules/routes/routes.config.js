@@ -54,7 +54,7 @@
               title: 'Questionnaire',
               templateUrl: helper.basepath('questionnaire.html'),
               controller: 'questionnaireCtrl',
-              resolve: helper.resolveFor('ngTable', 'ngTableExport')
+              resolve: helper.resolveFor('ngTable', 'ngTableExport', 'leaflet', 'angular-leaflet-directive')
           })
           .state('app.response', {
               url: '/questionnaires/:questionnaireId/responses/:responseId',

@@ -146,7 +146,11 @@
                                                         'vendor/jquery-knob/dist/jquery.knob.min.js']},
             {name: 'easypiechart',              files: ['vendor/jquery.easy-pie-chart/dist/angular.easypiechart.min.js']},
             {name: 'colorpicker.module',        files: ['vendor/angular-bootstrap-colorpicker/css/colorpicker.css',
-                                                        'vendor/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js']}
+                                                        'vendor/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js']},
+            /* Custom Code */
+            {name: 'leaflet',        files: ['vendor/leaflet/dist/leaflet.css',
+                                                        'vendor/leaflet/dist/leaflet.js']},
+            {name: 'angular-leaflet-directive',        files: ['vendor/angular-leaflet-directive/dist/angular-leaflet-directive.js']}
           ]
         })
         ;

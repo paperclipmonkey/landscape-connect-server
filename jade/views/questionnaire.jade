@@ -46,6 +46,11 @@
         //-     em.fa.fa-share-alt.text-muted
     .panel.panel-default
       .panel-heading
+        .panel-title Response Map
+      .panel-body
+        leaflet.map.mapbig(center="map.center" markers="map.markers")
+    .panel.panel-default
+      .panel-heading
         //-button(ng-click="downloadAll()" class="pull-right btn btn-purple btn-sm") Download
         button(href="/api/questionnaires/{{questionnaire.serverId}}/download/csv" class="pull-right btn btn-purple btn-sm") Download
         .panel-title Responses

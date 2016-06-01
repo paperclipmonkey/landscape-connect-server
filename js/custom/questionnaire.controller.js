@@ -46,8 +46,37 @@
 
         ////////////////
 
+        angular.extend($scope, {
+            map:{
+              center: {
+                  lat: 40.095,
+                  lng: 0,
+                  zoom: 6
+              },
+              defaults: {
+                  scrollWheelZoom: false
+              },
+              markers: [
+                  {
+                      lat: 59.91,
+                      lng: 10.75,
+                      message: "I want to travel here!",
+                      focus: true,
+                      draggable: false
+                  }
+              ]
+            }
+        });
+
+
+
         function activate() {
             var Api = $resource('/api/questionnaires/' + $stateParams.questionnaireId + '/responses');
+
+            $http.get('/api/questionnaires/' + $stateParams.questionnaireId + '/responses')
+            .then(function(response) {
+                $scope.map.markers = response.data.result;
+            });
 
             vm.tableResponses = new ngTableParams({
                 page: 1,            // show first page
@@ -76,6 +105,7 @@
                       */
                   }
                 });
+
         }
 
         activate();
