@@ -38,7 +38,7 @@
         //-     em.fa.fa-share-alt.text-muted
     .panel.panel-default.section(ng-repeat="(skey, sval) in response.data")
       .panel-heading
-        .panel-title.response-section-title {{sval.key}}
+        .panel-title {{sval.key}}
       .panel-body
         div(ng-repeat="(qkey, qval) in sval.value")
           h4.question {{qval.key}}
