@@ -35,7 +35,7 @@ module.exports = function (app) {
       // Publish event to the system
       eventServer.emit(objName + ':create', instance)
 
-      res.json(instance) // JSON
+      res.json({status: "success", obj: instance}) // JSON
       res.end()
     })
   }
