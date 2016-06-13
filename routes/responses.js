@@ -10,7 +10,9 @@ module.exports = function (app) {
   var modelName = 'response'
 
   var create = function (req, res, next) {
-    eventServer.emit(objName + ':creating', instance)
+    eventServer.emit(objName + ':creating', req.body)
+
+    eventServer.emit(objName + ':creating')
     var toInsert = req.body
 
     var Model = mongoose.model(modelName)
@@ -25,6 +27,7 @@ module.exports = function (app) {
     instance.save(function (err) {
       if (err) {
         eventServer.emit(objName + ':error', err)
+        eventServer.emit(instance)
         res.status(400).json(JSON.stringify({'err': err.message}))
         return res.end()
       }

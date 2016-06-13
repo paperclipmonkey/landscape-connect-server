@@ -47,12 +47,16 @@ module.exports = (function () {
       console.log('Logged in')
     })
 
-    eventServer.on('view:creating', function (view) {
-      console.log('New view being created')
+    eventServer.on('Response:creating', function (view) {
+      console.log('New response being created')
     })
 
-    eventServer.on('view:error', function (err) {
+    eventServer.on('Response:error', function (err) {
       console.error(err)
+    })
+
+    eventServer.on('Response:*', function (data) {
+      console.log(data)
     })
 
     // Catch all email events
@@ -149,7 +153,7 @@ module.exports = (function () {
   // app.post('/api/questionnaires/download/images/', middleware.ensureAuthenticated, routes.download.download_images)
   app.get('/api/questionnaires/:id/download/csv', middleware.ensureAuthenticated, routes.download.download_csv)
   app.get('/api/questionnaires/:id/download/kmz', middleware.ensureAuthenticated, routes.download.download_kmz)
-  app.get('/api/questionnaires/:id/download/images', middleware.ensureAuthenticated, routes.download.download_images)
+  app.get('/api/questionnaires/:id/download/media', middleware.ensureAuthenticated, routes.download.download_media)
 
   // Questionnaire
   app.get('/api/questionnaires', routes.questionnaires.list)

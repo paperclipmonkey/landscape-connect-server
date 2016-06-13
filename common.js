@@ -55,17 +55,17 @@ module.exports = (function () {
     var downloader = s3Client.downloadStream(s3Params)
 
     downloader.on('error', function (err) {
-      console.error('unable to download from S3:', err.stack)
+      console.error('Unable to download from S3')
       this.end()
     })
 
     // downloader.on('progress', function () {
-    // console.log("progress", downloader.progressMd5Amount,
-    // downloader.progressAmount, downloader.progressTotal)
+    //   console.log("progress", downloader.progressMd5Amount,
+    //   downloader.progressAmount, downloader.progressTotal)
     // })
 
     // downloader.on('end', function () {
-    // console.log("done downloading from S3")
+    //   console.log("done downloading from S3")
     // })
     return downloader
   }
