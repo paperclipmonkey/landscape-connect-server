@@ -14,7 +14,7 @@
       </div>
       <div ng-repeat="(skey, sval) in response.data" class="panel panel-default section">
          <div class="panel-heading">
-            <div class="panel-title response-section-title">{{sval.key}}</div>
+            <div class="panel-title">{{sval.key}}</div>
          </div>
          <div class="panel-body">
             <div ng-repeat="(qkey, qval) in sval.value">

@@ -1,27 +1,146 @@
 <div class="row questionnaire">
    <!-- Blog Content-->
    <div class="col-lg-9">
-      <div class="panel panel-default">
-         <div class="panel-heading">
-            <div class="bb">
-               <h2 class="text-lg">{{questionnaire.name}}</h2>
-               <p class="clearfix">
-                  <span class="pull-left">
-                     <small class="mr-sm">By <a href="">{{questionnaire.owner.email}}</a>
-                     </small>
-                     <small class="mr-sm">{{questionnaire.created | date:'medium'}}</small>
-                  </span>
-               </p>
+      <div class="row">
+         <div class="col-lg-8">
+            <div class="panel panel-default">
+               <div class="panel-heading">
+                  <div class="bb">
+                     <h2 class="text-lg">{{questionnaire.name}}</h2>
+                     <p class="clearfix">
+                        <span class="pull-left">
+                           <small class="mr-sm">By <a href="">{{questionnaire.owner.email}}</a>
+                           </small>
+                           <small class="mr-sm">{{questionnaire.created | date:'medium'}}</small>
+                        </span>
+                     </p>
+                  </div>
+               </div>
+               <div class="panel-body text-md">
+                  <p>{{questionnaire.description}}</p>
+                  <br/>
+               </div>
             </div>
          </div>
-         <div class="panel-body text-md">
-            <p>{{questionnaire.description}}</p>
-            <br/>
+         <div class="col-lg-4">
+            <!-- START List group-->
+            <ul class="list-group">
+               <li class="list-group-item">
+                  <div class="row row-table pv-lg">
+                     <div class="col-xs-6">
+                        <p class="m0 lead">1204</p>
+                        <p class="m0">
+                           <small>Commits this month</small>
+                        </p>
+                     </div>
+                     <div class="col-xs-6 text-center">
+                        <div sparkline="" data-bar-color="{{colorByName('info')}}" data-height="60" data-bar-width="10" data-bar-spacing="6" data-chart-range-min="0" values="3,6,7,8,4,5"></div>
+                     </div>
+                  </div>
+               </li>
+               <li class="list-group-item">
+                  <div class="row row-table pv-lg">
+                     <div class="col-xs-6">
+                        <p class="m0 lead">$ 3,200.00</p>
+                        <p class="m0">
+                           <small>Available budget</small>
+                        </p>
+                     </div>
+                     <div class="col-xs-6 text-center">
+                        <div sparkline="" data-type="line" data-height="60" data-width="80%" data-line-width="2" data-line-color="{{colorByName('purple')}}" data-chart-range-min="0" data-spot-color="#888" data-min-spot-color="{{colorByName('purple')}}" data-max-spot-color="{{colorByName('purple')}}"
+                        data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="3" values="7,3,4,7,5,9,4,4,7,5,9,6,4" data-resize="true"></div>
+                     </div>
+                  </div>
+               </li>
+               <li class="list-group-item">
+                  <div class="row row-table pv-lg">
+                     <div class="col-xs-6">
+                        <p class="m0 lead">67</p>
+                        <p class="m0">
+                           <small>New followers</small>
+                        </p>
+                     </div>
+                     <div class="col-xs-6">
+                        <ul class="list-inline text-center">
+                           <li>
+                              <a href="#" uib-tooltip="Katie">
+                                 <img src="app/img/user/02.jpg" alt="Follower" class="img-responsive img-circle thumb24" />
+                              </a>
+                           </li>
+                           <li>
+                              <a href="#" uib-tooltip="Cody">
+                                 <img src="app/img/user/01.jpg" alt="Follower" class="img-responsive img-circle thumb24" />
+                              </a>
+                           </li>
+                           <li>
+                              <a href="#" uib-tooltip="Tamara">
+                                 <img src="app/img/user/03.jpg" alt="Follower" class="img-responsive img-circle thumb24" />
+                              </a>
+                           </li>
+                           <li>
+                              <a href="#" uib-tooltip="Gene">
+                                 <img src="app/img/user/04.jpg" alt="Follower" class="img-responsive img-circle thumb24" />
+                              </a>
+                           </li>
+                           <li>
+                              <a href="#" uib-tooltip="Marsha">
+                                 <img src="app/img/user/04.jpg" alt="Follower" class="img-responsive img-circle thumb24" />
+                              </a>
+                           </li>
+                           <li>
+                              <a href="#" uib-tooltip="Robin">
+                                 <img src="app/img/user/09.jpg" alt="Follower" class="img-responsive img-circle thumb24" />
+                              </a>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </li>
+            </ul>
+         </div>
+         <!-- END List group-->
+      </div>
+      <div class="panel panel-default">
+         <div class="panel-heading">
+            <div class="panel-title">Responses Map</div>
+         </div>
+         <div class="panel-body">
+            <leaflet center="map.center" markers="map.markers" class="map mapbig"></leaflet>
          </div>
       </div>
       <div class="panel panel-default">
          <div class="panel-heading">
-            <button href="/api/questionnaires/{{questionnaire.serverId}}/download/csv" class="pull-right btn btn-purple btn-sm">Download</button>
+            <div class="panel-title">Question Responses</div>
+         </div>
+         <div class="panel-body">
+            <uib-tabset justified="true" vertical="true">
+               <uib-tab ng-repeat="section in questionnaire.sections">
+                  <uib-tab-heading>
+                     <em class="fa fa-clock-o fa-fw"></em>{{section.title}}</uib-tab-heading>
+                  <div>
+                     <div ng-repeat="question in section.questions"></div>{{question.title}}
+                     <div class="panel-footer text-right"><a href="#" class="btn btn-default btn-sm">View All Activity</a>
+                     </div>
+                  </div>
+               </uib-tab>
+            </uib-tabset>
+         </div>
+      </div>
+      <div class="panel panel-default">
+         <div class="panel-heading">
+            <div uib-dropdown="dropdown" class="btn-group pull-right">
+               <button uib-dropdown-toggle="true" class="btn btn-purple">Download<b class="caret"></b>
+               </button>
+               <ul role="menu" class="dropdown-menu animated undefined">
+                  <li><a href="/api/questionnaires/{{questionnaire.serverId}}/download/csv">CSV</a>
+                  </li>
+                  <li><a href="/api/questionnaires/{{questionnaire.serverId}}/download/kmz">KMZ</a>
+                  </li>
+                  <li><a href="/api/questionnaires/{{questionnaire.serverId}}/download/media">Media</a>
+                  </li>
+                  <!-- END button group-->
+               </ul>
+            </div>
             <div class="panel-title">Responses</div>
          </div>
          <div class="panel-body">
