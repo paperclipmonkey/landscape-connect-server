@@ -73,7 +73,7 @@ module.exports = function (app) {
     return zip
   }
 
-  var download_images = function (req, res) {
+  var download_media = function (req, res) {
     try {
       var ids = req.params.id
     } catch (e) {
@@ -81,9 +81,10 @@ module.exports = function (app) {
     }
     download_docs(ids, function (docs) {
       var zip = archiver.create('zip')
-      res.attachment('images.zip')
+      res.attachment('media.zip')
       zip.pipe(res)
       zip.addListener('fail', function (err) {
+        console.log("Zip failed")
         console.log(err)
       })
 
@@ -93,11 +94,7 @@ module.exports = function (app) {
   }
 
   var download_kmz = function (req, res) {
-    try {
-      var ids = JSON.parse(req.body.ids)
-    } catch (e) {
-      return res.sendStatus(400)
-    }
+    var ids = [req.body.id]
     download_docs(ids, packageKML, res)
   }
 
@@ -109,7 +106,7 @@ module.exports = function (app) {
     add_images(docs, zip)
     createKML(docs, function (err, kmlString) {
       if (err) {
-        console.log(new Error('Could not package KML'))
+        console.log(err)
       // next(err)
       }
       zip.append(
@@ -136,7 +133,12 @@ module.exports = function (app) {
         return res.sendStatus(500)
       }
       res.setHeader('Content-Disposition', 'attachment; filename=' + req.params.file)
-      common.downloadFromS3('uploads/' + doc.photo).pipe(res)
+      try{
+        common.downloadFromS3('uploads/' + doc.photo).pipe(res)
+      } catch(err){
+        console.log(err)
+        res.end()
+      }
     })
   }
 
@@ -145,6 +147,6 @@ module.exports = function (app) {
     download_image: download_image,
     download_docs: download_docs,
     download_csv: download_csv,
-    download_images: download_images,
+    download_media: download_media,
   }
 }
