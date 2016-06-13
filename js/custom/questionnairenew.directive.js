@@ -87,6 +87,12 @@
                           });
 
                       function readFile(file) {
+                          if(file.size > 201 * 1000){
+                            //Warn file is too large
+                            alert("File is too large. Please resize and try again")
+                            return;
+                          }
+
                           var deferred = $q.defer();
 
                           var reader = new FileReader();
