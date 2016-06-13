@@ -49,21 +49,14 @@
         angular.extend($scope, {
             map:{
               center: {
-                  lat: 40.095,
+                  lat: 55,
                   lng: 0,
-                  zoom: 6
+                  zoom: 5
               },
               defaults: {
                   scrollWheelZoom: false
               },
               markers: [
-                  {
-                      lat: 59.91,
-                      lng: 10.75,
-                      message: "I want to travel here!",
-                      focus: true,
-                      draggable: false
-                  }
               ]
             }
         });
