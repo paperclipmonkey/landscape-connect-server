@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+	<Document>
+		<Style id="rmvBalloonStyle">
+			<BalloonStyle>
+				<!-- a background color for the balloon -->
+				<bgColor>ffffff</bgColor>
+				<!-- styling of the balloon text -->
+				<text><![CDATA[
+				<html><head>
+				<style type="text/css">
+					body {background-color: #ffffff}
+					p {color: #000000}
+					p {font-family: Arial, Helvetica, sans-serif}
+					a:link {color: #B75B00}
+					dt {
+						float: left;
+						font-weight: bold
+						clear: left;
+						margin: 0;
+						padding: 0 .5em 0 0;
+					}
+					dd {
+						margin: 0;
+						padding: 0;
+					}
+					dt:after {
+						content: ":";
+					}
+				</style>
+				</head>
+				<body>
+				<b><font color="#CC0000" size="+3">$[name]</font></b>
+				<br/><br/>
+				<font face="Arial, Helvetica, sans-serif">$[description]</font>
+				<br/><br/>
+				</body>
+				]]></text>
+			</BalloonStyle>
+		</Style>
+
+		{{#docs}}
+		<Placemark>
+			<name>{{d.ts}}</name>
+			<styleUrl>#rmvBalloonStyle</styleUrl>
+			<visibility>0</visibility>
+			<Point>
+				<coordinates>{{{loc.coordinates}}}, 0</coordinates>
+			</Point>
+			<description><![CDATA[
+				<img src="{{photo}}"/><br/><br/>
+				<h2>Details</h2>
+				<dl>
+					<dt>Rating</dt>
+					<dd>{{rating}}</dd>
+					<dt>Age</dt>
+					<dd>{{age}}</dd>
+					<dt>Know Area</dt>
+					<dd>{{knowarea}}</dd>
+					<dt>Words</dt>
+					<dd>{{words}}</dd>
+					<dt>Comments</dt>
+					<dd>{{comments}}</dd>
+					<dt>Heading</dt>
+					<dd>{{heading}}</dd>
+				</dl>
+				<a href="http://ratemyview.co.uk/#{{_id}}">View on website</a>
+			]]></description>
+		</Placemark>
+		{{/docs}}
+	</Document>
+</kml>
