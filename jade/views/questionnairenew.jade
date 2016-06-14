@@ -113,7 +113,7 @@ h3 New Questionnaire
                     div(ng-if='selectedQuestion != null')
                       .form-group
                         label(for='title') Title
-                        input.form-control(type='text', ng-blur='checkDuplicate(selectedQuestion.title, $event)' ng-model='selectedQuestion.title', placeholder='Title')
+                        input.form-control(type='text', ng-blur='checkDuplicateQuestion(selectedQuestion.title, $event)' ng-model='selectedQuestion.title', placeholder='Title')
                       .form-group.screen.draggable-element-container.list-group(ui-sortable='questionOptions' ng-show='selectedQuestion.choices', ng-if="selectedQuestion.type === 'multi' || selectedQuestion.type === 'radio'")
                         label(for='title') choices
                         div(ng-repeat='choice in selectedQuestion.choices')
@@ -131,7 +131,7 @@ h3 New Questionnaire
                     div(ng-if='selectedQuestion == null && selectedSection != null')
                       .form-group
                         label(for='title') Title
-                        input.form-control(type='text', ng-model='selectedSection.title', placeholder='Title')
+                        input.form-control(type='text', ng-model='selectedSection.title', placeholder='Title' ng-blur='checkDuplicateSection(selectedSection.title, $event)')
                     //- Questionnaire details
                     div(ng-if='selectedQuestion == null && selectedSection == null')
                       p Select a section
