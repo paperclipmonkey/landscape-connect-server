@@ -25,7 +25,7 @@ describe('Questionnaires', function () {
 
   it('GET /api/questionnaires as normal client should show questionnaires', function (done) {
     rAgent
-      .get('/api/questionnaires/')
+      .get('/api/questionnaires/public/')
       .expect(200)
       .expect(/\bresult\b/, done)
   })

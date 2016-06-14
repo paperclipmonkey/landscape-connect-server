@@ -107,6 +107,7 @@ module.exports = function (app) {
   return {
     'create': create,
     'list': list,
+    'list_public': list_public,
     'remove': remove,
     'update': update,
     'read': read,

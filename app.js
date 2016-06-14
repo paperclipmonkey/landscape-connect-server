@@ -157,6 +157,7 @@ module.exports = (function () {
 
   // Questionnaire
   app.get('/api/questionnaires', routes.questionnaires.list)
+  app.get('/api/questionnaires/public', routes.questionnaires.list_public)
   app.get('/api/questionnaires/:id', routes.questionnaires.read)
   app.get('/api/questionnaires/:id/qr', routes.questionnaires.qr)
   app.delete('/api/questionnaires/:id', middleware.ensureAuthenticated, routes.questionnaires.remove)
