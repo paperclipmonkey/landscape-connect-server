@@ -73,7 +73,7 @@ module.exports = function (app) {
   var read = function (req, res, next) {
     mongoose.model(modelName).findOne({_id: req.params.id}, function (err, doc) {
       if (err) return next(err)
-      if (!doc) return sendStatus(404)
+      if (!doc) return res.sendStatus(404)
       res.send(doc)
     })
   }
