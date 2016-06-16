@@ -12,9 +12,25 @@
     /*jshint -W055 */
     responseCtrl.$inject = ['$resource', '$timeout', 'questionnairesDataService', '$scope', '$http', '$stateParams', '$state'];
     function responseCtrl($resource, $timeout, questionnairesDataService, $scope, $http, $stateParams, $state) {
+        angular.extend($scope, {
+            map:{
+              center: {
+                  lat: 55,
+                  lng: 0,
+                  zoom: 5
+              },
+              defaults: {
+                  scrollWheelZoom: false
+              },
+              markers: [
+              ]
+            }
+        })
+
         $http.get("/api/questionnaires/" + $stateParams.questionnaireId + "/responses/" + $stateParams.responseId).success(function(data, status) {
             console.log(data, status)
             $scope.response = data;
+            $scope.map.markers.push(data)
         })
 
         $http.get("/api/questionnaires/" + $stateParams.questionnaireId).success(function(data, status) {
