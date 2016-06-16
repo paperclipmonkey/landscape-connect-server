@@ -36,13 +36,20 @@
         //-   //-   em.fa.fa-pinterest.text-muted
         //-   button.btn.btn-default(type='button')
         //-     em.fa.fa-share-alt.text-muted
-    .panel.panel-default.section(ng-repeat="(skey, sval) in response.data")
+    .panel.panel-default.section
       .panel-heading
-        .panel-title {{sval.key}}
+        .panel-title raw
       .panel-body
-        div(ng-repeat="(qkey, qval) in sval.value")
-          h4.question {{qval.key}}
-          p.questionanswer {{qval.value}}
+        | {{response.data}}
+        //- Loop through the sections
+
+    .panel.panel-default.section(ng-repeat="(sectionkey, sectionval) in response.data")
+      .panel-heading
+        .panel-title {{sectionval.key}}
+      .panel-body
+        div(ng-repeat="(questionkey, quesionval) in sectionval.value")
+          h4.question {{quesionval.key}}
+          p.questionanswer {{quesionval.value}}
         //- Loop through the sections
   .col-lg-3
     // Tasks
