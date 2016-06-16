@@ -22,9 +22,11 @@
         'sections': [
           {
             'title': 'Sample Section 1',
+            'sectionId': 'lnnder',
             'questions': [
               {
                 title: 'Example Multi Select',
+                questionId: 'ovgdfq',
                 type: 'multi',
                 choices: [
                   {
@@ -37,15 +39,18 @@
               },
               {
                 title: 'Example Multiline Textarea',
+                questionId: 'qjmyzw',
                 type: 'textarea'
               }
             ]
           },
           {
             'title': 'Sample Section 2',
+            'sectionId': 'swghrp',
             'questions': [
               {
                 title: 'Second Multi Select',
+                questionId: 'ilxkxu',
                 type: 'multi',
                 choices: [
                   {
@@ -68,6 +73,7 @@
 
       var sectionTemplate = {
         'title': 'Section title',
+        'sectionId': '',
         'questions': []
       }
 
@@ -105,6 +111,16 @@
           type: 'text'
         }
       ]
+
+      function generateId(){
+        var length = 6
+        var str = ''
+        while(str.length < length){
+          var rand = Math.ceil(Math.random()*36)
+          str += 'abcdefghijklmnopqrstuvwxyz'.substring(rand, rand + 1)
+        }
+        return str
+      }
 
       $scope.checkDuplicateQuestion = function(a,b){
         //Loop through selected section
@@ -200,6 +216,7 @@
       $scope.addSection = function () {
         var section = angular.copy(sectionTemplate)
         section.title = this.sectionToAdd
+        section.sectionId = generateId()
         $scope.questionnaire.sections.push(section)
         $scope.selectedSection = section
         this.sectionToAdd = ''
@@ -227,6 +244,7 @@
 
       $scope.newQuestionClick = function (a) {
         var newEl = angular.copy(a)
+        newEl.questionId = generateId()
         $scope.selectedSection.questions.push(newEl)
         $scope.selectedQuestion = newEl
       }
