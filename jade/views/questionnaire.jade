@@ -1,54 +1,118 @@
 .row.questionnaire
   // Blog Content
   .col-lg-9
+    .row
+      .col-lg-8
+        .panel.panel-default
+          .panel-heading
+            .bb
+              h2.text-lg {{questionnaire.name}}
+              p.clearfix
+                span.pull-left
+                  small.mr-sm By 
+                    a(href="") {{questionnaire.owner.email}}
+                  small.mr-sm {{questionnaire.created | date:'medium'}}
+                  //- small 
+                  //-   strong {{$data.length}}
+                  //-   span responses
+          .panel-body.text-md
+            p {{questionnaire.description}}
+            br
+            //- Display latest photos
+            //- hr
+            //- .h3 Latest photos
+            //- .row
+            //-   .col-xs-3
+            //-     a(href=""): img.img-responsive(src="app/img/bg4.jpg")
+            //-   .col-xs-3
+            //-     a(href=""): img.img-responsive(src="app/img/bg5.jpg")
+            //-   .col-xs-3
+            //-     a(href=""): img.img-responsive(src="app/img/bg7.jpg")
+            //-   .col-xs-3
+            //-     a(href=""): img.img-responsive(src="app/img/bg8.jpg")
+            //- br
+            //- hr
+            //- small.mr-sm Share
+            //- .btn-group(role='group', aria-label='...')
+            //-   button.btn.btn-default(type='button')
+            //-     em.fa.fa-facebook.text-muted
+            //-   button.btn.btn-default(type='button')
+            //-     em.fa.fa-twitter.text-muted
+            //-   button.btn.btn-default(type='button')
+            //-     em.fa.fa-google-plus.text-muted
+            //-   //- button.btn.btn-default(type='button')
+            //-   //-   em.fa.fa-tumblr.text-muted
+            //-   //- button.btn.btn-default(type='button')
+            //-   //-   em.fa.fa-pinterest.text-muted
+            //-   button.btn.btn-default(type='button')
+            //-     em.fa.fa-share-alt.text-muted
+      .col-lg-4
+        // START List group
+        ul.list-group
+          li.list-group-item
+            .row.row-table.pv-lg
+              .col-xs-6
+                p.m0.lead 1204
+                p.m0: small Total responses
+              .col-xs-6.text-center
+                div(sparkline="", data-bar-color="{{colorByName('info')}}", data-height="60", data-bar-width="10", data-bar-spacing="6", data-chart-range-min="0", values="3,6,7,8,4,5")
+          li.list-group-item 
+            .row.row-table.pv-lg
+              .col-xs-6
+                p.m0.lead 400
+                p.m0: small Responses in the last month
+              .col-xs-6.text-center
+                div(sparkline="",data-type='line', data-height='60', data-width='80%', data-line-width='2', data-line-color="{{colorByName('purple')}}", data-chart-range-min="0",data-spot-color='#888', data-min-spot-color="{{colorByName('purple')}}", data-max-spot-color="{{colorByName('purple')}}", data-fill-color='', data-highlight-line-color='#fff', data-spot-radius='3', values="7,3,4,7,5,9,4,4,7,5,9,6,4", data-resize="true")
+          //- li.list-group-item 
+          //-   .row.row-table.pv-lg
+          //-     .col-xs-6
+          //-       p.m0.lead 67
+          //-       p.m0: small New followers
+          //-     .col-xs-6
+          //-       ul.list-inline.text-center
+          //-         li: a(href="#", uib-tooltip="Katie"): img.img-responsive.img-circle.thumb24(src="app/img/user/02.jpg", alt="Follower")
+          //-         li: a(href="#", uib-tooltip="Cody"): img.img-responsive.img-circle.thumb24(src="app/img/user/01.jpg", alt="Follower")
+          //-         li: a(href="#", uib-tooltip="Tamara"): img.img-responsive.img-circle.thumb24(src="app/img/user/03.jpg", alt="Follower")
+          //-         li: a(href="#", uib-tooltip="Gene"): img.img-responsive.img-circle.thumb24(src="app/img/user/04.jpg", alt="Follower")
+          //-         li: a(href="#", uib-tooltip="Marsha"): img.img-responsive.img-circle.thumb24(src="app/img/user/04.jpg", alt="Follower")
+          //-         li: a(href="#", uib-tooltip="Robin"): img.img-responsive.img-circle.thumb24(src="app/img/user/09.jpg", alt="Follower")
+      // END List group
     .panel.panel-default
       .panel-heading
-        .bb
-          h2.text-lg {{questionnaire.name}}
-          p.clearfix
-            span.pull-left
-              small.mr-sm By 
-                a(href="") {{questionnaire.owner.email}}
-              small.mr-sm {{questionnaire.created | date:'medium'}}
-              //- small 
-              //-   strong {{$data.length}}
-              //-   span responses
-      .panel-body.text-md
-        p {{questionnaire.description}}
-        br
-        //- Display latest photos
-        //- hr
-        //- .h3 Latest photos
-        //- .row
-        //-   .col-xs-3
-        //-     a(href=""): img.img-responsive(src="app/img/bg4.jpg")
-        //-   .col-xs-3
-        //-     a(href=""): img.img-responsive(src="app/img/bg5.jpg")
-        //-   .col-xs-3
-        //-     a(href=""): img.img-responsive(src="app/img/bg7.jpg")
-        //-   .col-xs-3
-        //-     a(href=""): img.img-responsive(src="app/img/bg8.jpg")
-        //- br
-        //- hr
-        //- small.mr-sm Share
-        //- .btn-group(role='group', aria-label='...')
-        //-   button.btn.btn-default(type='button')
-        //-     em.fa.fa-facebook.text-muted
-        //-   button.btn.btn-default(type='button')
-        //-     em.fa.fa-twitter.text-muted
-        //-   button.btn.btn-default(type='button')
-        //-     em.fa.fa-google-plus.text-muted
-        //-   //- button.btn.btn-default(type='button')
-        //-   //-   em.fa.fa-tumblr.text-muted
-        //-   //- button.btn.btn-default(type='button')
-        //-   //-   em.fa.fa-pinterest.text-muted
-        //-   button.btn.btn-default(type='button')
-        //-     em.fa.fa-share-alt.text-muted
-    .panel.panel-default
-      .panel-heading
-        .panel-title Response Map
+        .panel-title Responses Map
       .panel-body
         leaflet.map.mapbig(center="map.center" markers="map.markers")
+
+    .panel.panel-default
+      .panel-heading
+        .panel-title Question Responses
+      .panel-body
+        uib-tabset(justified="true" vertical="true")
+          uib-tab(ng-repeat='section in questionnaire.sections')
+            uib-tab-heading
+              em.fa.fa-clock-o.fa-fw
+              | {{section.title}}
+            div
+              div(ng-repeat="question in section.questions")
+                //- | {{question.title}}
+                div
+                  fieldset: .form-group
+                    label.col-md-4.control-label {{question.title}}
+                    .col-md-8
+                      flot(dataset='chart.pieData', options='chart.pieOptions', height="300px")
+              //- .panel-footer.text-right
+              //-   a.btn.btn-default.btn-sm(href='#') View All Activity
+
+            //- .row
+            //-   .col-md-6
+            //-     #panelChart5.panel.panel-default
+            //-       .panel-heading
+            //-         paneltool(tool-collapse, tool-dismiss)
+            //-         .panel-title Pie
+            //-       .panel-wrapper(uib-collapse="panelChart5")
+            //-         .panel-body
+            //-           flot(dataset='chart.pieData', options='chart.pieOptions', height="300px")
+
     .panel.panel-default
       .panel-heading
         .btn-group.pull-right(uib-dropdown='dropdown')
