@@ -36,20 +36,14 @@
         //-   //-   em.fa.fa-pinterest.text-muted
         //-   button.btn.btn-default(type='button')
         //-     em.fa.fa-share-alt.text-muted
-    .panel.panel-default.section
-      .panel-heading
-        .panel-title raw
-      .panel-body
-        | {{mResponse}}
-        //- Loop through the sections
 
-    .panel.panel-default.section(ng-repeat="(sectionkey, sectionval) in response.data")
+    .panel.panel-default.section(ng-repeat="section in mResponse")
       .panel-heading
-        .panel-title {{sectionval.key}}
+        .panel-title {{section.title}}
       .panel-body
-        div(ng-repeat="(questionkey, quesionval) in sectionval.value")
-          h4.question {{quesionval.key}}
-          p.questionanswer {{quesionval.value}}
+        div(ng-repeat="question in section.questions")
+          h4.question {{question.title}}
+          p.questionanswer {{question.answer}}
         //- Loop through the sections
   .col-lg-3
     // Tasks
@@ -69,7 +63,7 @@
           li Location: {{response.lat}}, {{response.lng}}
           li Accuracy: {{response.locAcc}}m
 
-        leaflet.map.mapbig(center="map.center" markers="map.markers")
+        leaflet.map.mapmid(center="map.center" markers="map.markers")
 
     // Properties
     .panel.panel-default

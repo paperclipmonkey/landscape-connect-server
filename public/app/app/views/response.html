@@ -12,20 +12,14 @@
             <br/>
          </div>
       </div>
-      <div class="panel panel-default section">
+      <div ng-repeat="section in mResponse" class="panel panel-default section">
          <div class="panel-heading">
-            <div class="panel-title">raw</div>
-         </div>
-         <div class="panel-body">{{mResponse}}</div>
-      </div>
-      <div ng-repeat="(sectionkey, sectionval) in response.data" class="panel panel-default section">
-         <div class="panel-heading">
-            <div class="panel-title">{{sectionval.key}}</div>
+            <div class="panel-title">{{section.title}}</div>
          </div>
          <div class="panel-body">
-            <div ng-repeat="(questionkey, quesionval) in sectionval.value">
-               <h4 class="question">{{quesionval.key}}</h4>
-               <p class="questionanswer">{{quesionval.value}}</p>
+            <div ng-repeat="question in section.questions">
+               <h4 class="question">{{question.title}}</h4>
+               <p class="questionanswer">{{question.answer}}</p>
             </div>
          </div>
       </div>
@@ -51,7 +45,7 @@
                <li>Location: {{response.lat}}, {{response.lng}}</li>
                <li>Accuracy: {{response.locAcc}}m</li>
             </ul>
-            <leaflet center="map.center" markers="map.markers" class="map mapbig"></leaflet>
+            <leaflet center="map.center" markers="map.markers" class="map mapmid"></leaflet>
          </div>
       </div>
       <!-- Properties-->
