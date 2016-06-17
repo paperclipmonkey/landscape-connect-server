@@ -25,7 +25,8 @@ module.exports = function (app) {
           docs2 = []
 
           for(var i = 0; i < docs.length; i++){
-            docs2.push(docs[i].dataToAttrs())
+           //TODO
+           // docs2.push(docs[i].dataToAttrs())
           }
           try {
             json2csv({data: docs2, fields: fields}, function (err, csv) {

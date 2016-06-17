@@ -22,8 +22,6 @@ module.exports = function (app) {
       instance.media = req.uploadedFileNames
     }
 
-    instance.dataToKeyVal();
-
     instance.save(function (err) {
       if (err) {
         eventServer.emit(objName + ':error', err)
