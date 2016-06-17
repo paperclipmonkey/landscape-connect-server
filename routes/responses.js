@@ -60,14 +60,6 @@ module.exports = function (app) {
     })
   }
 
-  var update = function (req, res, next) {
-    mongoose.model(modelName).findOneAndUpdate({_id: req.params.id}, req.body, {'new': true}, function (err, doc) {
-      if (err) return next(err)
-      res.json(results.view)
-      eventServer.emit(objName + ':update', doc)
-    })
-  }
-
   var read = function (req, res, next) {
     mongoose.model(modelName).findOne({_id: req.params.id}, function (err, doc) {
       if (err) return next(err)
@@ -80,7 +72,6 @@ module.exports = function (app) {
     'create': create,
     'list': list,
     'remove': remove,
-    'update': update,
     'read': read
   }
 }
