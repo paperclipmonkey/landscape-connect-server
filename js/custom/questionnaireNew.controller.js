@@ -122,34 +122,6 @@
         return str
       }
 
-      $scope.checkDuplicateQuestion = function(a,b){
-        //Loop through selected section
-        var count = 0
-        for (var i = $scope.selectedSection.questions.length - 1; i >= 0; i--) {
-          var item = $scope.selectedSection.questions[i]
-          if(item.title === a){
-            count++
-          }
-        }
-        if(count > 1){//We have a duplicate
-          alert("Please use a unique question name")
-        }
-      }
-
-      $scope.checkDuplicateSection = function(a,b){
-        //Loop through sections
-        var count = 0
-        for (var i = $scope.questionnaire.sections.length - 1; i >= 0; i--) {
-          var item = $scope.questionnaire.sections[i]
-          if(item.title === a){
-            count++
-          }
-        }
-        if(count > 1){//We have a duplicate
-          alert("Please use a unique section name")
-        }
-      }
-
       $scope.draggables = questionPrototypes.map(function (x) {
         return [x]
       })
