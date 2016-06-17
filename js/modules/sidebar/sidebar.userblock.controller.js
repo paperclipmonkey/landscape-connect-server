@@ -22,7 +22,6 @@
               if(!response.data.account){
                 return $state.go('page.login');
               }
-              console.log('user account details', response.data.account)
               $rootScope.user = response.data.account;
             }, function() {
               console.log("Error logging in");

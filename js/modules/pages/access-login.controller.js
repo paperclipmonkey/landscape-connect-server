@@ -31,7 +31,6 @@
                 return;
               }
               $state.go('app.dashboard');
-              console.log('user account details', response.data.account)
             });
 
           vm.login = function() {
