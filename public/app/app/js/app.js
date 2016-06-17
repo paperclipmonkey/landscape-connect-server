@@ -7339,7 +7339,7 @@
               title: 'Response',
               templateUrl: helper.basepath('response.html'),
               controller: 'responseCtrl',
-              resolve: helper.resolveFor('ngTable', 'ngTableExport')
+              resolve: helper.resolveFor('ngTable', 'ngTableExport', 'leaflet', 'angular-leaflet-directive')
           })
 
           .state('app.documentation', {
