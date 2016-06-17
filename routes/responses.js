@@ -40,16 +40,23 @@ module.exports = function (app) {
 
   var list = function (req, res, next) {
     eventServer.emit(objName + ':list', {})
+    var questionnaire
     var cback = function (err, results) {
       if (err) return next(err)
+      for (var i = 0; i < results.length; i++) {
+        results[i] = common.formatResponse(results[i], questionnaire)
+      }
       res.json({'result': results})
     }
-    if (req.user && req.user.isSuper) {
-      mongoose.model(modelName).find({questionnaire: req.params.id}, cback)
-    } else {
-      // TODO - check if data is public for this questionnaire
-      mongoose.model(modelName).find({questionnaire: req.params.id}, cback) // user: req.user._id
-    }
+    mongoose.model('questionnaire').findOne({serverId: req.params.id}, function (err, docb) {
+      questionnaire = docb
+      if (req.user && req.user.isSuper) {
+        mongoose.model(modelName).find({questionnaire: req.params.id}, cback)
+      } else {
+        // TODO - check if data is public for this questionnaire
+        mongoose.model(modelName).find({questionnaire: req.params.id}, cback) // user: req.user._id
+      }
+    })
   }
 
   var remove = function (req, res, next) {
@@ -61,10 +68,13 @@ module.exports = function (app) {
   }
 
   var read = function (req, res, next) {
-    mongoose.model(modelName).findOne({_id: req.params.id}, function (err, doc) {
+    mongoose.model(modelName).findOne({_id: req.params.id}, function (err, doca) {
       if (err) return next(err)
-      if (!doc) return res.sendStatus(404)
-      res.send(doc)
+      if (!doca) return res.sendStatus(404)
+      mongoose.model('questionnaire').findOne({serverId: doca.questionnaire}, function (err, docb) {
+        var doc = common.formatResponse(doca, docb)
+        res.send(doc)
+      })
     })
   }
 

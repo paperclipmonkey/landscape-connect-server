@@ -35,21 +35,6 @@
             $http.get("/api/questionnaires/" + $stateParams.questionnaireId + "/responses/" + $stateParams.responseId).success(function(data, status) {
                 $scope.response = data;
                 $scope.map.markers.push(data)
-
-                //build the response object from the questionnaire and response
-                $scope.mResponse = $scope.questionnaire.sections
-                for (var i = $scope.mResponse.length - 1; i >= 0; i--) {
-                    var section =  $scope.mResponse[i]
-                    //console.log("section", section)
-                    for (var x = section.questions.length - 1; x >= 0; x--) {
-                        var question = section.questions[x]
-                        //console.log("question", question)
-                        section.questions[x] = {
-                            title: section.questions[x].title,
-                            answer: getQuestionResponse(section.sectionId, question.questionId)
-                        }
-                    }
-                }
             })
 
         })
@@ -59,16 +44,6 @@
             $http.delete("/api/questionnaires/" +  $stateParams.questionnaireId + "/responses" + $stateParams.responseId).success(function(data, status) {
                 $state.go('app.questionnaires')
             })
-        }
-
-        var getQuestionResponse = function(sectionId, questionId){
-            //console.log("Looking up question:", sectionId, questionId)
-            try{
-                return $scope.response.data[sectionId][questionId]
-            } catch(e){
-                console.log("Didn't find answer:", sectionId, questionId)
-                return
-            }
         }
 
         $scope.isImage = function(filename){

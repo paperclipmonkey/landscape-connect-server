@@ -43,6 +43,37 @@ module.exports = (function () {
   }
 
   /*
+  Convert response from storage format to outputting format
+  */
+  function formatResponse(response, questionnaire){
+    var newData = {}
+    for (var i = questionnaire.sections.length - 1; i >= 0; i--) {
+      var section =  questionnaire.sections[i]
+      for (var x = section.questions.length - 1; x >= 0; x--) {
+          var question = section.questions[x]
+          section.questions[x] = {
+              title: section.questions[x].title,
+              answer: getQuestionResponse(response, section.sectionId, question.questionId)
+          }
+      }
+    }
+    response.data = questionnaire.sections
+    return response
+  }
+
+  /*
+  Lookup answers to questions
+  */
+  var getQuestionResponse = function(response, sectionId, questionId){
+    //console.log("Looking up question:", sectionId, questionId)
+    try{
+        return response.data[sectionId][questionId]
+    } catch(e){
+        return
+    }
+  }
+
+  /*
   ##Downloads a file from the S3 Data service
   Responds with a byte stream
   Works with an evented system based on top of the Node.js Stream API
@@ -212,6 +243,7 @@ module.exports = (function () {
 
   return {
     getQueryLocations: getQueryLocations,
+    formatResponse: formatResponse,
     saveStreamToS3: saveStreamToS3,
     saveFileToS3: saveFileToS3,
     saveB64ToS3: saveB64ToS3,

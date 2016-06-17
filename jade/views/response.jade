@@ -37,7 +37,7 @@
         //-   button.btn.btn-default(type='button')
         //-     em.fa.fa-share-alt.text-muted
 
-    .panel.panel-default.section(ng-repeat="section in mResponse")
+    .panel.panel-default.section(ng-repeat="section in response.data")
       .panel-heading
         .panel-title {{section.title}}
       .panel-body
