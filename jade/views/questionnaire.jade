@@ -51,8 +51,18 @@
         leaflet.map.mapbig(center="map.center" markers="map.markers")
     .panel.panel-default
       .panel-heading
-        //-button(ng-click="downloadAll()" class="pull-right btn btn-purple btn-sm") Download
-        button(href="/api/questionnaires/{{questionnaire.serverId}}/download/csv" class="pull-right btn btn-purple btn-sm") Download
+        .btn-group.pull-right(uib-dropdown='dropdown')
+          button.btn.btn-purple(uib-dropdown-toggle="true")
+            | Download
+            b.caret
+          ul.dropdown-menu(role='menu', class="animated #{animation}")
+            li
+              a(href="/api/questionnaires/{{questionnaire.serverId}}/download/csv") CSV
+            li
+              a(href="/api/questionnaires/{{questionnaire.serverId}}/download/kmz") KMZ
+            li
+              a(href="/api/questionnaires/{{questionnaire.serverId}}/download/media") Media
+            // END button group
         .panel-title Responses
       .panel-body
         table.table.table-striped.table-bordered.table-hover(ng-table='tableResponses')
