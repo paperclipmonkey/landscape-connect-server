@@ -10,26 +10,51 @@ module.exports = function (app) {
         if (docs.length === 0) {
           return next(new Error('Empty result'))
         }
-        var cDocs = docs
 
-        mongoose.model('questionnaire').findOne({serverId: req.params.id}, function (err, doc) {
+        mongoose.model('questionnaire').findOne({serverId: req.params.id}, function (err, questionnaire) {
           //Get the section and questions names in to a useable format
           var dataFields = []
-          for(x in doc.sections){
-            for(y in doc.sections[x].questions){
-              dataFields.push(doc.sections[x].title + '/' + doc.sections[x].questions[y].title)
+          for(x in questionnaire.sections){
+            for(y in questionnaire.sections[x].questions){
+              dataFields.push({
+                label: questionnaire.sections[x].title + '/' + questionnaire.sections[x].questions[y].title,
+                value: 'data.' + questionnaire.sections[x].sectionId + '.' + questionnaire.sections[x].questions[y].questionId
+              })
             }
           }
-          var fields = ['media', 'timestamp', 'lat', 'lng', 'locAcc'].concat(dataFields)
 
-          docs2 = []
+          var basefields = [
+            {
+              label: 'media files',
+              value: 'media' 
+            },
+            {
+              label: 'date',
+              value: function(row) {
+                return new Date(row.timestamp).toLocaleString();
+              },
+            },
+            {
+              label: 'lat',
+              value: 'lat' 
+            },
+            {
+              label: 'lng',
+              value: 'lng' 
+            },
+            {
+              label: 'location accuracy',
+              value: 'locAcc' 
+            }
+          ]
 
-          for(var i = 0; i < docs.length; i++){
-           //TODO
-           // docs2.push(docs[i].dataToAttrs())
-          }
+          var fields = basefields.concat(dataFields)
+
           try {
-            json2csv({data: docs2, fields: fields}, function (err, csv) {
+            json2csv({
+              data: docs,
+              fields: fields,
+            }, function (err, csv) {
               if (err) return next(new Error('Failed to encode CSV'))
               var filename = 'Landscape Connect.csv'
               res.attachment(filename)
@@ -47,12 +72,23 @@ module.exports = function (app) {
   }
 
   function download_docs (id, fun, res) {
-    mongoose.model('response').find({questionnaire: id}, function (err, docs) {
+    mongoose.model('questionnaire').findOne({serverId: id}, function (err, questionnaire) {
       if (err) {
-        // next(err)
-        console.log(new Error('Could not find docs'))
+        next(err)
+        console.log(new Error('Could not find questionnaire'))
       }
-      fun(docs, res)
+      mongoose.model('response').find({questionnaire: id}, function (err, docs) {
+        if (err) {
+          next(err)
+          console.log(new Error('Could not find responses'))
+        }
+
+        // for (var i = 0; i < docs.length; i++) {
+        //   docs[i] = common.formatResponse(docs[i], questionnaire)
+        // }
+
+        fun(docs, res)
+      })
     })
   }
 

@@ -53,7 +53,7 @@
         "gulp-util": "^3.0.1",
         "hbs": "*",
         "jshint-stylish": "^2.0.0",
-        "json2csv": "2.9.x",
+        "json2csv": "3.4.3",
         "marked": "^0.3.2",
         "method-override": "2.3.x",
         "mocha": "2.2.x",
