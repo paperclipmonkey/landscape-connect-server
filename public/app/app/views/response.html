@@ -9,7 +9,6 @@
          </div>
          <div class="panel-body text-md">
             <p>{{questionnaire.description}}</p>
-            <br/>
          </div>
       </div>
       <div ng-repeat="section in mResponse" class="panel panel-default section">
@@ -25,6 +24,20 @@
       </div>
    </div>
    <div class="col-lg-3">
+      <!-- Media-->
+      <div class="panel panel-default">
+         <div class="panel-heading">Media</div>
+         <div class="panel-body">
+            <div ng-repeat="mediaItem in response.media">
+               <a href="/api/media/{{mediaItem}}">
+                  <img ng-src="/api/media/{{mediaItem}}" ng-if="isImage(mediaItem)" class="max100" />
+               </a>
+               <audio ng-if="isAudio(mediaItem)" controls="controls">
+                  <source src="{{getUrl(mediaItem)}}" />
+               </audio>
+            </div>
+         </div>
+      </div>
       <!-- Tasks-->
       <div class="panel panel-default">
          <div class="panel-heading">Tasks</div>

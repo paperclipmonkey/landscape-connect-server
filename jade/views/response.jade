@@ -7,7 +7,7 @@
           h3.text-lg Response to {{questionnaire.name}}
       .panel-body.text-md
         p {{questionnaire.description}}
-        br
+        //- br
         //- Display latest photos
         //- hr
         //- .h3 Latest photosx§
@@ -46,6 +46,15 @@
           p.questionanswer {{question.answer}}
         //- Loop through the sections
   .col-lg-3
+    // Media
+    .panel.panel-default
+      .panel-heading Media
+      .panel-body
+        div(ng-repeat="mediaItem in response.media")
+          a(href="/api/media/{{mediaItem}}")
+            img(ng-src="/api/media/{{mediaItem}}" class="max100" ng-if="isImage(mediaItem)")
+          audio(ng-if="isAudio(mediaItem)" controls)
+            source(src="{{getUrl(mediaItem)}}")
     // Tasks
     .panel.panel-default
       .panel-heading Tasks
@@ -62,9 +71,7 @@
         ul.list-unstyled
           li Location: {{response.lat}}, {{response.lng}}
           li Accuracy: {{response.locAcc}}m
-
         leaflet.map.mapmid(center="map.center" markers="map.markers")
-
     // Properties
     .panel.panel-default
       .panel-heading Properties
