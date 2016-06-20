@@ -41,7 +41,7 @@
 
         $scope.delete = function(a){
             console.log("Deleting Response")
-            $http.delete("/api/questionnaires/" +  $stateParams.questionnaireId + "/responses" + $stateParams.responseId).success(function(data, status) {
+            $http.delete("/api/questionnaires/" +  $stateParams.questionnaireId + "/responses/" + $stateParams.responseId).success(function(data, status) {
                 $state.go('app.questionnaires')
             })
         }
