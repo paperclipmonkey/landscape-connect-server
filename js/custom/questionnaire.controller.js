@@ -13,14 +13,15 @@
     questionnaireCtrl.$inject = ['$filter', 'ngTableParams', '$resource', '$timeout', 'questionnairesDataService', '$scope', '$http', '$stateParams', '$state'];
     function questionnaireCtrl($filter, ngTableParams, $resource, $timeout, questionnairesDataService, $scope, $http, $stateParams, $state) {
         $http.get("/api/questionnaires/" + $stateParams.questionnaireId).success(function(data, status) {
-            console.log(data, status)
             $scope.questionnaire = data;
         })
 
+        $http.get("/api/questionnaires/" + $stateParams.questionnaireId + "/statistics").success(function(data, status) {
+            $scope.stats = data;
+        })
+
         $scope.delete = function(a){
-            console.log("Deleting Questionnaire")
             $http.delete("/api/questionnaires/" +  $stateParams.questionnaireId).success(function(data, status) {
-                console.log(data, status)
                 $state.go('app.questionnaires')
             })
         }

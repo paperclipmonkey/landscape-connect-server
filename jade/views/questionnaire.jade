@@ -52,15 +52,15 @@
           li.list-group-item
             .row.row-table.pv-lg
               .col-xs-6
-                p.m0.lead 1204
+                p.m0.lead {{stats.total}}
                 p.m0: small Total responses
               .col-xs-6.text-center
                 div(sparkline="", data-bar-color="{{colorByName('info')}}", data-height="60", data-bar-width="10", data-bar-spacing="6", data-chart-range-min="0", values="3,6,7,8,4,5")
           li.list-group-item 
             .row.row-table.pv-lg
               .col-xs-6
-                p.m0.lead 400
-                p.m0: small Responses in the last month
+                p.m0.lead {{stats.week}}
+                p.m0: small Responses in the last week
               .col-xs-6.text-center
                 div(sparkline="",data-type='line', data-height='60', data-width='80%', data-line-width='2', data-line-color="{{colorByName('purple')}}", data-chart-range-min="0",data-spot-color='#888', data-min-spot-color="{{colorByName('purple')}}", data-max-spot-color="{{colorByName('purple')}}", data-fill-color='', data-highlight-line-color='#fff', data-spot-radius='3', values="7,3,4,7,5,9,4,4,7,5,9,6,4", data-resize="true")
           //- li.list-group-item 

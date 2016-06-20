@@ -1,5 +1,6 @@
 var mongoose = require('mongoose')
 var escape = require('escape-html')
+var moment = require('moment')
 var common = require('../common')
 var async = require('async')
 var s3Client = require('../s3-client')
@@ -78,10 +79,28 @@ module.exports = function (app) {
     })
   }
 
+  var statistics = function (req, res, next) {
+    var lastWeek = moment().subtract(1, 'week').format('x')
+    mongoose.model(modelName).find({questionnaire: req.params.id}, function (erra, docsa) {
+      mongoose.model(modelName).find({questionnaire: req.params.id, timestamp:{ $gte: lastWeek}}, function (errb, docsb) {
+        if(erra || errb){
+          eventServer.emit(objName + ':error', erra)
+          eventServer.emit(objName + ':error', errb)
+          return res.sendStatus(400)
+        }
+        var result = {}
+        result.total = docsa.length
+        result.week = docsb.length
+        res.send(result)
+      })
+    })
+  }
+
   return {
     'create': create,
     'list': list,
     'remove': remove,
-    'read': read
+    'read': read,
+    'statistics': statistics
   }
 }
