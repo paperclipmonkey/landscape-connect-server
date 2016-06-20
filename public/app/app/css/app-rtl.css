@@ -13493,7 +13493,7 @@ flatdoc .button .badge {
   cursor: move;
 }
 
-.questionnaire .max100 {
+.max100 {
   max-width: 100px;
 }
 
