@@ -63,7 +63,7 @@ module.exports = function (app) {
     mongoose.model(modelName).findByIdAndRemove(req.params.id, function (err, doc) {
       if (err) return next(err)
       eventServer.emit(objName + ':delete', doc)
-      res.redirect('/admin/views')
+      res.sendStatus(200)
     })
   }
 
