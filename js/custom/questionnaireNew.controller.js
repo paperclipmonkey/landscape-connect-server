@@ -191,6 +191,7 @@
         section.sectionId = generateId()
         $scope.questionnaire.sections.push(section)
         $scope.selectedSection = section
+        $scope.selectedQuestion = null
         this.sectionToAdd = ''
       }
 
@@ -231,6 +232,7 @@
 
       $scope.sectionOptions = {}
 
+      $scope.questionsOptions = {}
       $scope.questionOptions = {}
 
       $scope.import = function (json) {
