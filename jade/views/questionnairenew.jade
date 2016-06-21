@@ -81,7 +81,7 @@ h3 New Questionnaire
                   div(ng-if='selectedSection == null')
                     p Please create a new section or select a section from the right hand-side
                   //- - - - - - - Questions list - - - - -
-                  .apps-container.screen.draggable-element-container(ui-sortable='questionOptions', ng-model='selectedSection.questions')
+                  .apps-container.screen.draggable-element-container(ui-sortable='questionsOptions', ng-model='selectedSection.questions')
                     //- - - - Each question - - - - - - - - -
                     .form-group.formelementlistitem.alert.question(ng-click='selectQuestion(question)' ng-class='{"alert-info": question === selectedQuestion}' ng-repeat='question in selectedSection.questions track by $index')
                       em.fa.fa-reorder.fa-fw.text-muted.mr-log.moveicon
@@ -114,13 +114,15 @@ h3 New Questionnaire
                       .form-group
                         label(for='title') Title
                         input.form-control(type='text', ng-model='selectedQuestion.title', placeholder='Title')
-                      .form-group.screen.draggable-element-container.list-group(ui-sortable='questionOptions' ng-show='selectedQuestion.choices', ng-if="selectedQuestion.type === 'multi' || selectedQuestion.type === 'radio'")
+
+                      .form-group.screen.draggable-element-container.list-group(ng-show='selectedQuestion.choices', ng-if="selectedQuestion.type === 'multi' || selectedQuestion.type === 'radio'")
                         label(for='title') choices
-                        div(ng-repeat='choice in selectedQuestion.choices')
-                          .list-group-item
-                            em.fa.fa-reorder.fa-fw.text-muted.mr-log.moveicon
-                            | {{choice.choice}}
-                            em.fa.fa-times.deleteicon(ng-click='removeOption(selectedQuestion, choice)')
+                        div(ui-sortable='questionOptions' ng-model="selectedQuestion.choices")
+                          div(ng-repeat='choice in selectedQuestion.choices track by $index')
+                            .list-group-item
+                              em.fa.fa-reorder.fa-fw.text-muted.mr-log.moveicon
+                              | {{choice.choice}}
+                              em.fa.fa-times.deleteicon(ng-click='removeOption(selectedQuestion, choice)')
                         .form-group
                           input.form-control(ng-model='choiceToAdd', ng-keyup='$event.keyCode == 13 ? addOption() : true', type='text', placeholder='Add Choice')
                       .form-group

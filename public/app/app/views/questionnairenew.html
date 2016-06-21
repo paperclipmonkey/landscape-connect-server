@@ -83,7 +83,7 @@
                            <div ng-if="selectedSection == null">
                               <p>Please create a new section or select a section from the right hand-side</p>
                            </div>
-                           <div ui-sortable="questionOptions" ng-model="selectedSection.questions" class="apps-container screen draggable-element-container">
+                           <div ui-sortable="questionsOptions" ng-model="selectedSection.questions" class="apps-container screen draggable-element-container">
                               <div ng-click="selectQuestion(question)" ng-class="{&quot;alert-info&quot;: question === selectedQuestion}" ng-repeat="question in selectedSection.questions track by $index" class="form-group formelementlistitem alert question">
                                  <em class="fa fa-reorder fa-fw text-muted mr-log moveicon"></em>{{question.title}}
                                  <em ng-click="removeQuestion(question)" class="fa fa-times deleteicon"></em>
@@ -121,12 +121,14 @@
                                     <label for="title">Title</label>
                                     <input type="text" ng-model="selectedQuestion.title" placeholder="Title" class="form-control" />
                                  </div>
-                                 <div ui-sortable="questionOptions" ng-show="selectedQuestion.choices" ng-if="selectedQuestion.type === 'multi' || selectedQuestion.type === 'radio'" class="form-group screen draggable-element-container list-group">
+                                 <div ng-show="selectedQuestion.choices" ng-if="selectedQuestion.type === 'multi' || selectedQuestion.type === 'radio'" class="form-group screen draggable-element-container list-group">
                                     <label for="title">choices</label>
-                                    <div ng-repeat="choice in selectedQuestion.choices">
-                                       <div class="list-group-item">
-                                          <em class="fa fa-reorder fa-fw text-muted mr-log moveicon"></em>{{choice.choice}}
-                                          <em ng-click="removeOption(selectedQuestion, choice)" class="fa fa-times deleteicon"></em>
+                                    <div ui-sortable="questionOptions" ng-model="selectedQuestion.choices">
+                                       <div ng-repeat="choice in selectedQuestion.choices track by $index">
+                                          <div class="list-group-item">
+                                             <em class="fa fa-reorder fa-fw text-muted mr-log moveicon"></em>{{choice.choice}}
+                                             <em ng-click="removeOption(selectedQuestion, choice)" class="fa fa-times deleteicon"></em>
+                                          </div>
                                        </div>
                                     </div>
                                     <div class="form-group">
