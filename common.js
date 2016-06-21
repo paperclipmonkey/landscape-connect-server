@@ -32,7 +32,6 @@ module.exports = (function () {
   Lookup answers to questions
   */
   var getQuestionResponse = function(response, sectionId, questionId){
-    //console.log("Looking up question:", sectionId, questionId)
     try{
         return response.data[sectionId][questionId]
     } catch(e){

@@ -59,9 +59,7 @@ module.exports = function (app) {
      resModel.where({}).count(cback)
     } else {
       qreModel.find({owner: req.user._id}, 'serverId', function (err, questionnaires) {
-        console.log(questionnaires)
         var k = questionnaires.map(function(o){return o.serverId})
-        console.log(k)
         resModel.where('questionnaire').in(k).count(cback)
      })
     }

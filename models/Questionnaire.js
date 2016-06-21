@@ -41,7 +41,6 @@ module.exports = (function (app) {
   NSchema.pre('save', checkHasserverId)
 
   function checkHasserverId (next) {
-    console.log('Check has code')
     if (!this.serverId) {
       uniqueOrAgain(this, next)
     } else {
@@ -50,7 +49,6 @@ module.exports = (function (app) {
   }
 
   function uniqueOrAgain (cx, next) {
-    console.log('Unique or again')
     cx.serverId = makeid(5)
     mongoose.models[schemaName].findOne({serverId: cx.serverId}, function (err, obj) {
       if (err) {

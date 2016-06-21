@@ -139,8 +139,6 @@
 
       $scope.selectedQuestionnaire = {};
 
-
-
       if($stateParams.questionnaireId !== null){
         //Duplicate questionnaire
         $http.get("/api/questionnaires/" + $stateParams.questionnaireId).success(function(data, status) {
