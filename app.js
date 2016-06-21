@@ -1,4 +1,3 @@
-// requires MongoDb 2.6 or higher!
 module.exports = (function () {
   var mongoose = require('mongoose')
   var express = require('express')
@@ -132,7 +131,6 @@ module.exports = (function () {
   app.get('/questionnaires/:id', function (req, res) {
     if (req.headers['user-agent'] && req.headers['user-agent'].indexOf('LandscapeConnect') !== -1) {
       return routes.questionnaires.read(req, res)
-    // return res.redirect("/api/questionnaires/" + req.params.id)
     }
     // Check if the request is from the app and redirect
     return res.redirect('/app/#/page/questionnaires/' + req.params.id)
@@ -148,9 +146,6 @@ module.exports = (function () {
   app.get('/api/dash/responses/words', middleware.ensureAuthenticated, routes.dashboard.dashboard_words)
 
   // Download
-  // app.post('/api/questionnaires/download/csv/', middleware.ensureAuthenticated, routes.download.download_csv)
-  // app.post('/api/questionnaires/download/kmz/', middleware.ensureAuthenticated, routes.download.download_kmz)
-  // app.post('/api/questionnaires/download/images/', middleware.ensureAuthenticated, routes.download.download_images)
   app.get('/api/questionnaires/:id/download/csv', middleware.ensureAuthenticated, routes.download.download_csv)
   app.get('/api/questionnaires/:id/download/kmz', middleware.ensureAuthenticated, routes.download.download_kmz)
   app.get('/api/questionnaires/:id/download/media', middleware.ensureAuthenticated, routes.download.download_media)

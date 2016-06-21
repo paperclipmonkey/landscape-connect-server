@@ -50,13 +50,13 @@
     'use strict';
 
     angular
-        .module('app.charts', []);
+        .module('app.bootstrapui', []);
 })();
 (function() {
     'use strict';
 
     angular
-        .module('app.bootstrapui', []);
+        .module('app.charts', []);
 })();
 (function() {
     'use strict';
@@ -160,13 +160,9 @@
     'use strict';
 
     angular
-        .module('app.pages', []);
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('app.panels', []);
+        .module('app.routes', [
+            'app.lazyload'
+        ]);
 })();
 (function() {
     'use strict';
@@ -180,15 +176,13 @@
     'use strict';
 
     angular
-        .module('app.routes', [
-            'app.lazyload'
-        ]);
+        .module('app.settings', []);
 })();
 (function() {
     'use strict';
 
     angular
-        .module('app.settings', []);
+        .module('app.panels', []);
 })();
 (function() {
     'use strict';
@@ -212,9 +206,575 @@
     'use strict';
 
     angular
+        .module('app.pages', []);
+})();
+(function() {
+    'use strict';
+
+    angular
         .module('app.utils', [
           'app.colors'
           ]);
+})();
+
+/**=========================================================
+ * Module: demo-alerts.js
+ * Provides a simple demo for pagination
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('AlertDemoCtrl', AlertDemoCtrl);
+
+    function AlertDemoCtrl() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.alerts = [
+            { type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' },
+            { type: 'warning', msg: 'Well done! You successfully read this important alert message.' }
+          ];
+
+          vm.addAlert = function() {
+            vm.alerts.push({msg: 'Another alert!'});
+          };
+
+          vm.closeAlert = function(index) {
+            vm.alerts.splice(index, 1);
+          };
+        }
+    }
+})();
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .config(bootstrapuiConfig);
+
+    bootstrapuiConfig.$inject = ['$uibTooltipProvider'];
+    function bootstrapuiConfig($uibTooltipProvider){
+      $uibTooltipProvider.options({appendToBody: true});
+    }
+})();
+/**=========================================================
+ * Module: demo-buttons.js
+ * Provides a simple demo for buttons actions
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('ButtonsCtrl', ButtonsCtrl);
+
+    function ButtonsCtrl() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.singleModel = 1;
+
+          vm.radioModel = 'Middle';
+
+          vm.checkModel = {
+            left: false,
+            middle: true,
+            right: false
+          };
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: demo-carousel.js
+ * Provides a simple demo for bootstrap ui carousel
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('CarouselDemoCtrl', CarouselDemoCtrl);
+
+    function CarouselDemoCtrl() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.myInterval = 5000;
+
+          var slides = vm.slides = [];
+          vm.addSlide = function(id) {
+            id = id || 8;
+            slides.push({
+              image: 'app/img/bg' + id + '.jpg',
+              text: ['More','Extra','Lots of','Surplus'][slides.length % 2] + ' ' +
+                ['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 2]
+            });
+          };
+
+          vm.addSlide(4);
+          vm.addSlide(7);
+          vm.addSlide(8);
+
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: demo-datepicker.js
+ * Provides a simple demo for bootstrap datepicker
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('DatepickerDemoCtrl', DatepickerDemoCtrl);
+
+    function DatepickerDemoCtrl() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.today = function() {
+            vm.dt = new Date();
+          };
+          vm.today();
+
+          vm.clear = function () {
+            vm.dt = null;
+          };
+
+          // Disable weekend selection
+          vm.disabled = function(date, mode) {
+            return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+          };
+
+          vm.toggleMin = function() {
+            vm.minDate = vm.minDate ? null : new Date();
+          };
+          vm.toggleMin();
+
+          vm.open = function($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            vm.opened = true;
+          };
+
+          vm.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+          };
+
+          vm.initDate = new Date('2019-10-20');
+          vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+          vm.format = vm.formats[0];
+        }
+    }
+})();
+
+
+/**=========================================================
+ * Module: modals.js
+ * Provides a simple way to implement bootstrap modals from templates
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('ModalController', ModalController);
+
+    ModalController.$inject = ['$uibModal'];
+    function ModalController($uibModal) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          vm.open = function (size) {
+
+            var modalInstance = $uibModal.open({
+              templateUrl: '/myModalContent.html',
+              controller: ModalInstanceCtrl,
+              size: size
+            });
+
+            var state = $('#modal-state');
+            modalInstance.result.then(function () {
+              state.text('Modal dismissed with OK status');
+            }, function () {
+              state.text('Modal dismissed with Cancel status');
+            });
+          };
+
+          // Please note that $uibModalInstance represents a modal window (instance) dependency.
+          // It is not the same as the $uibModal service used above.
+
+          ModalInstanceCtrl.$inject = ['$scope', '$uibModalInstance'];
+          function ModalInstanceCtrl($scope, $uibModalInstance) {
+
+            $scope.ok = function () {
+              $uibModalInstance.close('closed');
+            };
+
+            $scope.cancel = function () {
+              $uibModalInstance.dismiss('cancel');
+            };
+          }
+        }
+    }
+
+})();
+
+/**=========================================================
+ * Module: demo-pagination.js
+ * Provides a simple demo for pagination
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('PaginationDemoCtrl', PaginationDemoCtrl);
+
+    function PaginationDemoCtrl() {
+        var vm = this;
+
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.totalItems = 64;
+          vm.currentPage = 4;
+
+          vm.setPage = function (pageNo) {
+            vm.currentPage = pageNo;
+          };
+
+          vm.pageChanged = function() {
+            console.log('Page changed to: ' + vm.currentPage);
+          };
+
+          vm.maxSize = 5;
+          vm.bigTotalItems = 175;
+          vm.bigCurrentPage = 1;
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: demo-popover.js
+ * Provides a simple demo for popovers
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('PopoverDemoCtrl', PopoverDemoCtrl);
+
+    function PopoverDemoCtrl() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.dynamicPopover = 'Hello, World!';
+          vm.dynamicPopoverTitle = 'Title';
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: demo-progress.js
+ * Provides a simple demo to animate progress bar
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('ProgressDemoCtrl', ProgressDemoCtrl);
+
+    function ProgressDemoCtrl() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.max = 200;
+
+          vm.random = function() {
+            var value = Math.floor((Math.random() * 100) + 1);
+            var type;
+
+            if (value < 25) {
+              type = 'success';
+            } else if (value < 50) {
+              type = 'info';
+            } else if (value < 75) {
+              type = 'warning';
+            } else {
+              type = 'danger';
+            }
+
+            vm.showWarning = (type === 'danger' || type === 'warning');
+
+            vm.dynamic = value;
+            vm.type = type;
+          };
+          vm.random();
+
+          vm.randomStacked = function() {
+            vm.stacked = [];
+            var types = ['success', 'info', 'warning', 'danger'];
+
+            for (var i = 0, n = Math.floor((Math.random() * 4) + 1); i < n; i++) {
+                var index = Math.floor((Math.random() * 4));
+                vm.stacked.push({
+                  value: Math.floor((Math.random() * 30) + 1),
+                  type: types[index]
+                });
+            }
+          };
+          vm.randomStacked();
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: demo-rating.js
+ * Provides a demo for ratings UI
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('RatingDemoCtrl', RatingDemoCtrl);
+
+    function RatingDemoCtrl() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.rate = 7;
+          vm.max = 10;
+          vm.isReadonly = false;
+
+          vm.hoveringOver = function(value) {
+            vm.overStar = value;
+            vm.percent = 100 * (value / vm.max);
+          };
+
+          vm.ratingStates = [
+            {stateOn: 'fa fa-check', stateOff: 'fa fa-check-circle'},
+            {stateOn: 'fa fa-star', stateOff: 'fa fa-star-o'},
+            {stateOn: 'fa fa-heart', stateOff: 'fa fa-ban'},
+            {stateOn: 'fa fa-heart'},
+            {stateOff: 'fa fa-power-off'}
+          ];
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: demo-timepicker.js
+ * Provides a simple demo for bootstrap ui timepicker
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('TimepickerDemoCtrl', TimepickerDemoCtrl);
+
+    function TimepickerDemoCtrl() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.mytime = new Date();
+
+          vm.hstep = 1;
+          vm.mstep = 15;
+
+          vm.options = {
+            hstep: [1, 2, 3],
+            mstep: [1, 5, 10, 15, 25, 30]
+          };
+
+          vm.ismeridian = true;
+          vm.toggleMode = function() {
+            vm.ismeridian = ! vm.ismeridian;
+          };
+
+          vm.update = function() {
+            var d = new Date();
+            d.setHours( 14 );
+            d.setMinutes( 0 );
+            vm.mytime = d;
+          };
+
+          vm.changed = function () {
+            console.log('Time changed to: ' + vm.mytime);
+          };
+
+          vm.clear = function() {
+            vm.mytime = null;
+          };
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: demo-tooltip.js
+ * Provides a simple demo for tooltip
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('TooltipDemoCtrl', TooltipDemoCtrl);
+
+    function TooltipDemoCtrl() {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          vm.dynamicTooltip = 'Hello, World!';
+          vm.dynamicTooltipText = 'dynamic';
+          vm.htmlTooltip = 'I\'ve been made <b>bold</b>!';
+
+          vm.autoplace = function (context, source) {
+            //return (predictTooltipTop(source) < 0) ?  "bottom": "top";
+            var pos = 'top';
+            if(predictTooltipTop(source) < 0)
+              pos = 'bottom';
+            if(predictTooltipLeft(source) < 0)
+              pos = 'right';
+            return pos;
+          };
+
+            // Predicts tooltip top position 
+            // based on the trigger element
+            function predictTooltipTop(el) {
+              var top = el.offsetTop;
+              var height = 40; // asumes ~40px tooltip height
+
+              while(el.offsetParent) {
+                el = el.offsetParent;
+                top += el.offsetTop;
+              }
+              return (top - height) - (window.pageYOffset);
+            }
+
+            // Predicts tooltip top position 
+            // based on the trigger element
+            function predictTooltipLeft(el) {
+              var left = el.offsetLeft;
+              var width = el.offsetWidth;
+
+              while(el.offsetParent) {
+                el = el.offsetParent;
+                left += el.offsetLeft;
+              }
+              return (left - width) - (window.pageXOffset);
+            }
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: demo-typeahead.js
+ * Provides a simple demo for typeahead
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.bootstrapui')
+        .controller('TypeaheadCtrl', TypeaheadCtrl);
+
+    TypeaheadCtrl.$inject = ['$http'];
+    function TypeaheadCtrl($http) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          vm.selected = undefined;
+          vm.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+
+          // Any function returning a promise object can be used to load values asynchronously
+          vm.getLocation = function(val) {
+            return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
+              params: {
+                address: val,
+                sensor: false
+              }
+            }).then(function(res){
+              var addresses = [];
+              angular.forEach(res.data.results, function(item){
+                /*jshint -W106*/
+                addresses.push(item.formatted_address);
+              });
+              return addresses;
+            });
+          };
+
+          vm.statesWithFlags = [{'name':'Alabama','flag':'5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'},{'name':'Alaska','flag':'e/e6/Flag_of_Alaska.svg/43px-Flag_of_Alaska.svg.png'},{'name':'Arizona','flag':'9/9d/Flag_of_Arizona.svg/45px-Flag_of_Arizona.svg.png'},{'name':'Arkansas','flag':'9/9d/Flag_of_Arkansas.svg/45px-Flag_of_Arkansas.svg.png'},{'name':'California','flag':'0/01/Flag_of_California.svg/45px-Flag_of_California.svg.png'},{'name':'Colorado','flag':'4/46/Flag_of_Colorado.svg/45px-Flag_of_Colorado.svg.png'},{'name':'Connecticut','flag':'9/96/Flag_of_Connecticut.svg/39px-Flag_of_Connecticut.svg.png'},{'name':'Delaware','flag':'c/c6/Flag_of_Delaware.svg/45px-Flag_of_Delaware.svg.png'},{'name':'Florida','flag':'f/f7/Flag_of_Florida.svg/45px-Flag_of_Florida.svg.png'},{'name':'Georgia','flag':'5/54/Flag_of_Georgia_%28U.S._state%29.svg/46px-Flag_of_Georgia_%28U.S._state%29.svg.png'},{'name':'Hawaii','flag':'e/ef/Flag_of_Hawaii.svg/46px-Flag_of_Hawaii.svg.png'},{'name':'Idaho','flag':'a/a4/Flag_of_Idaho.svg/38px-Flag_of_Idaho.svg.png'},{'name':'Illinois','flag':'0/01/Flag_of_Illinois.svg/46px-Flag_of_Illinois.svg.png'},{'name':'Indiana','flag':'a/ac/Flag_of_Indiana.svg/45px-Flag_of_Indiana.svg.png'},{'name':'Iowa','flag':'a/aa/Flag_of_Iowa.svg/44px-Flag_of_Iowa.svg.png'},{'name':'Kansas','flag':'d/da/Flag_of_Kansas.svg/46px-Flag_of_Kansas.svg.png'},{'name':'Kentucky','flag':'8/8d/Flag_of_Kentucky.svg/46px-Flag_of_Kentucky.svg.png'},{'name':'Louisiana','flag':'e/e0/Flag_of_Louisiana.svg/46px-Flag_of_Louisiana.svg.png'},{'name':'Maine','flag':'3/35/Flag_of_Maine.svg/45px-Flag_of_Maine.svg.png'},{'name':'Maryland','flag':'a/a0/Flag_of_Maryland.svg/45px-Flag_of_Maryland.svg.png'},{'name':'Massachusetts','flag':'f/f2/Flag_of_Massachusetts.svg/46px-Flag_of_Massachusetts.svg.png'},{'name':'Michigan','flag':'b/b5/Flag_of_Michigan.svg/45px-Flag_of_Michigan.svg.png'},{'name':'Minnesota','flag':'b/b9/Flag_of_Minnesota.svg/46px-Flag_of_Minnesota.svg.png'},{'name':'Mississippi','flag':'4/42/Flag_of_Mississippi.svg/45px-Flag_of_Mississippi.svg.png'},{'name':'Missouri','flag':'5/5a/Flag_of_Missouri.svg/46px-Flag_of_Missouri.svg.png'},{'name':'Montana','flag':'c/cb/Flag_of_Montana.svg/45px-Flag_of_Montana.svg.png'},{'name':'Nebraska','flag':'4/4d/Flag_of_Nebraska.svg/46px-Flag_of_Nebraska.svg.png'},{'name':'Nevada','flag':'f/f1/Flag_of_Nevada.svg/45px-Flag_of_Nevada.svg.png'},{'name':'New Hampshire','flag':'2/28/Flag_of_New_Hampshire.svg/45px-Flag_of_New_Hampshire.svg.png'},{'name':'New Jersey','flag':'9/92/Flag_of_New_Jersey.svg/45px-Flag_of_New_Jersey.svg.png'},{'name':'New Mexico','flag':'c/c3/Flag_of_New_Mexico.svg/45px-Flag_of_New_Mexico.svg.png'},{'name':'New York','flag':'1/1a/Flag_of_New_York.svg/46px-Flag_of_New_York.svg.png'},{'name':'North Carolina','flag':'b/bb/Flag_of_North_Carolina.svg/45px-Flag_of_North_Carolina.svg.png'},{'name':'North Dakota','flag':'e/ee/Flag_of_North_Dakota.svg/38px-Flag_of_North_Dakota.svg.png'},{'name':'Ohio','flag':'4/4c/Flag_of_Ohio.svg/46px-Flag_of_Ohio.svg.png'},{'name':'Oklahoma','flag':'6/6e/Flag_of_Oklahoma.svg/45px-Flag_of_Oklahoma.svg.png'},{'name':'Oregon','flag':'b/b9/Flag_of_Oregon.svg/46px-Flag_of_Oregon.svg.png'},{'name':'Pennsylvania','flag':'f/f7/Flag_of_Pennsylvania.svg/45px-Flag_of_Pennsylvania.svg.png'},{'name':'Rhode Island','flag':'f/f3/Flag_of_Rhode_Island.svg/32px-Flag_of_Rhode_Island.svg.png'},{'name':'South Carolina','flag':'6/69/Flag_of_South_Carolina.svg/45px-Flag_of_South_Carolina.svg.png'},{'name':'South Dakota','flag':'1/1a/Flag_of_South_Dakota.svg/46px-Flag_of_South_Dakota.svg.png'},{'name':'Tennessee','flag':'9/9e/Flag_of_Tennessee.svg/46px-Flag_of_Tennessee.svg.png'},{'name':'Texas','flag':'f/f7/Flag_of_Texas.svg/45px-Flag_of_Texas.svg.png'},{'name':'Utah','flag':'f/f6/Flag_of_Utah.svg/45px-Flag_of_Utah.svg.png'},{'name':'Vermont','flag':'4/49/Flag_of_Vermont.svg/46px-Flag_of_Vermont.svg.png'},{'name':'Virginia','flag':'4/47/Flag_of_Virginia.svg/44px-Flag_of_Virginia.svg.png'},{'name':'Washington','flag':'5/54/Flag_of_Washington.svg/46px-Flag_of_Washington.svg.png'},{'name':'West Virginia','flag':'2/22/Flag_of_West_Virginia.svg/46px-Flag_of_West_Virginia.svg.png'},{'name':'Wisconsin','flag':'2/22/Flag_of_Wisconsin.svg/45px-Flag_of_Wisconsin.svg.png'},{'name':'Wyoming','flag':'b/bc/Flag_of_Wyoming.svg/43px-Flag_of_Wyoming.svg.png'}];
+
+        }
+    }
 })();
 
 /**=========================================================
@@ -1857,566 +2417,6 @@
     }
     
 
-})();
-
-/**=========================================================
- * Module: demo-alerts.js
- * Provides a simple demo for pagination
- =========================================================*/
-(function() {
-    'use strict';
-
-    angular
-        .module('app.bootstrapui')
-        .controller('AlertDemoCtrl', AlertDemoCtrl);
-
-    function AlertDemoCtrl() {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-          vm.alerts = [
-            { type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' },
-            { type: 'warning', msg: 'Well done! You successfully read this important alert message.' }
-          ];
-
-          vm.addAlert = function() {
-            vm.alerts.push({msg: 'Another alert!'});
-          };
-
-          vm.closeAlert = function(index) {
-            vm.alerts.splice(index, 1);
-          };
-        }
-    }
-})();
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.bootstrapui')
-        .config(bootstrapuiConfig);
-
-    bootstrapuiConfig.$inject = ['$uibTooltipProvider'];
-    function bootstrapuiConfig($uibTooltipProvider){
-      $uibTooltipProvider.options({appendToBody: true});
-    }
-})();
-/**=========================================================
- * Module: demo-buttons.js
- * Provides a simple demo for buttons actions
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.bootstrapui')
-        .controller('ButtonsCtrl', ButtonsCtrl);
-
-    function ButtonsCtrl() {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-          vm.singleModel = 1;
-
-          vm.radioModel = 'Middle';
-
-          vm.checkModel = {
-            left: false,
-            middle: true,
-            right: false
-          };
-        }
-    }
-})();
-
-/**=========================================================
- * Module: demo-carousel.js
- * Provides a simple demo for bootstrap ui carousel
- =========================================================*/
-(function() {
-    'use strict';
-
-    angular
-        .module('app.bootstrapui')
-        .controller('CarouselDemoCtrl', CarouselDemoCtrl);
-
-    function CarouselDemoCtrl() {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-          vm.myInterval = 5000;
-
-          var slides = vm.slides = [];
-          vm.addSlide = function(id) {
-            id = id || 8;
-            slides.push({
-              image: 'app/img/bg' + id + '.jpg',
-              text: ['More','Extra','Lots of','Surplus'][slides.length % 2] + ' ' +
-                ['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 2]
-            });
-          };
-
-          vm.addSlide(4);
-          vm.addSlide(7);
-          vm.addSlide(8);
-
-        }
-    }
-})();
-
-/**=========================================================
- * Module: demo-datepicker.js
- * Provides a simple demo for bootstrap datepicker
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.bootstrapui')
-        .controller('DatepickerDemoCtrl', DatepickerDemoCtrl);
-
-    function DatepickerDemoCtrl() {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-          vm.today = function() {
-            vm.dt = new Date();
-          };
-          vm.today();
-
-          vm.clear = function () {
-            vm.dt = null;
-          };
-
-          // Disable weekend selection
-          vm.disabled = function(date, mode) {
-            return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-          };
-
-          vm.toggleMin = function() {
-            vm.minDate = vm.minDate ? null : new Date();
-          };
-          vm.toggleMin();
-
-          vm.open = function($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-
-            vm.opened = true;
-          };
-
-          vm.dateOptions = {
-            formatYear: 'yy',
-            startingDay: 1
-          };
-
-          vm.initDate = new Date('2019-10-20');
-          vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-          vm.format = vm.formats[0];
-        }
-    }
-})();
-
-
-/**=========================================================
- * Module: modals.js
- * Provides a simple way to implement bootstrap modals from templates
- =========================================================*/
-(function() {
-    'use strict';
-
-    angular
-        .module('app.bootstrapui')
-        .controller('ModalController', ModalController);
-
-    ModalController.$inject = ['$uibModal'];
-    function ModalController($uibModal) {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-
-          vm.open = function (size) {
-
-            var modalInstance = $uibModal.open({
-              templateUrl: '/myModalContent.html',
-              controller: ModalInstanceCtrl,
-              size: size
-            });
-
-            var state = $('#modal-state');
-            modalInstance.result.then(function () {
-              state.text('Modal dismissed with OK status');
-            }, function () {
-              state.text('Modal dismissed with Cancel status');
-            });
-          };
-
-          // Please note that $uibModalInstance represents a modal window (instance) dependency.
-          // It is not the same as the $uibModal service used above.
-
-          ModalInstanceCtrl.$inject = ['$scope', '$uibModalInstance'];
-          function ModalInstanceCtrl($scope, $uibModalInstance) {
-
-            $scope.ok = function () {
-              $uibModalInstance.close('closed');
-            };
-
-            $scope.cancel = function () {
-              $uibModalInstance.dismiss('cancel');
-            };
-          }
-        }
-    }
-
-})();
-
-/**=========================================================
- * Module: demo-pagination.js
- * Provides a simple demo for pagination
- =========================================================*/
-(function() {
-    'use strict';
-
-    angular
-        .module('app.bootstrapui')
-        .controller('PaginationDemoCtrl', PaginationDemoCtrl);
-
-    function PaginationDemoCtrl() {
-        var vm = this;
-
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-          vm.totalItems = 64;
-          vm.currentPage = 4;
-
-          vm.setPage = function (pageNo) {
-            vm.currentPage = pageNo;
-          };
-
-          vm.pageChanged = function() {
-            console.log('Page changed to: ' + vm.currentPage);
-          };
-
-          vm.maxSize = 5;
-          vm.bigTotalItems = 175;
-          vm.bigCurrentPage = 1;
-        }
-    }
-})();
-
-/**=========================================================
- * Module: demo-popover.js
- * Provides a simple demo for popovers
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.bootstrapui')
-        .controller('PopoverDemoCtrl', PopoverDemoCtrl);
-
-    function PopoverDemoCtrl() {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-          vm.dynamicPopover = 'Hello, World!';
-          vm.dynamicPopoverTitle = 'Title';
-        }
-    }
-})();
-
-/**=========================================================
- * Module: demo-progress.js
- * Provides a simple demo to animate progress bar
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.bootstrapui')
-        .controller('ProgressDemoCtrl', ProgressDemoCtrl);
-
-    function ProgressDemoCtrl() {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-          vm.max = 200;
-
-          vm.random = function() {
-            var value = Math.floor((Math.random() * 100) + 1);
-            var type;
-
-            if (value < 25) {
-              type = 'success';
-            } else if (value < 50) {
-              type = 'info';
-            } else if (value < 75) {
-              type = 'warning';
-            } else {
-              type = 'danger';
-            }
-
-            vm.showWarning = (type === 'danger' || type === 'warning');
-
-            vm.dynamic = value;
-            vm.type = type;
-          };
-          vm.random();
-
-          vm.randomStacked = function() {
-            vm.stacked = [];
-            var types = ['success', 'info', 'warning', 'danger'];
-
-            for (var i = 0, n = Math.floor((Math.random() * 4) + 1); i < n; i++) {
-                var index = Math.floor((Math.random() * 4));
-                vm.stacked.push({
-                  value: Math.floor((Math.random() * 30) + 1),
-                  type: types[index]
-                });
-            }
-          };
-          vm.randomStacked();
-        }
-    }
-})();
-
-/**=========================================================
- * Module: demo-rating.js
- * Provides a demo for ratings UI
- =========================================================*/
-(function() {
-    'use strict';
-
-    angular
-        .module('app.bootstrapui')
-        .controller('RatingDemoCtrl', RatingDemoCtrl);
-
-    function RatingDemoCtrl() {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-          vm.rate = 7;
-          vm.max = 10;
-          vm.isReadonly = false;
-
-          vm.hoveringOver = function(value) {
-            vm.overStar = value;
-            vm.percent = 100 * (value / vm.max);
-          };
-
-          vm.ratingStates = [
-            {stateOn: 'fa fa-check', stateOff: 'fa fa-check-circle'},
-            {stateOn: 'fa fa-star', stateOff: 'fa fa-star-o'},
-            {stateOn: 'fa fa-heart', stateOff: 'fa fa-ban'},
-            {stateOn: 'fa fa-heart'},
-            {stateOff: 'fa fa-power-off'}
-          ];
-        }
-    }
-})();
-
-/**=========================================================
- * Module: demo-timepicker.js
- * Provides a simple demo for bootstrap ui timepicker
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.bootstrapui')
-        .controller('TimepickerDemoCtrl', TimepickerDemoCtrl);
-
-    function TimepickerDemoCtrl() {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-          vm.mytime = new Date();
-
-          vm.hstep = 1;
-          vm.mstep = 15;
-
-          vm.options = {
-            hstep: [1, 2, 3],
-            mstep: [1, 5, 10, 15, 25, 30]
-          };
-
-          vm.ismeridian = true;
-          vm.toggleMode = function() {
-            vm.ismeridian = ! vm.ismeridian;
-          };
-
-          vm.update = function() {
-            var d = new Date();
-            d.setHours( 14 );
-            d.setMinutes( 0 );
-            vm.mytime = d;
-          };
-
-          vm.changed = function () {
-            console.log('Time changed to: ' + vm.mytime);
-          };
-
-          vm.clear = function() {
-            vm.mytime = null;
-          };
-        }
-    }
-})();
-
-/**=========================================================
- * Module: demo-tooltip.js
- * Provides a simple demo for tooltip
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.bootstrapui')
-        .controller('TooltipDemoCtrl', TooltipDemoCtrl);
-
-    function TooltipDemoCtrl() {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-          vm.dynamicTooltip = 'Hello, World!';
-          vm.dynamicTooltipText = 'dynamic';
-          vm.htmlTooltip = 'I\'ve been made <b>bold</b>!';
-
-          vm.autoplace = function (context, source) {
-            //return (predictTooltipTop(source) < 0) ?  "bottom": "top";
-            var pos = 'top';
-            if(predictTooltipTop(source) < 0)
-              pos = 'bottom';
-            if(predictTooltipLeft(source) < 0)
-              pos = 'right';
-            return pos;
-          };
-
-            // Predicts tooltip top position 
-            // based on the trigger element
-            function predictTooltipTop(el) {
-              var top = el.offsetTop;
-              var height = 40; // asumes ~40px tooltip height
-
-              while(el.offsetParent) {
-                el = el.offsetParent;
-                top += el.offsetTop;
-              }
-              return (top - height) - (window.pageYOffset);
-            }
-
-            // Predicts tooltip top position 
-            // based on the trigger element
-            function predictTooltipLeft(el) {
-              var left = el.offsetLeft;
-              var width = el.offsetWidth;
-
-              while(el.offsetParent) {
-                el = el.offsetParent;
-                left += el.offsetLeft;
-              }
-              return (left - width) - (window.pageXOffset);
-            }
-        }
-    }
-})();
-
-/**=========================================================
- * Module: demo-typeahead.js
- * Provides a simple demo for typeahead
- =========================================================*/
-(function() {
-    'use strict';
-
-    angular
-        .module('app.bootstrapui')
-        .controller('TypeaheadCtrl', TypeaheadCtrl);
-
-    TypeaheadCtrl.$inject = ['$http'];
-    function TypeaheadCtrl($http) {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-
-          vm.selected = undefined;
-          vm.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
-
-          // Any function returning a promise object can be used to load values asynchronously
-          vm.getLocation = function(val) {
-            return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
-              params: {
-                address: val,
-                sensor: false
-              }
-            }).then(function(res){
-              var addresses = [];
-              angular.forEach(res.data.results, function(item){
-                /*jshint -W106*/
-                addresses.push(item.formatted_address);
-              });
-              return addresses;
-            });
-          };
-
-          vm.statesWithFlags = [{'name':'Alabama','flag':'5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'},{'name':'Alaska','flag':'e/e6/Flag_of_Alaska.svg/43px-Flag_of_Alaska.svg.png'},{'name':'Arizona','flag':'9/9d/Flag_of_Arizona.svg/45px-Flag_of_Arizona.svg.png'},{'name':'Arkansas','flag':'9/9d/Flag_of_Arkansas.svg/45px-Flag_of_Arkansas.svg.png'},{'name':'California','flag':'0/01/Flag_of_California.svg/45px-Flag_of_California.svg.png'},{'name':'Colorado','flag':'4/46/Flag_of_Colorado.svg/45px-Flag_of_Colorado.svg.png'},{'name':'Connecticut','flag':'9/96/Flag_of_Connecticut.svg/39px-Flag_of_Connecticut.svg.png'},{'name':'Delaware','flag':'c/c6/Flag_of_Delaware.svg/45px-Flag_of_Delaware.svg.png'},{'name':'Florida','flag':'f/f7/Flag_of_Florida.svg/45px-Flag_of_Florida.svg.png'},{'name':'Georgia','flag':'5/54/Flag_of_Georgia_%28U.S._state%29.svg/46px-Flag_of_Georgia_%28U.S._state%29.svg.png'},{'name':'Hawaii','flag':'e/ef/Flag_of_Hawaii.svg/46px-Flag_of_Hawaii.svg.png'},{'name':'Idaho','flag':'a/a4/Flag_of_Idaho.svg/38px-Flag_of_Idaho.svg.png'},{'name':'Illinois','flag':'0/01/Flag_of_Illinois.svg/46px-Flag_of_Illinois.svg.png'},{'name':'Indiana','flag':'a/ac/Flag_of_Indiana.svg/45px-Flag_of_Indiana.svg.png'},{'name':'Iowa','flag':'a/aa/Flag_of_Iowa.svg/44px-Flag_of_Iowa.svg.png'},{'name':'Kansas','flag':'d/da/Flag_of_Kansas.svg/46px-Flag_of_Kansas.svg.png'},{'name':'Kentucky','flag':'8/8d/Flag_of_Kentucky.svg/46px-Flag_of_Kentucky.svg.png'},{'name':'Louisiana','flag':'e/e0/Flag_of_Louisiana.svg/46px-Flag_of_Louisiana.svg.png'},{'name':'Maine','flag':'3/35/Flag_of_Maine.svg/45px-Flag_of_Maine.svg.png'},{'name':'Maryland','flag':'a/a0/Flag_of_Maryland.svg/45px-Flag_of_Maryland.svg.png'},{'name':'Massachusetts','flag':'f/f2/Flag_of_Massachusetts.svg/46px-Flag_of_Massachusetts.svg.png'},{'name':'Michigan','flag':'b/b5/Flag_of_Michigan.svg/45px-Flag_of_Michigan.svg.png'},{'name':'Minnesota','flag':'b/b9/Flag_of_Minnesota.svg/46px-Flag_of_Minnesota.svg.png'},{'name':'Mississippi','flag':'4/42/Flag_of_Mississippi.svg/45px-Flag_of_Mississippi.svg.png'},{'name':'Missouri','flag':'5/5a/Flag_of_Missouri.svg/46px-Flag_of_Missouri.svg.png'},{'name':'Montana','flag':'c/cb/Flag_of_Montana.svg/45px-Flag_of_Montana.svg.png'},{'name':'Nebraska','flag':'4/4d/Flag_of_Nebraska.svg/46px-Flag_of_Nebraska.svg.png'},{'name':'Nevada','flag':'f/f1/Flag_of_Nevada.svg/45px-Flag_of_Nevada.svg.png'},{'name':'New Hampshire','flag':'2/28/Flag_of_New_Hampshire.svg/45px-Flag_of_New_Hampshire.svg.png'},{'name':'New Jersey','flag':'9/92/Flag_of_New_Jersey.svg/45px-Flag_of_New_Jersey.svg.png'},{'name':'New Mexico','flag':'c/c3/Flag_of_New_Mexico.svg/45px-Flag_of_New_Mexico.svg.png'},{'name':'New York','flag':'1/1a/Flag_of_New_York.svg/46px-Flag_of_New_York.svg.png'},{'name':'North Carolina','flag':'b/bb/Flag_of_North_Carolina.svg/45px-Flag_of_North_Carolina.svg.png'},{'name':'North Dakota','flag':'e/ee/Flag_of_North_Dakota.svg/38px-Flag_of_North_Dakota.svg.png'},{'name':'Ohio','flag':'4/4c/Flag_of_Ohio.svg/46px-Flag_of_Ohio.svg.png'},{'name':'Oklahoma','flag':'6/6e/Flag_of_Oklahoma.svg/45px-Flag_of_Oklahoma.svg.png'},{'name':'Oregon','flag':'b/b9/Flag_of_Oregon.svg/46px-Flag_of_Oregon.svg.png'},{'name':'Pennsylvania','flag':'f/f7/Flag_of_Pennsylvania.svg/45px-Flag_of_Pennsylvania.svg.png'},{'name':'Rhode Island','flag':'f/f3/Flag_of_Rhode_Island.svg/32px-Flag_of_Rhode_Island.svg.png'},{'name':'South Carolina','flag':'6/69/Flag_of_South_Carolina.svg/45px-Flag_of_South_Carolina.svg.png'},{'name':'South Dakota','flag':'1/1a/Flag_of_South_Dakota.svg/46px-Flag_of_South_Dakota.svg.png'},{'name':'Tennessee','flag':'9/9e/Flag_of_Tennessee.svg/46px-Flag_of_Tennessee.svg.png'},{'name':'Texas','flag':'f/f7/Flag_of_Texas.svg/45px-Flag_of_Texas.svg.png'},{'name':'Utah','flag':'f/f6/Flag_of_Utah.svg/45px-Flag_of_Utah.svg.png'},{'name':'Vermont','flag':'4/49/Flag_of_Vermont.svg/46px-Flag_of_Vermont.svg.png'},{'name':'Virginia','flag':'4/47/Flag_of_Virginia.svg/44px-Flag_of_Virginia.svg.png'},{'name':'Washington','flag':'5/54/Flag_of_Washington.svg/46px-Flag_of_Washington.svg.png'},{'name':'West Virginia','flag':'2/22/Flag_of_West_Virginia.svg/46px-Flag_of_West_Virginia.svg.png'},{'name':'Wisconsin','flag':'2/22/Flag_of_Wisconsin.svg/45px-Flag_of_Wisconsin.svg.png'},{'name':'Wyoming','flag':'b/bc/Flag_of_Wyoming.svg/43px-Flag_of_Wyoming.svg.png'}];
-
-        }
-    }
 })();
 
 (function() {
@@ -6528,671 +6528,6 @@
 }(jQuery));
 
 /**=========================================================
- * Module: access-login.js
- * Demo for login api
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.pages')
-        .controller('LoginFormController', LoginFormController);
-
-    LoginFormController.$inject = ['$http', '$state'];
-    function LoginFormController($http, $state) {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-          // bind here all data from the form
-          vm.account = {};
-          // place the message if something goes wrong
-          vm.authMsg = '';
-
-          $http
-            .get('/api/account/details')
-            .then(function(response) {
-              if(!response.data.account){
-                return;
-              }
-              $state.go('app.dashboard');
-            });
-
-          vm.login = function() {
-            vm.authMsg = '';
-
-            if(vm.loginForm.$valid) {
-
-              $http
-                .post('/api/account/login', {email: vm.account.email, password: vm.account.password})
-                .then(function(response) {
-                  // assumes if ok, response is an object with some data, if not, a string with error
-                  // customize according to your api
-                  //if ( !response.data.account ) {
-                  //  vm.authMsg = 'Incorrect credentials.';
-                  //}else{
-                    $state.go('app.dashboard');
-                  //}
-                }, function() {
-                  vm.authMsg = 'Server Request Error';
-                });
-            }
-            else {
-              // set as dirty if the user click directly to login so we show the validation messages
-              /*jshint -W106*/
-              vm.loginForm.account_email.$dirty = true;
-              vm.loginForm.account_password.$dirty = true;
-            }
-          };
-        }
-    }
-})();
-
-/**=========================================================
- * Module: access-register.js
- * Demo for register account api
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.pages')
-        .controller('RegisterFormController', RegisterFormController);
-
-    RegisterFormController.$inject = ['$http', '$state'];
-    function RegisterFormController($http, $state) {
-        var vm = this;
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-          // bind here all data from the form
-          vm.account = {};
-          // place the message if something goes wrong
-          vm.authMsg = '';
-            
-          vm.register = function() {
-            vm.authMsg = '';
-
-            if(vm.registerForm.$valid) {
-
-              $http
-                .post('/api/account/register', {email: vm.account.email, password: vm.account.password, username: vm.account.username})
-                .then(function(response) {
-                  console.log("Signup response data: ", response)
-                  //Check against status code
-                  //If 200 then redirect to dashboard.
-                  //If !200 then display message directly
-                  if (response.status === 200) {
-                    $state.go('app.dashboard');
-                  }else{
-                    vm.authMsg = response.data;
-                  }
-                }, function() {
-                  vm.authMsg = 'Server Error';
-                });
-            }
-            else {
-              // set as dirty if the user click directly to login so we show the validation messages
-              /*jshint -W106*/
-              vm.registerForm.account_email.$dirty = true;
-              vm.registerForm.account_password.$dirty = true;
-              vm.registerForm.account_agreed.$dirty = true;
-              
-            }
-          };
-        }
-    }
-})();
-
-/**=========================================================
- * Collapse panels * [panel-collapse]
- =========================================================*/
-(function() {
-    'use strict';
-
-    angular
-        .module('app.panels')
-        .directive('panelCollapse', panelCollapse);
-
-    function panelCollapse () {
-        var directive = {
-            controller: Controller,
-            restrict: 'A',
-            scope: false
-        };
-        return directive;
-    }
-
-    Controller.$inject = ['$scope', '$element', '$timeout', '$localStorage'];
-    function Controller ($scope, $element, $timeout, $localStorage) {
-      var storageKeyName = 'panelState';
-
-      // Prepare the panel to be collapsible
-      var $elem   = $($element),
-          parent  = $elem.closest('.panel'), // find the first parent panel
-          panelId = parent.attr('id');
-
-      // Load the saved state if exists
-      var currentState = loadPanelState( panelId );
-      if ( typeof currentState !== 'undefined') {
-        $timeout(function(){
-            $scope[panelId] = currentState; },
-          10);
-      }
-
-      // bind events to switch icons
-      $element.bind('click', function(e) {
-        e.preventDefault();
-        savePanelState( panelId, !$scope[panelId] );
-
-      });
-  
-      // Controller helpers
-      function savePanelState(id, state) {
-        if(!id) return false;
-        var data = angular.fromJson($localStorage[storageKeyName]);
-        if(!data) { data = {}; }
-        data[id] = state;
-        $localStorage[storageKeyName] = angular.toJson(data);
-      }
-      function loadPanelState(id) {
-        if(!id) return false;
-        var data = angular.fromJson($localStorage[storageKeyName]);
-        if(data) {
-          return data[id];
-        }
-      }
-    }
-
-})();
-
-/**=========================================================
- * Dismiss panels * [panel-dismiss]
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.panels')
-        .directive('panelDismiss', panelDismiss);
-
-    function panelDismiss () {
-
-        var directive = {
-            controller: Controller,
-            restrict: 'A'
-        };
-        return directive;
-
-    }
-
-    Controller.$inject = ['$scope', '$element', '$q', 'Utils'];
-    function Controller ($scope, $element, $q, Utils) {
-      var removeEvent   = 'panel-remove',
-          removedEvent  = 'panel-removed';
-
-      $element.on('click', function (e) {
-        e.preventDefault();
-
-        // find the first parent panel
-        var parent = $(this).closest('.panel');
-
-        removeElement();
-
-        function removeElement() {
-          var deferred = $q.defer();
-          var promise = deferred.promise;
-          
-          // Communicate event destroying panel
-          $scope.$emit(removeEvent, parent.attr('id'), deferred);
-          promise.then(destroyMiddleware);
-        }
-
-        // Run the animation before destroy the panel
-        function destroyMiddleware() {
-          if(Utils.support.animation) {
-            parent.animo({animation: 'bounceOut'}, destroyPanel);
-          }
-          else destroyPanel();
-        }
-
-        function destroyPanel() {
-
-          var col = parent.parent();
-          parent.remove();
-          // remove the parent if it is a row and is empty and not a sortable (portlet)
-          col
-            .filter(function() {
-            var el = $(this);
-            return (el.is('[class*="col-"]:not(.sortable)') && el.children('*').length === 0);
-          }).remove();
-
-          // Communicate event destroyed panel
-          $scope.$emit(removedEvent, parent.attr('id'));
-
-        }
-
-      });
-    }
-})();
-
-
-
-/**=========================================================
- * Refresh panels
- * [panel-refresh] * [data-spinner="standard"]
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.panels')
-        .directive('panelRefresh', panelRefresh);
-
-    function panelRefresh () {
-        var directive = {
-            controller: Controller,
-            restrict: 'A',
-            scope: false
-        };
-        return directive;
-
-    }
-
-    Controller.$inject = ['$scope', '$element'];
-    function Controller ($scope, $element) {
-      var refreshEvent   = 'panel-refresh',
-          whirlClass     = 'whirl',
-          defaultSpinner = 'standard';
-
-      // catch clicks to toggle panel refresh
-      $element.on('click', function (e) {
-        e.preventDefault();
-
-        var $this   = $(this),
-            panel   = $this.parents('.panel').eq(0),
-            spinner = $this.data('spinner') || defaultSpinner
-            ;
-
-        // start showing the spinner
-        panel.addClass(whirlClass + ' ' + spinner);
-
-        // Emit event when refresh clicked
-        $scope.$emit(refreshEvent, panel.attr('id'));
-
-      });
-
-      // listen to remove spinner
-      $scope.$on('removeSpinner', removeSpinner);
-
-      // method to clear the spinner when done
-      function removeSpinner (ev, id) {
-        if (!id) return;
-        var newid = id.charAt(0) === '#' ? id : ('#'+id);
-        angular
-          .element(newid)
-          .removeClass(whirlClass);
-      }
-    }
-})();
-
-
-
-/**=========================================================
- * Module panel-tools.js
- * Directive tools to control panels.
- * Allows collapse, refresh and dismiss (remove)
- * Saves panel state in browser storage
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.panels')
-        .directive('paneltool', paneltool);
-
-    paneltool.$inject = ['$compile', '$timeout'];
-    function paneltool ($compile, $timeout) {
-        var directive = {
-            link: link,
-            restrict: 'E',
-            scope: false
-        };
-        return directive;
-
-        function link(scope, element, attrs) {
-
-          var templates = {
-            /* jshint multistr: true */
-            collapse:'<a href="#" panel-collapse="" uib-tooltip="Collapse Panel" ng-click="{{panelId}} = !{{panelId}}"> \
-                        <em ng-show="{{panelId}}" class="fa fa-plus ng-no-animation"></em> \
-                        <em ng-show="!{{panelId}}" class="fa fa-minus ng-no-animation"></em> \
-                      </a>',
-            dismiss: '<a href="#" panel-dismiss="" uib-tooltip="Close Panel">\
-                       <em class="fa fa-times"></em>\
-                     </a>',
-            refresh: '<a href="#" panel-refresh="" data-spinner="{{spinner}}" uib-tooltip="Refresh Panel">\
-                       <em class="fa fa-refresh"></em>\
-                     </a>'
-          };
-
-          var tools = scope.panelTools || attrs;
-
-          $timeout(function() {
-            element.html(getTemplate(element, tools )).show();
-            $compile(element.contents())(scope);
-
-            element.addClass('pull-right');
-          });
-
-          function getTemplate( elem, attrs ){
-            var temp = '';
-            attrs = attrs || {};
-            if(attrs.toolCollapse)
-              temp += templates.collapse.replace(/{{panelId}}/g, (elem.parent().parent().attr('id')) );
-            if(attrs.toolDismiss)
-              temp += templates.dismiss;
-            if(attrs.toolRefresh)
-              temp += templates.refresh.replace(/{{spinner}}/g, attrs.toolRefresh);
-            return temp;
-          }
-        }// link
-    }
-
-})();
-
-/**=========================================================
- * Module: demo-panels.js
- * Provides a simple demo for panel actions
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.panels')
-        .controller('PanelsCtrl', PanelsCtrl);
-
-    PanelsCtrl.$inject = ['$scope', '$timeout'];
-    function PanelsCtrl($scope, $timeout) {
-
-        activate();
-
-        ////////////////
-
-        function activate() {
-
-          // PANEL COLLAPSE EVENTS
-          // ----------------------------------- 
-
-          // We can use panel id name for the boolean flag to [un]collapse the panel
-          $scope.$watch('panelDemo1',function(newVal){
-              
-              console.log('panelDemo1 collapsed: ' + newVal);
-
-          });
-
-
-          // PANEL DISMISS EVENTS
-          // ----------------------------------- 
-
-          // Before remove panel
-          $scope.$on('panel-remove', function(event, id, deferred){
-            
-            console.log('Panel #' + id + ' removing');
-            
-            // Here is obligatory to call the resolve() if we pretend to remove the panel finally
-            // Not calling resolve() will NOT remove the panel
-            // It's up to your app to decide if panel should be removed or not
-            deferred.resolve();
-          
-          });
-
-          // Panel removed ( only if above was resolved() )
-          $scope.$on('panel-removed', function(event, id){
-
-            console.log('Panel #' + id + ' removed');
-
-          });
-
-
-          // PANEL REFRESH EVENTS
-          // ----------------------------------- 
-
-          $scope.$on('panel-refresh', function(event, id) {
-            var secs = 3;
-            
-            console.log('Refreshing during ' + secs +'s #'+id);
-
-            $timeout(function(){
-              // directive listen for to remove the spinner 
-              // after we end up to perform own operations
-              $scope.$broadcast('removeSpinner', id);
-              
-              console.log('Refreshed #' + id);
-
-            }, 3000);
-
-          });
-
-          // PANELS VIA NG-REPEAT
-          // ----------------------------------- 
-
-          $scope.panels = [
-            {
-              id: 'panelRepeat1',
-              title: 'Panel Title 1',
-              body: 'Nulla eget lorem leo, sit amet elementum lorem. '
-            },
-            {
-              id: 'panelRepeat2',
-              title: 'Panel Title 2',
-              body: 'Nulla eget lorem leo, sit amet elementum lorem. '
-            },
-            {
-              id: 'panelRepeat3',
-              title: 'Panel Title 3',
-              body: 'Nulla eget lorem leo, sit amet elementum lorem. '
-            }
-          ];
-        }
-
-    } //PanelsCtrl
-
-})();
-
-
-/**=========================================================
- * Drag and drop any panel based on jQueryUI portlets
- =========================================================*/
-
-(function() {
-    'use strict';
-
-    angular
-        .module('app.panels')
-        .directive('portlet', portlet);
-
-    portlet.$inject = ['$timeout', '$localStorage'];
-    function portlet ($timeout, $localStorage) {
-      var storageKeyName = 'portletState';
-
-      return {
-        restrict: 'A',
-        link: link
-      };
-
-      /////////////
-
-      function link(scope, element) {
-          
-        // not compatible with jquery sortable
-        if(!$.fn.sortable) return;
-
-        element.sortable({
-          connectWith:          '[portlet]', // same like directive 
-          items:                'div.panel',
-          handle:               '.portlet-handler',
-          opacity:              0.7,
-          placeholder:          'portlet box-placeholder',
-          cancel:               '.portlet-cancel',
-          forcePlaceholderSize: true,
-          iframeFix:            false,
-          tolerance:            'pointer',
-          helper:               'original',
-          revert:               200,
-          forceHelperSize:      true,
-          update:               savePortletOrder,
-          create:               loadPortletOrder
-        });
-
-      }
-
-
-      function savePortletOrder(event/*, ui*/) {
-        var self = event.target;
-        var data = angular.fromJson($localStorage[storageKeyName]);
-        
-        if(!data) { data = {}; }
-
-        data[self.id] = $(self).sortable('toArray');
-
-        if(data) {
-          $timeout(function() {
-            $localStorage[storageKeyName] = angular.toJson(data);
-          });
-        }
-      }
-
-      function loadPortletOrder(event) {
-        var self = event.target;
-        var data = angular.fromJson($localStorage[storageKeyName]);
-
-        if(data) {
-          
-          var porletId = self.id,
-              panels   = data[porletId];
-
-          if(panels) {
-            var portlet = $('#'+porletId);
-            
-            $.each(panels, function(index, value) {
-               $('#'+value).appendTo(portlet);
-            });
-          }
-
-        }
-      }
-
-    }
-
-})();
- 
-(function() {
-    'use strict';
-
-    angular
-        .module('app.preloader')
-        .directive('preloader', preloader);
-
-    preloader.$inject = ['$animate', '$timeout', '$q'];
-    function preloader ($animate, $timeout, $q) {
-
-        var directive = {
-            restrict: 'EAC',
-            template: 
-              '<div class="preloader-progress">' +
-                  '<div class="preloader-progress-bar" ' +
-                       'ng-style="{width: loadCounter + \'%\'}"></div>' +
-              '</div>'
-            ,
-            link: link
-        };
-        return directive;
-
-        ///////
-
-        function link(scope, el) {
-
-          scope.loadCounter = 0;
-
-          var counter  = 0,
-              timeout;
-
-          // disables scrollbar
-          angular.element('body').css('overflow', 'hidden');
-          // ensure class is present for styling
-          el.addClass('preloader');
-
-          appReady().then(endCounter);
-
-          timeout = $timeout(startCounter);
-
-          ///////
-
-          function startCounter() {
-
-            var remaining = 100 - counter;
-            counter = counter + (0.015 * Math.pow(1 - Math.sqrt(remaining), 2));
-
-            scope.loadCounter = parseInt(counter, 10);
-
-            timeout = $timeout(startCounter, 20);
-          }
-
-          function endCounter() {
-
-            $timeout.cancel(timeout);
-
-            scope.loadCounter = 100;
-
-            $timeout(function(){
-              // animate preloader hiding
-              $animate.addClass(el, 'preloader-hidden');
-              // retore scrollbar
-              angular.element('body').css('overflow', '');
-            }, 300);
-          }
-
-          function appReady() {
-            var deferred = $q.defer();
-            var viewsLoaded = 0;
-            // if this doesn't sync with the real app ready
-            // a custom event must be used instead
-            var off = scope.$on('$viewContentLoaded', function () {
-              viewsLoaded ++;
-              // we know there are at least two views to be loaded 
-              // before the app is ready (1-index.html 2-app*.html)
-              if ( viewsLoaded === 2) {
-                // with resolve this fires only once
-                $timeout(function(){
-                  deferred.resolve();
-                }, 3000);
-
-                off();
-              }
-
-            });
-
-            return deferred.promise;
-          }
-
-        } //link
-    }
-
-})();
-/**=========================================================
  * Module: helpers.js
  * Provides helper functions for routes definition
  =========================================================*/
@@ -7982,6 +7317,99 @@
     'use strict';
 
     angular
+        .module('app.preloader')
+        .directive('preloader', preloader);
+
+    preloader.$inject = ['$animate', '$timeout', '$q'];
+    function preloader ($animate, $timeout, $q) {
+
+        var directive = {
+            restrict: 'EAC',
+            template: 
+              '<div class="preloader-progress">' +
+                  '<div class="preloader-progress-bar" ' +
+                       'ng-style="{width: loadCounter + \'%\'}"></div>' +
+              '</div>'
+            ,
+            link: link
+        };
+        return directive;
+
+        ///////
+
+        function link(scope, el) {
+
+          scope.loadCounter = 0;
+
+          var counter  = 0,
+              timeout;
+
+          // disables scrollbar
+          angular.element('body').css('overflow', 'hidden');
+          // ensure class is present for styling
+          el.addClass('preloader');
+
+          appReady().then(endCounter);
+
+          timeout = $timeout(startCounter);
+
+          ///////
+
+          function startCounter() {
+
+            var remaining = 100 - counter;
+            counter = counter + (0.015 * Math.pow(1 - Math.sqrt(remaining), 2));
+
+            scope.loadCounter = parseInt(counter, 10);
+
+            timeout = $timeout(startCounter, 20);
+          }
+
+          function endCounter() {
+
+            $timeout.cancel(timeout);
+
+            scope.loadCounter = 100;
+
+            $timeout(function(){
+              // animate preloader hiding
+              $animate.addClass(el, 'preloader-hidden');
+              // retore scrollbar
+              angular.element('body').css('overflow', '');
+            }, 300);
+          }
+
+          function appReady() {
+            var deferred = $q.defer();
+            var viewsLoaded = 0;
+            // if this doesn't sync with the real app ready
+            // a custom event must be used instead
+            var off = scope.$on('$viewContentLoaded', function () {
+              viewsLoaded ++;
+              // we know there are at least two views to be loaded 
+              // before the app is ready (1-index.html 2-app*.html)
+              if ( viewsLoaded === 2) {
+                // with resolve this fires only once
+                $timeout(function(){
+                  deferred.resolve();
+                }, 3000);
+
+                off();
+              }
+
+            });
+
+            return deferred.promise;
+          }
+
+        } //link
+    }
+
+})();
+(function() {
+    'use strict';
+
+    angular
         .module('app.settings')
         .run(settingsRun);
 
@@ -8036,6 +7464,453 @@
 
 })();
 
+/**=========================================================
+ * Collapse panels * [panel-collapse]
+ =========================================================*/
+(function() {
+    'use strict';
+
+    angular
+        .module('app.panels')
+        .directive('panelCollapse', panelCollapse);
+
+    function panelCollapse () {
+        var directive = {
+            controller: Controller,
+            restrict: 'A',
+            scope: false
+        };
+        return directive;
+    }
+
+    Controller.$inject = ['$scope', '$element', '$timeout', '$localStorage'];
+    function Controller ($scope, $element, $timeout, $localStorage) {
+      var storageKeyName = 'panelState';
+
+      // Prepare the panel to be collapsible
+      var $elem   = $($element),
+          parent  = $elem.closest('.panel'), // find the first parent panel
+          panelId = parent.attr('id');
+
+      // Load the saved state if exists
+      var currentState = loadPanelState( panelId );
+      if ( typeof currentState !== 'undefined') {
+        $timeout(function(){
+            $scope[panelId] = currentState; },
+          10);
+      }
+
+      // bind events to switch icons
+      $element.bind('click', function(e) {
+        e.preventDefault();
+        savePanelState( panelId, !$scope[panelId] );
+
+      });
+  
+      // Controller helpers
+      function savePanelState(id, state) {
+        if(!id) return false;
+        var data = angular.fromJson($localStorage[storageKeyName]);
+        if(!data) { data = {}; }
+        data[id] = state;
+        $localStorage[storageKeyName] = angular.toJson(data);
+      }
+      function loadPanelState(id) {
+        if(!id) return false;
+        var data = angular.fromJson($localStorage[storageKeyName]);
+        if(data) {
+          return data[id];
+        }
+      }
+    }
+
+})();
+
+/**=========================================================
+ * Dismiss panels * [panel-dismiss]
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.panels')
+        .directive('panelDismiss', panelDismiss);
+
+    function panelDismiss () {
+
+        var directive = {
+            controller: Controller,
+            restrict: 'A'
+        };
+        return directive;
+
+    }
+
+    Controller.$inject = ['$scope', '$element', '$q', 'Utils'];
+    function Controller ($scope, $element, $q, Utils) {
+      var removeEvent   = 'panel-remove',
+          removedEvent  = 'panel-removed';
+
+      $element.on('click', function (e) {
+        e.preventDefault();
+
+        // find the first parent panel
+        var parent = $(this).closest('.panel');
+
+        removeElement();
+
+        function removeElement() {
+          var deferred = $q.defer();
+          var promise = deferred.promise;
+          
+          // Communicate event destroying panel
+          $scope.$emit(removeEvent, parent.attr('id'), deferred);
+          promise.then(destroyMiddleware);
+        }
+
+        // Run the animation before destroy the panel
+        function destroyMiddleware() {
+          if(Utils.support.animation) {
+            parent.animo({animation: 'bounceOut'}, destroyPanel);
+          }
+          else destroyPanel();
+        }
+
+        function destroyPanel() {
+
+          var col = parent.parent();
+          parent.remove();
+          // remove the parent if it is a row and is empty and not a sortable (portlet)
+          col
+            .filter(function() {
+            var el = $(this);
+            return (el.is('[class*="col-"]:not(.sortable)') && el.children('*').length === 0);
+          }).remove();
+
+          // Communicate event destroyed panel
+          $scope.$emit(removedEvent, parent.attr('id'));
+
+        }
+
+      });
+    }
+})();
+
+
+
+/**=========================================================
+ * Refresh panels
+ * [panel-refresh] * [data-spinner="standard"]
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.panels')
+        .directive('panelRefresh', panelRefresh);
+
+    function panelRefresh () {
+        var directive = {
+            controller: Controller,
+            restrict: 'A',
+            scope: false
+        };
+        return directive;
+
+    }
+
+    Controller.$inject = ['$scope', '$element'];
+    function Controller ($scope, $element) {
+      var refreshEvent   = 'panel-refresh',
+          whirlClass     = 'whirl',
+          defaultSpinner = 'standard';
+
+      // catch clicks to toggle panel refresh
+      $element.on('click', function (e) {
+        e.preventDefault();
+
+        var $this   = $(this),
+            panel   = $this.parents('.panel').eq(0),
+            spinner = $this.data('spinner') || defaultSpinner
+            ;
+
+        // start showing the spinner
+        panel.addClass(whirlClass + ' ' + spinner);
+
+        // Emit event when refresh clicked
+        $scope.$emit(refreshEvent, panel.attr('id'));
+
+      });
+
+      // listen to remove spinner
+      $scope.$on('removeSpinner', removeSpinner);
+
+      // method to clear the spinner when done
+      function removeSpinner (ev, id) {
+        if (!id) return;
+        var newid = id.charAt(0) === '#' ? id : ('#'+id);
+        angular
+          .element(newid)
+          .removeClass(whirlClass);
+      }
+    }
+})();
+
+
+
+/**=========================================================
+ * Module panel-tools.js
+ * Directive tools to control panels.
+ * Allows collapse, refresh and dismiss (remove)
+ * Saves panel state in browser storage
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.panels')
+        .directive('paneltool', paneltool);
+
+    paneltool.$inject = ['$compile', '$timeout'];
+    function paneltool ($compile, $timeout) {
+        var directive = {
+            link: link,
+            restrict: 'E',
+            scope: false
+        };
+        return directive;
+
+        function link(scope, element, attrs) {
+
+          var templates = {
+            /* jshint multistr: true */
+            collapse:'<a href="#" panel-collapse="" uib-tooltip="Collapse Panel" ng-click="{{panelId}} = !{{panelId}}"> \
+                        <em ng-show="{{panelId}}" class="fa fa-plus ng-no-animation"></em> \
+                        <em ng-show="!{{panelId}}" class="fa fa-minus ng-no-animation"></em> \
+                      </a>',
+            dismiss: '<a href="#" panel-dismiss="" uib-tooltip="Close Panel">\
+                       <em class="fa fa-times"></em>\
+                     </a>',
+            refresh: '<a href="#" panel-refresh="" data-spinner="{{spinner}}" uib-tooltip="Refresh Panel">\
+                       <em class="fa fa-refresh"></em>\
+                     </a>'
+          };
+
+          var tools = scope.panelTools || attrs;
+
+          $timeout(function() {
+            element.html(getTemplate(element, tools )).show();
+            $compile(element.contents())(scope);
+
+            element.addClass('pull-right');
+          });
+
+          function getTemplate( elem, attrs ){
+            var temp = '';
+            attrs = attrs || {};
+            if(attrs.toolCollapse)
+              temp += templates.collapse.replace(/{{panelId}}/g, (elem.parent().parent().attr('id')) );
+            if(attrs.toolDismiss)
+              temp += templates.dismiss;
+            if(attrs.toolRefresh)
+              temp += templates.refresh.replace(/{{spinner}}/g, attrs.toolRefresh);
+            return temp;
+          }
+        }// link
+    }
+
+})();
+
+/**=========================================================
+ * Module: demo-panels.js
+ * Provides a simple demo for panel actions
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.panels')
+        .controller('PanelsCtrl', PanelsCtrl);
+
+    PanelsCtrl.$inject = ['$scope', '$timeout'];
+    function PanelsCtrl($scope, $timeout) {
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+
+          // PANEL COLLAPSE EVENTS
+          // ----------------------------------- 
+
+          // We can use panel id name for the boolean flag to [un]collapse the panel
+          $scope.$watch('panelDemo1',function(newVal){
+              
+              console.log('panelDemo1 collapsed: ' + newVal);
+
+          });
+
+
+          // PANEL DISMISS EVENTS
+          // ----------------------------------- 
+
+          // Before remove panel
+          $scope.$on('panel-remove', function(event, id, deferred){
+            
+            console.log('Panel #' + id + ' removing');
+            
+            // Here is obligatory to call the resolve() if we pretend to remove the panel finally
+            // Not calling resolve() will NOT remove the panel
+            // It's up to your app to decide if panel should be removed or not
+            deferred.resolve();
+          
+          });
+
+          // Panel removed ( only if above was resolved() )
+          $scope.$on('panel-removed', function(event, id){
+
+            console.log('Panel #' + id + ' removed');
+
+          });
+
+
+          // PANEL REFRESH EVENTS
+          // ----------------------------------- 
+
+          $scope.$on('panel-refresh', function(event, id) {
+            var secs = 3;
+            
+            console.log('Refreshing during ' + secs +'s #'+id);
+
+            $timeout(function(){
+              // directive listen for to remove the spinner 
+              // after we end up to perform own operations
+              $scope.$broadcast('removeSpinner', id);
+              
+              console.log('Refreshed #' + id);
+
+            }, 3000);
+
+          });
+
+          // PANELS VIA NG-REPEAT
+          // ----------------------------------- 
+
+          $scope.panels = [
+            {
+              id: 'panelRepeat1',
+              title: 'Panel Title 1',
+              body: 'Nulla eget lorem leo, sit amet elementum lorem. '
+            },
+            {
+              id: 'panelRepeat2',
+              title: 'Panel Title 2',
+              body: 'Nulla eget lorem leo, sit amet elementum lorem. '
+            },
+            {
+              id: 'panelRepeat3',
+              title: 'Panel Title 3',
+              body: 'Nulla eget lorem leo, sit amet elementum lorem. '
+            }
+          ];
+        }
+
+    } //PanelsCtrl
+
+})();
+
+
+/**=========================================================
+ * Drag and drop any panel based on jQueryUI portlets
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.panels')
+        .directive('portlet', portlet);
+
+    portlet.$inject = ['$timeout', '$localStorage'];
+    function portlet ($timeout, $localStorage) {
+      var storageKeyName = 'portletState';
+
+      return {
+        restrict: 'A',
+        link: link
+      };
+
+      /////////////
+
+      function link(scope, element) {
+          
+        // not compatible with jquery sortable
+        if(!$.fn.sortable) return;
+
+        element.sortable({
+          connectWith:          '[portlet]', // same like directive 
+          items:                'div.panel',
+          handle:               '.portlet-handler',
+          opacity:              0.7,
+          placeholder:          'portlet box-placeholder',
+          cancel:               '.portlet-cancel',
+          forcePlaceholderSize: true,
+          iframeFix:            false,
+          tolerance:            'pointer',
+          helper:               'original',
+          revert:               200,
+          forceHelperSize:      true,
+          update:               savePortletOrder,
+          create:               loadPortletOrder
+        });
+
+      }
+
+
+      function savePortletOrder(event/*, ui*/) {
+        var self = event.target;
+        var data = angular.fromJson($localStorage[storageKeyName]);
+        
+        if(!data) { data = {}; }
+
+        data[self.id] = $(self).sortable('toArray');
+
+        if(data) {
+          $timeout(function() {
+            $localStorage[storageKeyName] = angular.toJson(data);
+          });
+        }
+      }
+
+      function loadPortletOrder(event) {
+        var self = event.target;
+        var data = angular.fromJson($localStorage[storageKeyName]);
+
+        if(data) {
+          
+          var porletId = self.id,
+              panels   = data[porletId];
+
+          if(panels) {
+            var portlet = $('#'+porletId);
+            
+            $.each(panels, function(index, value) {
+               $('#'+value).appendTo(portlet);
+            });
+          }
+
+        }
+      }
+
+    }
+
+})();
+ 
 /**=========================================================
  * Module: sidebar-menu.js
  * Handle sidebar collapsible elements
@@ -9342,6 +9217,131 @@
 
     }
 })();
+/**=========================================================
+ * Module: access-login.js
+ * Demo for login api
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.pages')
+        .controller('LoginFormController', LoginFormController);
+
+    LoginFormController.$inject = ['$http', '$state'];
+    function LoginFormController($http, $state) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          // bind here all data from the form
+          vm.account = {};
+          // place the message if something goes wrong
+          vm.authMsg = '';
+
+          $http
+            .get('/api/account/details')
+            .then(function(response) {
+              if(!response.data.account){
+                return;
+              }
+              $state.go('app.dashboard');
+            });
+
+          vm.login = function() {
+            vm.authMsg = '';
+
+            if(vm.loginForm.$valid) {
+
+              $http
+                .post('/api/account/login', {email: vm.account.email, password: vm.account.password})
+                .then(function(response) {
+                  // assumes if ok, response is an object with some data, if not, a string with error
+                  // customize according to your api
+                  //if ( !response.data.account ) {
+                  //  vm.authMsg = 'Incorrect credentials.';
+                  //}else{
+                    $state.go('app.dashboard');
+                  //}
+                }, function() {
+                  vm.authMsg = 'Server Request Error';
+                });
+            }
+            else {
+              // set as dirty if the user click directly to login so we show the validation messages
+              /*jshint -W106*/
+              vm.loginForm.account_email.$dirty = true;
+              vm.loginForm.account_password.$dirty = true;
+            }
+          };
+        }
+    }
+})();
+
+/**=========================================================
+ * Module: access-register.js
+ * Demo for register account api
+ =========================================================*/
+
+(function() {
+    'use strict';
+
+    angular
+        .module('app.pages')
+        .controller('RegisterFormController', RegisterFormController);
+
+    RegisterFormController.$inject = ['$http', '$state'];
+    function RegisterFormController($http, $state) {
+        var vm = this;
+
+        activate();
+
+        ////////////////
+
+        function activate() {
+          // bind here all data from the form
+          vm.account = {};
+          // place the message if something goes wrong
+          vm.authMsg = '';
+            
+          vm.register = function() {
+            vm.authMsg = '';
+
+            if(vm.registerForm.$valid) {
+
+              $http
+                .post('/api/account/register', {email: vm.account.email, password: vm.account.password, username: vm.account.username})
+                .then(function(response) {
+                  console.log("Signup response data: ", response)
+                  //Check against status code
+                  //If 200 then redirect to dashboard.
+                  //If !200 then display message directly
+                  if (response.status === 200) {
+                    $state.go('app.dashboard');
+                  }else{
+                    vm.authMsg = response.data;
+                  }
+                }, function() {
+                  vm.authMsg = 'Server Error';
+                });
+            }
+            else {
+              // set as dirty if the user click directly to login so we show the validation messages
+              /*jshint -W106*/
+              vm.registerForm.account_email.$dirty = true;
+              vm.registerForm.account_password.$dirty = true;
+              vm.registerForm.account_agreed.$dirty = true;
+              
+            }
+          };
+        }
+    }
+})();
+
 /**=========================================================
  * Module: animate-enabled.js
  * Enable or disables ngAnimate for element with directive

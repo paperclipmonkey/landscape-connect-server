@@ -9,39 +9,6 @@ module.exports = (function () {
   var stream = require('stream')
   var eventServer = require('./eventemitter')
 
-  function getQueryLocations (userAreas, cback) {
-    if (!cback) { return }
-    if (!userAreas.length) { return cback(null, {}) }
-    mongoose.model('area').find({_id: {$in: userAreas}}, function (err, areas) {
-      if (err) {
-        cback(err, null)
-      }
-      var query = { // Sample - "type" : "MultiPoint", "coordinates" : [ [ 87.9259315145841, 63.65550362431469 ] , [ 88.9259315145841, 64.65550362431469 ] ] } } )
-        '$geoWithin': {
-          '$geometry': {
-            type: 'MultiPolygon',
-            coordinates: []
-          }
-        }
-      }
-      for (var q = 0; q < areas.length; q++) {
-        var thisArea = areas[q].loc.toObject()
-        // Problem with this is that it could either be a Polygon or Multipolygon. Multi needs to be pulled apart
-        if (thisArea.type === 'MultiPolygon') {
-          query['$geoWithin']['$geometry']['coordinates'].push.apply(
-            query['$geoWithin']['$geometry']['coordinates'],
-            thisArea.coordinates
-          )
-        } else {
-          query['$geoWithin']['$geometry']['coordinates'].push(
-            thisArea.coordinates
-          )
-        }
-      }
-      cback(null, query)
-    })
-  }
-
   /*
   Convert response from storage format to outputting format
   */
@@ -89,15 +56,6 @@ module.exports = (function () {
       console.error('Unable to download from S3')
       this.end()
     })
-
-    // downloader.on('progress', function () {
-    //   console.log("progress", downloader.progressMd5Amount,
-    //   downloader.progressAmount, downloader.progressTotal)
-    // })
-
-    // downloader.on('end', function () {
-    //   console.log("done downloading from S3")
-    // })
     return downloader
   }
 
@@ -131,19 +89,6 @@ module.exports = (function () {
     })
   }
 
-  function saveB64ToS3 (key, b64String, done) {
-    // Create a Stream from the string
-    var s = new stream.Readable()
-    s._read = function noop () {}
-    s.push(b64String)
-    s.push(null)
-
-    // Pipe Stream in to decoder
-    var decoder = s.pipe(base64.decode())
-
-    saveStreamToS3(key, decoder, done)
-  }
-
   function saveUrlToS3 (url, key, callback) {
     request({
       url: url,
@@ -163,69 +108,6 @@ module.exports = (function () {
     })
   }
 
-  var emailAdmins = function (view) {
-    // Create a list of users to email
-    // All super admins that have asked to be emailed
-    // Add users that are related to the submission area that have asked to be emailed
-
-    function queryBack (err, users) {
-      if (err) {
-        return
-      }
-      users.forEach(function (user) {
-        sendNewViewEmail(user, view)
-      })
-    }
-
-    // Super admins
-    mongoose.model('user').find({isSuper: true, emailOn: true}, queryBack)
-
-    // perform geoquery on areas - finding areas that the view relates to. Lookup area in users.
-    var geoQuery = {
-      '$geoIntersects': {
-        '$geometry': view.loc
-      }
-    }
-
-    mongoose.model('area').find({loc: geoQuery}, function (err, areas) {
-      if (err) {
-        return
-      }
-
-      // make array of area ids
-      var areaIds = []
-      areas.forEach(function (area) {
-        areaIds.push(area._id.toString())
-      })
-
-      mongoose.model('user').find({isSuper: false, emailOn: true, areas: {$in: areaIds}}, queryBack)
-    })
-  }
-
-  var sendNewViewEmail = function (user, view) {
-    // setup e-mail data with unicode symbols
-    var mailOptions = {
-      from: 'RmV Team <contact@ratemyview.co.uk>', // sender address
-      to: user.email, // list of receivers
-      subject: 'New view added', // Subject line
-      text: 'A new view has been uploaded to Rate my View. You can check it out here: http://ratemyview.co.uk/admin/views/' + view.id // plaintext body
-    // html: '<b>Hello world ✔</b>' // html body
-    }
-
-    // send mail with defined mailer object
-    mailer.sendMail(mailOptions, function (err, info) {
-      if (err) {
-        return console.log(err)
-      }
-      eventServer.emit('email:sent', null, info)
-    })
-  }
-
-  function resizeImage (inS, size, done) {
-    // check err
-    done()
-  }
-
   // Check if file exists on S3
   function s3KeyExists (filename, done) {
     var s3Params = {
@@ -242,15 +124,11 @@ module.exports = (function () {
   }
 
   return {
-    getQueryLocations: getQueryLocations,
     formatResponse: formatResponse,
     saveStreamToS3: saveStreamToS3,
     saveFileToS3: saveFileToS3,
-    saveB64ToS3: saveB64ToS3,
     downloadFromS3: downloadFromS3,
     saveUrlToS3: saveUrlToS3,
-    emailAdmins: emailAdmins,
-    resizeImage: resizeImage,
     s3KeyExists: s3KeyExists
   }
 })()
