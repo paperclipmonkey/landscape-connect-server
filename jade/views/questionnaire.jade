@@ -160,13 +160,14 @@
       .panel-body
         ul.list-unstyled
           li
+            a(href="" ng-click="duplicate()") 
+              em.fa.fa-angle-right.fa-fw
+              | Duplicate
+          p
+          li
             a(href="" ng-click="delete()") 
               em.fa.fa-angle-right.fa-fw
               | Delete
-          //- li
-          //-   a(href="") 
-          //-     em.fa.fa-angle-right.fa-fw
-          //-     | Deactivate
     // Tag Cloud
     .panel.panel-default
       .panel-heading Properties

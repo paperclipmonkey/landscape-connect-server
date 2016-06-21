@@ -10,9 +10,10 @@
         .module('app.questions')
         .controller('questionnaireNewCtrl', questionnaireNewCtrl);
     /*jshint -W055 */
-    questionnaireNewCtrl.$inject = ['$scope', '$http', '$state'];//'ui-sortable'
+    questionnaireNewCtrl.$inject = ['$scope', '$http', '$state', '$stateParams'];//'ui-sortable'
     
-    function questionnaireNewCtrl($scope, $http, $state) {
+    function questionnaireNewCtrl($scope, $http, $state, $stateParams) {
+
       window.myScope = $scope
       $scope.questionnaire = {
         'name': '',
@@ -128,29 +129,37 @@
 
       $scope.populateOptions = [];
 
-      $scope.populatePopulationOptions = function(){
-        $http.get("/api/questionnaires/").success(function(data, status) {
-            console.log(data.result)
-            $scope.populateOptions = data.result;
-            //$scope.selectedQuestionnaire = $scope.populateOptions[0]
-        })
-      }
+      // $scope.populatePopulationOptions = function(){
+      //   $http.get("/api/questionnaires/").success(function(data, status) {
+      //       console.log(data.result)
+      //       $scope.populateOptions = data.result;
+      //       //$scope.selectedQuestionnaire = $scope.populateOptions[0]
+      //   })
+      // }
 
       $scope.selectedQuestionnaire = {};
 
 
-      // $scope.$watch("", function(oldo,newo){
-      //   console.log(oldo, newo)
-      //   console.log('selected Questionnaire')
-      // }, true);
 
-      // $scope.$watch('selectedQuestionnaire',
-      // function () {
-      //           return $scope.selectedQuestionnaire.quickCode;
-      //       },
-      // function() {
-      //   console.log('hey, selected Questionnaire changed has changed!', $scope.selectedQuestionnaire);
-      // }, true);
+      if($stateParams.questionnaireId !== null){
+        //Duplicate questionnaire
+        $http.get("/api/questionnaires/" + $stateParams.questionnaireId).success(function(data, status) {
+            console.log(data)
+            $scope.questionnaire = data
+            try{
+              delete $scope.questionnaire.serverId
+              delete $scope.questionnaire._id
+              delete $scope.questionnaire.owner
+              delete $scope.questionnaire.__v
+              delete $scope.questionnaire.created
+              delete $scope.questionnaire.uploadUrl
+
+              $scope.selectedSection = $scope.questionnaire.sections[0]
+              $scope.selectedQuestion = null
+            } catch(e){}
+            //$scope.selectedQuestionnaire = $scope.populateOptions[0]
+        })
+      }
 
       $scope.selectQuestionnaire = function(a){
         console.log("Selected")
@@ -245,7 +254,7 @@
       }
 
       var activate = function() {
-        $scope.populatePopulationOptions()
+        //$scope.populatePopulationOptions()
         // BootstrapTour is not compatible with z-index based layout
         // so adding position:static for this case makes the browser
         // to ignore the property

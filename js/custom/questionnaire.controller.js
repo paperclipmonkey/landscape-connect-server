@@ -26,6 +26,10 @@
             })
         }
 
+        $scope.duplicate = function(a){
+          $state.go('app.questionnairenew', {questionnaireId: $stateParams.questionnaireId})
+        }
+
         $scope.isImage = function(filename){
           return ['jpg', 'jpeg', 'png', 'tiff'].indexOf(filename.split('.').pop()) != -1
         }

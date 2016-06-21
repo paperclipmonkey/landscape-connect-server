@@ -44,7 +44,7 @@
               resolve: helper.resolveFor('ngTable', 'ngTableExport')
           })
           .state('app.questionnairenew', {
-              url: '/questionnaires/new/',
+              url: '/questionnaires/new/:questionnaireId',
               title: 'New Questionnaire',
               templateUrl: helper.basepath('questionnairenew.html'),
               resolve: helper.resolveFor('bm.bsTour', 'jquery-ui', 'jquery-ui-widgets', 'ui.sortable')
