@@ -27,8 +27,6 @@
             }
         })
 
-        window.mScope = $scope
-
         $http.get("/api/questionnaires/" + $stateParams.questionnaireId).success(function(data, status) {
             $scope.questionnaire = data;
 
@@ -40,7 +38,6 @@
         })
 
         $scope.delete = function(a){
-            console.log("Deleting Response")
             $http.delete("/api/questionnaires/" +  $stateParams.questionnaireId + "/responses/" + $stateParams.responseId).success(function(data, status) {
                 $state.go('app.questionnaires')
             })

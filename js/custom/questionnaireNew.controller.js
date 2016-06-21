@@ -14,7 +14,6 @@
     
     function questionnaireNewCtrl($scope, $http, $state, $stateParams) {
 
-      window.myScope = $scope
       $scope.questionnaire = {
         'name': '',
         'description': '',
@@ -131,7 +130,6 @@
 
       // $scope.populatePopulationOptions = function(){
       //   $http.get("/api/questionnaires/").success(function(data, status) {
-      //       console.log(data.result)
       //       $scope.populateOptions = data.result;
       //       //$scope.selectedQuestionnaire = $scope.populateOptions[0]
       //   })
@@ -142,7 +140,6 @@
       if($stateParams.questionnaireId !== null){
         //Duplicate questionnaire
         $http.get("/api/questionnaires/" + $stateParams.questionnaireId).success(function(data, status) {
-            console.log(data)
             $scope.questionnaire = data
             try{
               delete $scope.questionnaire.serverId
@@ -160,8 +157,6 @@
       }
 
       $scope.selectQuestionnaire = function(a){
-        console.log("Selected")
-        console.log($scope.selectedQuestionnaire)
       }
 
       $scope.deselectQuestion = function () {
@@ -230,9 +225,7 @@
       }
 
       $scope.submitQuestionnaire = function(a){
-        console.log("Submitting Questionnaire")
         $http.post("/api/questionnaires/", $scope.questionnaire).success(function(data, status) {
-            console.log(data, status)
             $state.go('app.questionnaire', {questionnaireId: data.serverId})
         })
       }
@@ -248,7 +241,6 @@
       }
 
       $scope.export = function () {
-        console.log($scope.questionnaire)
       }
 
       var activate = function() {

@@ -13,7 +13,6 @@
     publicQuestionnaireCtrl.$inject = ['$scope', '$http', '$stateParams', '$state'];
     function publicQuestionnaireCtrl($scope, $http, $stateParams, $state) {
         $http.get("/api/questionnaires/" + $stateParams.questionnaireId).success(function(data, status) {
-            console.log(data, status)
             $scope.questionnaire = data;
         })
     }
