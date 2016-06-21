@@ -54,9 +54,9 @@ module.exports = (function () {
       console.error(err)
     })
 
-    eventServer.on('Response:*', function (data) {
-      console.log(data)
-    })
+    // eventServer.on('Response:*', function (data) {
+    //   console.log(data)
+    // })
 
     // Catch all email events
     eventServer.on('email:*', function (info) {
