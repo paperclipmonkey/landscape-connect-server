@@ -96,7 +96,7 @@
     "textAngular": "1.4.1",
     "angular-rickshaw": "master",
     "morris.js": "0.5.1",
-    "angular-chartist.js": "master",
+    "angular-chartist.js": "3.3.13",
     "loaders.css": "0.1.1",
     "spinkit": "1.2.2",
     "angular-jqcloud": "1.0.2",
