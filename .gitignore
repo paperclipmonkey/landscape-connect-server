@@ -1,8 +1,9 @@
 /node_modules/
 /bower_components/
-/public/app/css/
-/public/app/js/
-/public/app/pages/
+/public/app/app/css/
+/public/app/app/js/
+/public/app/app/pages/
+/public/app/app/views/
 /public/app/vendor/
 /public/vendor/
 /public/app/views/
@@ -14,3 +15,4 @@
 /frontend/bower_components/
 
 /npm-debug.log
+
