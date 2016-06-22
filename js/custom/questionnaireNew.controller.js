@@ -128,13 +128,6 @@
 
       $scope.populateOptions = [];
 
-      // $scope.populatePopulationOptions = function(){
-      //   $http.get("/api/questionnaires/").success(function(data, status) {
-      //       $scope.populateOptions = data.result;
-      //       //$scope.selectedQuestionnaire = $scope.populateOptions[0]
-      //   })
-      // }
-
       $scope.selectedQuestionnaire = {};
 
       if($stateParams.questionnaireId !== null){
@@ -235,16 +228,7 @@
       $scope.questionsOptions = {}
       $scope.questionOptions = {}
 
-      $scope.import = function (json) {
-        $scope.questionnaire.sections = json.sections
-        $scope.$apply()
-      }
-
-      $scope.export = function () {
-      }
-
       var activate = function() {
-        //$scope.populatePopulationOptions()
         // BootstrapTour is not compatible with z-index based layout
         // so adding position:static for this case makes the browser
         // to ignore the property
