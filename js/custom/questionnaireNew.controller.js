@@ -130,7 +130,7 @@
 
       $scope.selectedQuestionnaire = {};
 
-      if($stateParams.questionnaireId !== null){
+      if($stateParams.questionnaireId != false ){
         //Duplicate questionnaire
         $http.get("/api/questionnaires/" + $stateParams.questionnaireId).success(function(data, status) {
             $scope.questionnaire = data
@@ -145,7 +145,6 @@
               $scope.selectedSection = $scope.questionnaire.sections[0]
               $scope.selectedQuestion = null
             } catch(e){}
-            //$scope.selectedQuestionnaire = $scope.populateOptions[0]
         })
       }
 
