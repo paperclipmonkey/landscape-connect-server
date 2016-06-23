@@ -2,9 +2,14 @@ var app = require('../app')
 var request = require('supertest')
 var server
 var users = {
-  'super': {email: 'me@me.com', password: 'mememe'},
-  'nonsuper': {email: 'example+nonsuper@sample.com', password: 'pwordme'}
+  'super': {email: 'me@me.com', password: 'mememe', isSuper: true, id: '575eeb9322137beca74f77b4'},
+  'nonsuper': {email: 'example+nonsuper@sample.com', password: 'pwordme', isSuper: false, id: '575eeb9322137beca74f77b4'}
 }
+
+var mongoose = require('mongoose')
+var User = mongoose.model('user')
+var Questionnaire = mongoose.model('questionnaire')
+
 
 describe('Back-end admin', function () {
   var rAgent
@@ -12,10 +17,7 @@ describe('Back-end admin', function () {
     server = app.listen(process.env.PORT, function () {
       rAgent = request.agent(app)
       // Delete all areas with name test - Unique test on Area names
-      var mongoose = require('mongoose')
-      var Questionnaire = mongoose.model('questionnaire')
       Questionnaire.remove({'name': 'test'}, function () {
-        var User = mongoose.model('user')
         User.remove({'email': 'test@test.com'}, done)
       })
     })
@@ -63,25 +65,6 @@ describe('Back-end admin', function () {
       .expect(/\bemail\b/, done)
   })
 
-  var userAdr
-
-  it('POST /api/account/register/ should add new user', function (done) {
-    rAgent
-      .post('/api/account/register/')
-      .send({
-        fullname: 'test',
-        email: 'test@test.com',
-        organisation: 'Test',
-        phoneno: '01792',
-        password: 'test'
-      })
-      .expect(200)
-      .end(function (err, res) {
-        userAdr = res.header.location
-        done(err)
-      })
-  })
-
   // it('POST /api/users/:id/ with photo should update user photo', function (done) {
   //   this.timeout(5000)
   //   rAgent
@@ -112,12 +95,21 @@ describe('Back-end admin', function () {
       .expect(400, done)
   })
 
-  // it('GET /api/users/:id should show user', function (done) {
-  //   rAgent
-  //     .get(userAdr)
-  //     .expect(200)
-  //     .expect(/\btest\b/, done)
-  // })
+  it('POST /api/account/register/ should add new user', function (done) {
+    rAgent
+      .post('/api/account/register/')
+      .send({
+        fullname: 'test',
+        email: 'test@test.com',
+        organisation: 'Test',
+        phoneno: '01792',
+        password: 'test'
+      })
+      .expect(200)
+      .end(function (err, res) {
+        done(err)
+      })
+  })
 
   // it('POST /api/users/:id should edit user', function (done) {
   //   rAgent
@@ -154,7 +146,7 @@ describe('Back-end admin', function () {
   /* - - - - - Different Users - - - - - - */
 
   function runAs (userLogin) {
-    describe('login: ' + userLogin.username, function () {
+    describe('login: ' + userLogin.email, function () {
       it('POST /api/account/login should login & set cookie', function (done) {
         rAgent
           .post('/api/account/login')
@@ -163,7 +155,7 @@ describe('Back-end admin', function () {
       })
 
       /* - - - - - - Questionnaires - - - - - */
-      it('GET /api/questionnaires should show private questionnaires', function (done) {
+      it('GET /api/questionnaires should show my private questionnaires', function (done) {
         rAgent
           .get('/api/questionnaires/')
           .expect(200)
@@ -177,41 +169,23 @@ describe('Back-end admin', function () {
       })
 
       /* - - - - Dashboard - - - - - */
-      // it('GET /api/dash/rating/average should show average rating', function (done) {
-      //   rAgent
-      //     .get('/api/dash/rating/average')
-      //     .expect(200, done)
-      // })
+      it('GET /api/dash/responses/total should show total rating', function (done) {
+        rAgent
+          .get('/api/dash/responses/total')
+          .expect(200, done)
+      })
 
-      // it('GET /api/dash/rating/months should show months rating', function (done) {
-      //   rAgent
-      //     .get('/api/dash/rating/months')
-      //     .expect(200, done)
-      // })
+      it('GET /api/dash/responses/latest should show responses this month', function (done) {
+        rAgent
+          .get('/api/dash/responses/latest')
+          .expect(200, done)
+      })
 
-      // it('GET /api/dash/responses/week should show total responses this week', function (done) {
-      //   rAgent
-      //     .get('/api/dash/responses/week')
-      //     .expect(200, done)
-      // })
-
-      // it('GET /api/dash/responses/average should show total responses this month', function (done) {
-      //   rAgent
-      //     .get('/api/dash/responses/months')
-      //     .expect(200, done)
-      // })
-
-      // it('GET /api/dash/responses/total should show total responses', function (done) {
-      //   rAgent
-      //     .get('/api/dash/responses/total')
-      //     .expect(200, done)
-      // })
-
-      // it('GET /api/dash/responses/latest should show latest responses', function (done) {
-      //   rAgent
-      //     .get('/api/dash/responses/latest')
-      //     .expect(200, done)
-      // })
+      it('GET /api/dash/questionnaires/total should show total questionnaires', function (done) {
+        rAgent
+          .get('/api/dash/questionnaires/total')
+          .expect(200, done)
+      })
 
       it('POST /api/account/logout should logout & delete cookie', function (done) {
         rAgent
@@ -222,12 +196,57 @@ describe('Back-end admin', function () {
     })
   }
 
+  //Get Id of 
+
   // Super Admin
   runAs(users.super)
   // Normal Admin
+  runAs(users.nonsuper)
 
-  // TODO - Add non-super used
-  // runAs(users.nonsuper)
+  function loginAs(userLogin, done){
+    rAgent
+      .post('/api/account/login')
+      .send(userLogin)
+      .expect(200, done)
+  }
+
+  function checkPermissions (userLogin, expected) {
+    describe('check permissions: ' + userLogin.email, function () {
+
+      it('GET /api/users/:superUserId', function (done) {
+        rAgent
+          .get('/api/users/' + users.super.id)
+          .end(function(err, res){
+            done()
+        })
+      })
+
+      it('GET /api/questionnaires/:id with questionnaire not mine', function (done) {
+        rAgent
+          .get('/api/questionnaires/:id')
+          .end(function(err, res){
+            done()
+          })
+      })
+
+      it('POST /api/questionnaires/:id Update with id not mine', function (done) {
+        rAgent
+          .get('/api/questionnaires/:id')
+          .expect(404, done)
+      })
+
+      it('DELETE /api/questionnaires/:id with id not mine', function (done) {
+        rAgent
+          .get('/api/questionnaires/:id')
+          .expect(404, done)
+      })
+
+    })
+  }
+
+  checkPermissions(users.super, true)
+  checkPermissions(users.nonsuper, false)
+
 
   /* - - - - Non-Super admin - - - - - */
   it('POST /api/account/login as non-super should login & set cookie', function (done) {
@@ -237,11 +256,11 @@ describe('Back-end admin', function () {
       .expect(200, done)
   })
 
-  // it("GET /api/users as non-super shouldn't show users", function (done) {
-  //   rAgent
-  //     .get('/api/users/')
-  //     .expect(302, done)
-  // })
+  it("GET /api/users as non-super shouldn't show users", function (done) {
+    rAgent
+      .get('/api/users/')
+      .expect(401, done)
+  })
 
   after(function () {
     server.close()

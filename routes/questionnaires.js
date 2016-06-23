@@ -59,9 +59,9 @@ module.exports = function (app) {
     }
 
     if (req.user && req.user.isSuper) {
-    mongoose.model(modelName).find({}).populate('owner', 'username _id').exec(function (err, res) {
+    mongoose.model(modelName).find({}).populate('owner', 'username _id').exec(function (err, results) {
       // Link questionnaire with user
-      cback(err, res)
+      cback(err, results)
     })
     } else {
       mongoose.model(modelName).find({owner: req.user._id}).select('-owner').exec(cback)//user: req.user._id // {'owner': req.user._id}
@@ -69,14 +69,9 @@ module.exports = function (app) {
   }
 
   var list_public = function (req, res, next) {
-    eventServer.emit(objName + ':list', {})
-    var cback = function (err, results) {
+    mongoose.model(modelName).find({publicQuestionnaire: true}).populate('owner', 'username _id').exec(function (err, results) {
       if (err) return next(err)
-      res.json({result: results})
-    }
-
-    mongoose.model(modelName).find({public: true}).populate('owner', 'username _id').exec(function (err, res) {
-      cback(err, res)
+      res.json({result: results})    
     })
   }
 

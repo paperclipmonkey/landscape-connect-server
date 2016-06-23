@@ -72,6 +72,18 @@ function ensureIsSuper (req, res, next) {
   return res.sendStatus(401)
 }
 
+function ensureIsOwner (req, res, next) {
+  if (req.isAuthenticated()) {
+    if (req.user && req.user.isSuper) {
+      return next()
+    }
+    if(req.params.id === req.user._id){
+      return next()
+    }
+  }
+  return res.sendStatus(401)
+}
+
 function ensureAuthenticated (req, res, next) {
   if (!req.isAuthenticated()) {
     return res.sendStatus(401)
@@ -139,5 +151,6 @@ module.exports = {
   saveUploaded: saveUploaded,
   ensureIsSuper: ensureIsSuper,
   ensureAuthenticated: ensureAuthenticated,
-  check_nonce: check_nonce
+  check_nonce: check_nonce,
+  ensureIsOwner: ensureIsOwner
 }

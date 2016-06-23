@@ -66,6 +66,12 @@ describe('Questionnaires', function () {
       .expect(/(app)/, done)
   })
 
+  it('GET /api/questionnaires/x/qr should show qr code', function (done) {
+    rAgent
+      .get('/api/questionnaires/' + questionnaire.serverId + '/qr')
+      .expect(200, done)
+  })
+
   it('GET /questionnaires/x as Android client V1 should show JSON', function (done) {
     rAgent
       .get('/questionnaires/' + questionnaire.serverId)

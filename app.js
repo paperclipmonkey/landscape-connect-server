@@ -141,10 +141,6 @@ module.exports = (function () {
   app.get('/api/dash/responses/total', middleware.ensureAuthenticated, routes.dashboard.responses_total)
   app.get('/api/dash/responses/latest', middleware.ensureAuthenticated, routes.dashboard.responses_latest)
 
-  app.get('/api/dash/responses/months', middleware.ensureAuthenticated, routes.dashboard.dashboard_views_by_month)
-  app.get('/api/dash/responses/total', middleware.ensureAuthenticated, routes.dashboard.dashboard_views_total)
-  app.get('/api/dash/responses/words', middleware.ensureAuthenticated, routes.dashboard.dashboard_words)
-
   // Download
   app.get('/api/questionnaires/:id/download/csv', middleware.ensureAuthenticated, routes.download.download_csv)
   app.get('/api/questionnaires/:id/download/kmz', middleware.ensureAuthenticated, routes.download.download_kmz)
@@ -175,8 +171,8 @@ module.exports = (function () {
   app.post('/api/questionnaires/:id/responses', multipart, middleware.saveUploaded, routes.responses.create)
 
   // Users
-  app.get('/api/users', middleware.ensureAuthenticated, routes.users.list)
-  app.get('/api/users/:id', middleware.ensureAuthenticated, routes.users.read)
+  app.get('/api/users', middleware.ensureIsSuper, routes.users.list)
+  app.get('/api/users/:id', middleware.ensureIsOwner, middleware.ensureAuthenticated, routes.users.read)
   app.post('/api/users/:id', middleware.ensureAuthenticated, multipart, routes.users.edit)
   app.delete('/api/users/:id', middleware.ensureAuthenticated, routes.users.remove)
 
