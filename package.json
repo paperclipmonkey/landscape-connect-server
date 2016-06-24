@@ -65,7 +65,7 @@
         "passport-local": "1.0.x",
         "qr-image": "^3.1.0",
         "request": "2.60.x",
-        "s3": "4.4.x",
+        "s3": "git://github.com/andrewrk/node-s3-client",
         "should": "7.x",
         "supertest": "*",
         "through2": "^0.6.3",
