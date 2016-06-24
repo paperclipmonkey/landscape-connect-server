@@ -126,7 +126,7 @@ module.exports = function (app) {
     } catch (e) {
       return res.sendStatus(400)
     }
-    download_docs(ids, function (docs) {
+    download_docs_raw(ids, function (docs) {
       var zip = archiver.create('zip')
       res.attachment('media.zip')
       zip.pipe(res)
