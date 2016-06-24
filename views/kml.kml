@@ -45,25 +45,24 @@
 			<styleUrl>#rmvBalloonStyle</styleUrl>
 			<visibility>0</visibility>
 			<Point>
-				<coordinates>{{{loc.coordinates}}}, 0</coordinates>
+				<coordinates>{{{lng}}},{{{lat}}}, 0</coordinates>
 			</Point>
 			<description><![CDATA[
-				<img src="{{photo}}"/><br/><br/>
+				{{#media}}
+				<img src="{{this}}"/><br/><br/>
+				{{/media}}
 				<h2>Details</h2>
-				<dl>
-					<dt>Rating</dt>
-					<dd>{{rating}}</dd>
-					<dt>Age</dt>
-					<dd>{{age}}</dd>
-					<dt>Know Area</dt>
-					<dd>{{knowarea}}</dd>
-					<dt>Words</dt>
-					<dd>{{words}}</dd>
-					<dt>Comments</dt>
-					<dd>{{comments}}</dd>
-					<dt>Heading</dt>
-					<dd>{{heading}}</dd>
-				</dl>
+				{{#data}}
+				<div>
+					<h3>{{title}}</h3>
+					{{#questions}}
+						<div>
+							<h4>{{title}}</h4>
+							<p>{{answer}}</p>
+						</div>
+					{{/questions}}
+				</div>
+				{{/data}}
 				<a href="http://ratemyview.co.uk/#{{_id}}">View on website</a>
 			]]></description>
 		</Placemark>

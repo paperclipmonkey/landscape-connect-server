@@ -6,7 +6,7 @@ var common = require('../common')
 
 module.exports = function (app) {
   var download_csv = function (req, res, next) {
-    download_docs(req.params.id, function (docs) {
+    download_docs_raw(req.params.id, function (docs) {
         if (docs.length === 0) {
           return next(new Error('Empty result'))
         }
@@ -68,26 +68,36 @@ module.exports = function (app) {
   }
 
   var download_kmz = function (req, res) {
-    download_docs([req.params.id], packageKML, res)
+    download_docs_formatted([req.params.id], packageKML, res)
   }
 
-  function download_docs (id, fun, res) {
+  function download_docs_raw (id, fun, res) {
+      mongoose.model('response').find({questionnaire: id}, function (err, responses) {
+        if (err) {
+          next(err)
+          console.log(new Error('Could not find responses'))
+        }
+        fun(responses, res)
+      })
+  }
+
+  function download_docs_formatted (id, fun, res) {
     mongoose.model('questionnaire').findOne({serverId: id}, function (err, questionnaire) {
       if (err) {
         next(err)
         console.log(new Error('Could not find questionnaire'))
       }
-      mongoose.model('response').find({questionnaire: id}, function (err, docs) {
+      mongoose.model('response').find({questionnaire: id}, function (err, responses) {
         if (err) {
           next(err)
           console.log(new Error('Could not find responses'))
         }
 
-        // for (var i = 0; i < docs.length; i++) {
-        //   docs[i] = common.formatResponse(docs[i], questionnaire)
-        // }
+        for (var i = 0; i < responses.length; i++) {
+          responses[i] = common.formatResponse(responses[i], JSON.parse(JSON.stringify(questionnaire)))
+        }
 
-        fun(docs, res)
+        fun(responses, res)
       })
     })
   }
@@ -97,11 +107,11 @@ module.exports = function (app) {
     var x = 0
     while (i < docs.length) {
       while (x < docs[i].media.length) {
-        try {
+        //try {
           zip.append(common.downloadFromS3('uploads/' + docs[i].media[x]), {name: docs[i].media[x]})
-        } catch (err) {
-          console.log(err)
-        }
+        //} catch (err) {
+        //  console.log(err)
+        //}
         x++
       }
       x = 0
@@ -130,15 +140,15 @@ module.exports = function (app) {
     })
   }
 
-  var download_kmz = function (req, res) {
-    var ids = [req.body.id]
-    download_docs(ids, packageKML, res)
-  }
-
   function packageKML (docs, res) {
     var zip = archiver.create('zip')
     res.attachment('earth.kmz')
     zip.pipe(res)
+
+    zip.addListener('fail', function (err) {
+      console.log("Zip failed")
+      console.log(err)
+    })
 
     add_images(docs, zip)
     createKML(docs, function (err, kmlString) {
@@ -182,7 +192,6 @@ module.exports = function (app) {
   return {
     download_kmz: download_kmz,
     download_image: download_image,
-    download_docs: download_docs,
     download_csv: download_csv,
     download_media: download_media,
   }
