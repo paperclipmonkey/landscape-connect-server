@@ -67,7 +67,6 @@ function ensureIsSuper (req, res, next) {
     if (req.user && req.user.isSuper) {
       return next()
     }
-    return res.sendStatus(401)
   }
   return res.sendStatus(401)
 }
@@ -77,11 +76,37 @@ function ensureIsOwner (req, res, next) {
     if (req.user && req.user.isSuper) {
       return next()
     }
+    //User object
     if(req.params.id === req.user._id){
       return next()
     }
+    //Questionnaire object
+    mongoose.model('questionnaire').findOne({owner: req.user._id, serverId: req.params.id}, function (err, questionnaire) {
+      if (questionnaire != null) {
+        return next()
+      }
+      return res.sendStatus(401)
+    })
+  } else {
+    return res.sendStatus(401)
   }
-  return res.sendStatus(401)
+}
+
+function ensurePublicOrAuthenticated (req, res, next) {
+  if (req.user && req.user.isSuper) {
+    return next()
+  }
+  mongoose.model('questionnaire').findOne({serverId: req.params.id}, function (err, questionnaire) {
+    if(questionnaire != null){
+      if (questionnaire.owner === req.user._id) {//Owned by logged in user
+        return next()
+      }
+      if (questionnaire.publicData === true) {//Public data
+        return next()
+      }
+    }
+    return res.sendStatus(401)
+  })
 }
 
 function ensureAuthenticated (req, res, next) {
@@ -150,6 +175,7 @@ var check_nonce = function (req, res, next) {
 module.exports = {
   saveUploaded: saveUploaded,
   ensureIsSuper: ensureIsSuper,
+  ensurePublicOrAuthenticated: ensurePublicOrAuthenticated,
   ensureAuthenticated: ensureAuthenticated,
   check_nonce: check_nonce,
   ensureIsOwner: ensureIsOwner

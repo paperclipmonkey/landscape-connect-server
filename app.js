@@ -142,9 +142,9 @@ module.exports = (function () {
   app.get('/api/dash/responses/latest', middleware.ensureAuthenticated, routes.dashboard.responses_latest)
 
   // Download
-  app.get('/api/questionnaires/:id/download/csv', middleware.ensureAuthenticated, routes.download.download_csv)
-  app.get('/api/questionnaires/:id/download/kmz', middleware.ensureAuthenticated, routes.download.download_kmz)
-  app.get('/api/questionnaires/:id/download/media', middleware.ensureAuthenticated, routes.download.download_media)
+  app.get('/api/questionnaires/:id/download/csv', middleware.ensurePublicOrAuthenticated, routes.download.download_csv)
+  app.get('/api/questionnaires/:id/download/kmz', middleware.ensurePublicOrAuthenticated, routes.download.download_kmz)
+  app.get('/api/questionnaires/:id/download/media', middleware.ensurePublicOrAuthenticated, routes.download.download_media)
 
   // Questionnaire
   app.get('/api/questionnaires', middleware.ensureAuthenticated, routes.questionnaires.list)
@@ -152,8 +152,8 @@ module.exports = (function () {
  
   app.get('/api/questionnaires/:id', routes.questionnaires.read)
   app.get('/api/questionnaires/:id/qr', routes.questionnaires.qr)
-  app.delete('/api/questionnaires/:id', middleware.ensureAuthenticated, routes.questionnaires.remove)
-  app.post('/api/questionnaires/:id', middleware.ensureAuthenticated, routes.questionnaires.update)
+  app.delete('/api/questionnaires/:id', middleware.ensureAuthenticated, middleware.ensureIsOwner, routes.questionnaires.remove)
+  app.post('/api/questionnaires/:id', middleware.ensureAuthenticated, middleware.ensureIsOwner, routes.questionnaires.update)
   app.post('/api/questionnaires/', routes.questionnaires.create)
 
   // Response media
@@ -164,17 +164,17 @@ module.exports = (function () {
   // Responses
   app.get('/api/questionnaires/:id/responses', routes.responses.list)
 
-  app.get('/api/questionnaires/:id/statistics', routes.responses.statistics)
+  app.get('/api/questionnaires/:id/statistics', middleware.ensurePublicOrAuthenticated, routes.responses.statistics)
 
-  app.get('/api/questionnaires/:qid/responses/:id', routes.responses.read)
-  app.delete('/api/questionnaires/:qid/responses/:id', routes.responses.remove)
+  app.get('/api/questionnaires/:qid/responses/:id', middleware.ensurePublicOrAuthenticated, routes.responses.read)
+  app.delete('/api/questionnaires/:qid/responses/:id', middleware.ensureIsOwner, routes.responses.remove)
   app.post('/api/questionnaires/:id/responses', multipart, middleware.saveUploaded, routes.responses.create)
 
   // Users
   app.get('/api/users', middleware.ensureIsSuper, routes.users.list)
   app.get('/api/users/:id', middleware.ensureIsOwner, middleware.ensureAuthenticated, routes.users.read)
-  app.post('/api/users/:id', middleware.ensureAuthenticated, multipart, routes.users.edit)
-  app.delete('/api/users/:id', middleware.ensureAuthenticated, routes.users.remove)
+  app.post('/api/users/:id', middleware.ensureIsOwner, multipart, routes.users.edit)
+  app.delete('/api/users/:id', middleware.ensureIsOwner, middleware.ensureIsOwner, routes.users.remove)
 
   // User login
   app.get('/api/account/details/', middleware.ensureAuthenticated, routes.users.me)

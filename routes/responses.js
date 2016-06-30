@@ -10,6 +10,25 @@ module.exports = function (app) {
   var objName = 'Response'
   var modelName = 'response'
 
+  var check_nonce = function (req, res, next) {
+    // Ensure we have a new view - check NONCE from App
+    if (req.body.uuid) {
+      // Do lookup in DB for nonce. Does it exist already?
+      mongoose.model(modelName).findOne({uuid: req.body.uuid}, function (err, response) {
+        if (err) {
+          return next()
+        }
+        if (response !== null) {
+          res.json({status: "success", obj: response}) // JSON
+          return res.end()
+        }
+        return next()
+      })
+    } else {
+      return next()
+    }
+  }
+
   var create = function (req, res, next) {
     eventServer.emit(objName + ':creating', req.body)
 
