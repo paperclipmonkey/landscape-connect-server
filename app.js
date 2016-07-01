@@ -137,9 +137,9 @@ module.exports = (function () {
   })
 
   // Dashboard
-  app.get('/api/dash/questionnaires/total', middleware.ensureAuthenticated, routes.dashboard.questionnaires_total)
-  app.get('/api/dash/responses/total', middleware.ensureAuthenticated, routes.dashboard.responses_total)
-  app.get('/api/dash/responses/latest', middleware.ensureAuthenticated, routes.dashboard.responses_latest)
+  app.get('/api/dash/questionnaires/total', middleware.ensureLoggedIn, routes.dashboard.questionnaires_total)
+  app.get('/api/dash/responses/total', middleware.ensureLoggedIn, routes.dashboard.responses_total)
+  app.get('/api/dash/responses/latest', middleware.ensureLoggedIn, routes.dashboard.responses_latest)
 
   // Download
   app.get('/api/questionnaires/:id/download/csv', middleware.ensurePublicOrAuthenticated, routes.download.download_csv)
@@ -147,13 +147,13 @@ module.exports = (function () {
   app.get('/api/questionnaires/:id/download/media', middleware.ensurePublicOrAuthenticated, routes.download.download_media)
 
   // Questionnaire
-  app.get('/api/questionnaires', middleware.ensureAuthenticated, routes.questionnaires.list)
+  app.get('/api/questionnaires', middleware.ensureLoggedIn, routes.questionnaires.list)
   app.get('/api/questionnaires/public', routes.questionnaires.list_public)
  
   app.get('/api/questionnaires/:id', routes.questionnaires.read)
   app.get('/api/questionnaires/:id/qr', routes.questionnaires.qr)
-  app.delete('/api/questionnaires/:id', middleware.ensureAuthenticated, middleware.ensureIsOwner, routes.questionnaires.remove)
-  app.post('/api/questionnaires/:id', middleware.ensureAuthenticated, middleware.ensureIsOwner, routes.questionnaires.update)
+  app.delete('/api/questionnaires/:id', middleware.ensureLoggedIn, middleware.ensureIsOwner, routes.questionnaires.remove)
+  app.post('/api/questionnaires/:id', middleware.ensureLoggedIn, middleware.ensureIsOwner, routes.questionnaires.update)
   app.post('/api/questionnaires/', routes.questionnaires.create)
 
   // Response media
@@ -172,14 +172,14 @@ module.exports = (function () {
 
   // Users
   app.get('/api/users', middleware.ensureIsSuper, routes.users.list)
-  app.get('/api/users/:id', middleware.ensureIsOwner, middleware.ensureAuthenticated, routes.users.read)
+  app.get('/api/users/:id', middleware.ensureIsOwner, routes.users.read)
   app.post('/api/users/:id', middleware.ensureIsOwner, multipart, routes.users.edit)
   app.delete('/api/users/:id', middleware.ensureIsOwner, middleware.ensureIsOwner, routes.users.remove)
 
   // User login
-  app.get('/api/account/details/', middleware.ensureAuthenticated, routes.users.me)
-  app.get('/api/account/menu/', middleware.ensureAuthenticated, routes.users.menu)
-  app.post('/api/account/logout', middleware.ensureAuthenticated, routes.authenticate.logout)
+  app.get('/api/account/details/', middleware.ensureLoggedIn, routes.users.me)
+  app.get('/api/account/menu/', middleware.ensureLoggedIn, routes.users.menu)
+  app.post('/api/account/logout', middleware.ensureLoggedIn, routes.authenticate.logout)
   app.post('/api/account/register', routes.users.register, loginFunction)
   app.post('/api/account/login', loginFunction)
 

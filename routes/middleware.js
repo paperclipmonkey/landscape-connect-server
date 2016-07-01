@@ -109,74 +109,17 @@ function ensurePublicOrAuthenticated (req, res, next) {
   })
 }
 
-function ensureAuthenticated (req, res, next) {
-  if (!req.isAuthenticated()) {
-    return res.sendStatus(401)
-  }
-
-  if (req.user.isSuper) { // If super admin allow access
+function ensureLoggedIn (req, res, next) {
+  if (req.user != null) {
     return next()
   }
-
-  sanitiseInput(req) // Sanitise inputs for non-admins
-
-  var ids = [] // Id(s) of accessed item(s)
-
-  // See if ID is logged in user ID
-  if (req.params.id) {
-    ids.push(req.params.id)
-  }
-
-  // // Add GET routes with JSON arrays
-  // if (req.params.ids) {
-  //   try {
-  //     ids.concat(JSON.parse(req.params.ids))
-  //   } catch (e) {}
-  // }
-
-  // // Add POST routes with JSON arrays
-  // if (req.body.ids) {
-  //   try {
-  //     ids.concat(JSON.parse(req.body.ids))
-  //   } catch (e) {}
-  // }
-
-  // if (!ids) {
-  //   return next()
-  // }
-
-  // if (ids.indexOf(req.user._id.toString()) !== -1 && ids.length === 1) { // Own profile
-  //   return next()
-  // }
-
-  return next()
-}
-
-var check_nonce = function (req, res, next) {
-  // Ensure we have a new view - check NONCE from App
-  // if (req.body.nonce) {
-  //   // Do lookup in DB for nonce. Does it exist already?
-  //   mongoose.model('feedback').find({nonce: req.body.nonce}, function (err, views) {
-  //     if (err) {
-  //       return res.json(500, err)
-  //     }
-  //     if (views.length < 1) {
-  //       return next()
-  //     } else {
-  //       res.json(views[0].toClient()) // JSON
-  //       return res.end()
-  //     }
-  //   })
-  // } else {
-  return next()
-// }
+  return res.sendStatus(401)
 }
 
 module.exports = {
   saveUploaded: saveUploaded,
+  ensureLoggedIn: ensureLoggedIn,
   ensureIsSuper: ensureIsSuper,
   ensurePublicOrAuthenticated: ensurePublicOrAuthenticated,
-  ensureAuthenticated: ensureAuthenticated,
-  check_nonce: check_nonce,
   ensureIsOwner: ensureIsOwner
 }
