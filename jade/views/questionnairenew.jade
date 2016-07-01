@@ -76,7 +76,7 @@ h3 New Questionnaire
                   .newquestionbuttons.row(ng-hide='selectedSection == null', tour-step='', order='3', title='New question', content='Click to add a new question to the selected section', placement='right')
                     .btn.screen.col-md-3(ng-repeat='arr in draggables track by $index', ng-model='arr')
                       .btn.btn-info(ng-click='newQuestionClick(questionType)', ng-repeat='questionType in arr')
-                        i.fa(ng-class="{'fa-check-square': questionType.type == 'multi','fa-circle-o': questionType.type == 'radio', 'fa-font': questionType.type == 'text', 'fa-quote-left': questionType.type == 'textarea'}")
+                        i.fa(ng-class="{'fa-check-square': questionType.type == 'multi','fa-circle-o': questionType.type == 'radio', 'fa-font': questionType.type == 'text', 'fa-quote-left': questionType.type == 'textarea', 'fa-paragraph': questionType.type == 'infotext'}")
                   //- - - - - - Nothing selected - - - - - 
                   div(ng-if='selectedSection == null')
                     p Please create a new section or select a section from the right hand-side
