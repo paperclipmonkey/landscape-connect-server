@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "publicQuestionnaire": {
+      "type": "boolean"
+    },
+    "publicData": {
+      "type": "boolean"
+    },
+    "introTitle": {
+      "type": "string"
+    },
+    "introDescription": {
+      "type": "string"
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "questions": {
+            "type": "array",
+            "items": {
+              "$ref": "/Question"
+            }
+          },
+          "sectionId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "questions",
+          "sectionId",
+          "title"
+        ]
+      }
+    },
+    "getInitialPhoto": {
+      "type": "boolean"
+    },
+    "getLocationAccuracy": {
+      "type": "integer"
+    },
+    "getLocation": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "title",
+    "description",
+    "publicQuestionnaire",
+    "publicData",
+    "introTitle",
+    "introDescription",
+    "sections",
+    "getInitialPhoto",
+    "getLocationAccuracy",
+    "getLocation"
+  ]
+}

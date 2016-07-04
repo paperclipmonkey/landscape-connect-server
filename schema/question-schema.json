@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "/Question",
+  "type": "object",
+  "properties": {
+    "questionId": {
+      "description": "Unique ID for each question in a section. Used during upload",
+      "type": "string"
+    },
+    "choices": {
+      "description": "Possible choices for the user. Used in radio and multi type questions",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "choice": {
+            "type": "string",
+            "required": [
+              "choice"
+            ]
+          }
+        }
+      }
+    },
+    "type": {
+      "description": "Type of question being modelled",
+      "type": "string",
+      "enum": [
+        "radio",
+        "multi",
+        "textarea",
+        "text",
+        "infotext"
+      ]
+    },
+    "title": {
+      "description": "Question to ask user",
+      "type": "string"
+    }
+  },
+  "required": [
+    "questionId",
+    "type",
+    "title"
+  ]
+}

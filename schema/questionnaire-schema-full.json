@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "uploadUrl": {
+      "type": "string"
+    },
+    "serverId": {
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "publicQuestionnaire": {
+      "type": "boolean"
+    },
+    "publicData": {
+      "type": "boolean"
+    },
+    "introTitle": {
+      "type": "string"
+    },
+    "introDescription": {
+      "type": "string"
+    },
+    "created": {
+      "type": "integer"
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "questions": {
+            "type": "array",
+            "items": {
+              "$ref": "/Question"
+            }
+          },
+          "sectionId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "questions",
+          "sectionId",
+          "title"
+        ]
+      }
+    },
+    "getInitialPhoto": {
+      "type": "boolean"
+    },
+    "getLocationAccuracy": {
+      "type": "integer"
+    },
+    "getLocation": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "uploadUrl",
+    "serverId",
+    "owner",
+    "title",
+    "description",
+    "publicQuestionnaire",
+    "publicData",
+    "introTitle",
+    "introDescription",
+    "created",
+    "sections",
+    "getInitialPhoto",
+    "getLocationAccuracy",
+    "getLocation"
+  ]
+}

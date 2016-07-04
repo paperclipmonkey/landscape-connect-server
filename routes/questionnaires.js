@@ -5,20 +5,35 @@ var async = require('async')
 var s3Client = require('../s3-client')
 var eventServer = require('../eventemitter')
 var qrLib = require('qr-image')
+var Validator = require('jsonschema').Validator
 
 module.exports = function (app) {
   var objName = 'Questionnaire'
   var modelName = 'questionnaire'
 
+  //Build JSONSchema object
+  var lcValidator = new Validator()
+  var questionSchema = require('../schema/question-schema');
+  var questionnaireSchema = require('../schema/questionnaire-schema');
+  
+  //Load the additional schema document
+  lcValidator.addSchema(questionSchema, '/Question');
+
   var create = function (req, res, next) {
     eventServer.emit(objName + ':creating', instance)
     var toInsert = req.body
+
+    //Validate JSON against Schema
+    if(lcValidator.validate(toInsert, questionnaireSchema).errors.length > 0){
+      return res.status(400).json({'err':lcValidator.validate(toInsert, questionnaireSchema).errors})
+    }
 
     var Model = mongoose.model(modelName)
     var instance = new Model(toInsert)
 
     // Questionnaire specific code
     instance.owner = req.user
+
     // End Specific code
 
     instance.save(function (err) {
@@ -64,7 +79,7 @@ module.exports = function (app) {
       cback(err, results)
     })
     } else {
-      mongoose.model(modelName).find({owner: req.user._id}).select('-owner').exec(cback)//user: req.user._id // {'owner': req.user._id}
+      mongoose.model(modelName).find({owner: req.user._id}).populate('owner', 'username _id').exec(cback)//user: req.user._id // {'owner': req.user._id}
     }
   }
 
@@ -92,8 +107,8 @@ module.exports = function (app) {
   }
 
   var read = function (req, res, next) {
-    mongoose.model(modelName).findOne({serverId: req.params.id}).populate('owner', 'email _id').exec(function (err, doc) {
-      if (err) return next(err)
+    mongoose.model(modelName).findOne({serverId: req.params.id}).populate('owner', 'username _id').exec(function (err, doc) {
+      if (err) return res.sendStatus(400)
       if (!doc) return res.sendStatus(404)
       res.send(doc)
     })
