@@ -9,7 +9,7 @@
     function publicQuestionnairesCtrl($filter, $resource, questionnairesDataService, $scope, $http, $state) {
     	$scope.questionnaires = [];
 
-	    $http.get("/api/questionnaires/").success(function(data, status) {
+	    $http.get("/api/questionnaires/public/").success(function(data, status) {
 	        $scope.questionnaires = data.result;
 	    })
 	}
