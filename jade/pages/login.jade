@@ -17,13 +17,13 @@
           span.fa.fa-lock.form-control-feedback.text-muted
           span.text-danger(ng-show="login.loginForm.account_password.$dirty && login.loginForm.account_password.$error.required") This field is required
         .clearfix
-          .checkbox.c-checkbox.pull-left.mt0
-            label
-              input(type='checkbox', value='', name="account_remember", ng-model="login.account.remember")
-              span.fa.fa-check
-              |  Remember Me
+          //- .checkbox.c-checkbox.pull-left.mt0
+          //-   label
+          //-     input(type='checkbox', value='', name="account_remember", ng-model="login.account.remember")
+          //-     span.fa.fa-check
+          //-     |  Remember Me
           .pull-right
-            a.text-muted(ui-sref="page.recover") Forgot your password?
+            a.text-muted(href="mailto:help@landscape-connect.com") Forgot your password?
         
         button.btn.btn-block.btn-primary.mt-lg(type='submit') Login
       
