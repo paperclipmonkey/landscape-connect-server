@@ -16,7 +16,7 @@
       ul.xi
         li.thumbnail.questionnaire-listing(ng-repeat='xi in questionnaires | filter:query | orderBy:orderProp')
           span.xi-title
-            a(href='#/page/questionnaires/{{xi.serverId}}') {{xi.name}}
+            a(href='#/page/questionnaires/{{xi.serverId}}') {{xi.title}}
           span.description {{xi.description}}
           span.owner
             a(href='#/page/questionnaires/{{xi.serverId}}') {{xi.owner.username}}

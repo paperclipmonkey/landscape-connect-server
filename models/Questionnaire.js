@@ -4,7 +4,7 @@ require('datejs')
 
 /*
 "dateAdded": 1446587339,
-  "name": "Natural England",
+  "title": "Natural England",
   "serverId": "FGHH21",
   "description": "Natural England landscape questionnaire. This uses the Landscape Connect technology",
   "publicQuestionnaire": true,
@@ -20,7 +20,7 @@ var schemaName = 'questionnaire'
 
 module.exports = (function (app) {
   var NSchema = new Schema({
-    name: {type: String},
+    title: {type: String},
     serverId: {type: String, index: { unique: true }},
     description: {type: String},
     publicQuestionnaire: {type: Boolean},
@@ -69,7 +69,6 @@ module.exports = (function (app) {
 
     for ( var i = 0; i < length; i++)
       text += possible.charAt(Math.floor(Math.random() * possible.length))
-    console.log('Code', text)
     return text
   }
 

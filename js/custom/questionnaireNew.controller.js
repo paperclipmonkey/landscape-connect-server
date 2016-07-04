@@ -15,7 +15,7 @@
     function questionnaireNewCtrl($scope, $http, $state, $stateParams) {
 
       $scope.questionnaire = {
-        'name': '',
+        'title': '',
         'description': '',
         'publicQuestionnaire': true,
         'publicData': true,
