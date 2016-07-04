@@ -158,6 +158,25 @@
         $scope.selectedQuestion = null
       }
 
+      $scope.checkQuestionValid = function(){
+        if($scope.selectedQuestion == null){
+          return true
+        }
+        //check if question type is multi or radio. If is, check has enough options
+        if($scope.selectedQuestion.type === 'radio'){
+          if($scope.selectedQuestion.choices.length < 3){
+            alert('A single response question must have two or more options')
+            return false
+          }
+        } else if($scope.selectedQuestion.type === 'multi'){
+          if($scope.selectedQuestion.choices.length < 2){
+            alert('A multi select question must have one or more options')
+            return false
+          }
+        }
+        return true
+      }
+
       $scope.selectQuestion = function (a) {
         if ($scope.selectedQuestion === a) {
           $scope.deselectQuestion()
@@ -167,8 +186,10 @@
       }
 
       $scope.removeOption = function (el, i) {
-        var index = el.choices.indexOf(i)
-        el.choices.splice(index, 1)
+        if($scope.checkQuestionValid()){
+          var index = el.choices.indexOf(i)
+          el.choices.splice(index, 1)
+        }
       }
 
       $scope.removeQuestion = function (el) {
