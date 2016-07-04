@@ -6,6 +6,9 @@ var users = {
   'nonsuper': {email: 'example+nonsuper@sample.com', password: 'pwordme', isSuper: false, id: '575eeb9322137beca74f77b4'}
 }
 
+var questionnaireHeaders = {"title":"my Title","description":"my Description","publicQuestionnaire":true,"publicData":true,"getInitialPhoto":true, "getLocationAccuracy": 20, "getLocation": true,"sections":[{"title":"Sample Section 1","sectionId":"lnnder","questions":[{"title":"Example Multi Select","questionId":"ovgdfq","type":"multi","choices":[{"choice":"Example choice 1"},{"choice":"Another example choice 2"}]},{"title":"Example Multiline Textarea","questionId":"qjmyzw","type":"textarea"},{"title":"Single Text Line","type":"text","questionId":"ziwbhc"},{"title":"Single Select","type":"radio","choices":[{"choice":"Example single choice"},{"choice":"Another example single choice"}],"questionId":"pigrve"}]},{"title":"Sample Section 2","sectionId":"swghrp","questions":[{"title":"Second Multi Select","questionId":"ilxkxu","type":"multi","choices":[{"choice":"Example choice"},{"choice":"Another example choice"}]}]}],"website":"http://project.com","introTitle":"intro title","introDescription":"intro description","introImage":"data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAA8AAD/7gAOQWRvYmUAZMAAAAAB/9sAhAAGBAQEBQQGBQUGCQYFBgkLCAYGCAsMCgoLCgoMEAwMDAwMDBAMDg8QDw4MExMUFBMTHBsbGxwfHx8fHx8fHx8fAQcHBw0MDRgQEBgaFREVGh8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx//wAARCAABAAEDAREAAhEBAxEB/8QASgABAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAABhABAAAAAAAAAAAAAAAAAAAAABEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AAsLf/9k="}
+
+
 var mongoose = require('mongoose')
 var User = mongoose.model('user')
 var Questionnaire = mongoose.model('questionnaire')
@@ -187,12 +190,49 @@ describe('Back-end admin', function () {
           .expect(200, done)
       })
 
+      it('POST /api/questionnaires/ without title should error', function (done) {
+        var questionnaireHeaders2 = JSON.parse(JSON.stringify(questionnaireHeaders));
+        delete questionnaireHeaders2.title
+        rAgent
+          .post('/api/questionnaires')
+          .send(questionnaireHeaders2)
+          .expect(400)
+          .expect(/\berr\b/, done)
+      })
+
+      it('POST /api/questionnaires/ without section title should error', function (done) {
+        var questionnaireHeaders2 = JSON.parse(JSON.stringify(questionnaireHeaders));
+        delete questionnaireHeaders2.sections[0].title
+        rAgent
+          .post('/api/questionnaires')
+          .send(questionnaireHeaders2)
+          .expect(400)
+          .expect(/\berr\b/, done)
+      })
+
+      it('POST /api/questionnaires/ without question title should error', function (done) {
+        var questionnaireHeaders2 = JSON.parse(JSON.stringify(questionnaireHeaders));
+        delete questionnaireHeaders2.sections[0].questions[0].title
+        rAgent
+          .post('/api/questionnaires')
+          .send(questionnaireHeaders2)
+          .expect(400)
+          .expect(/\berr\b/, done)
+      })
+
+      it('POST /api/questionnaires/ should add new questionnaire', function (done) {
+        rAgent
+          .post('/api/questionnaires')
+          .send(questionnaireHeaders)
+          .expect(200)
+          .expect(/\btitle\b/, done)
+      })
+
       it('POST /api/account/logout should logout & delete cookie', function (done) {
         rAgent
           .post('/api/account/logout')
           .expect(200, done)
       })
-
     })
   }
 
