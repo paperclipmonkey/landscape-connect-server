@@ -13,12 +13,15 @@
     questionnaireNewCtrl.$inject = ['$scope', '$http', '$state', '$stateParams'];//'ui-sortable'
     
     function questionnaireNewCtrl($scope, $http, $state, $stateParams) {
-
       $scope.questionnaire = {
         'title': '',
         'description': '',
         'publicQuestionnaire': true,
         'publicData': true,
+        'getLocation': true,
+        'getInitialPhoto': true,
+        'getLocationAccuracy': '50',
+
         'sections': [
           {
             'title': 'Sample Section 1',
