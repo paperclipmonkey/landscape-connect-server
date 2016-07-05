@@ -3,10 +3,10 @@ h3 New Questionnaire
 // START panel
 .questionnairenew
   //- .panel.panel-default
-  div 
+  div(ng-controller="questionnaireNewCtrl as dgnr", tour="",  backdrop="true")
     //-.panel-body
-    form(form-wizard="", steps="4", novalidate="", ng-submit="alertSubmit()")
-      .form-wizard.wizard-horizontal(ng-controller="questionnaireNewCtrl as dgnr")
+    form(form-wizard="", steps="4", novalidate="")
+      .form-wizard.wizard-horizontal
         // START wizard steps indicator
         ol.row.panel.panel-default
             li.col-md-3(ng-class="{'active':wizard.active(1)}", ng-click="wizard.go(1)")
@@ -45,15 +45,10 @@ h3 New Questionnaire
                   span &rarr;
           // END Wizard Step inputs
         // START Wizard Step inputs 
-        div(ng-show="wizard.active(2)" tour="",  backdrop="true")
+        div#builder(ng-show="wizard.active(2)")
           // START QBuilder
+          a.btn.btn-primary.mb-lg.pull-right(ng-click='tour.restart(true)') Start Tour!
           h2 Designer
-          a.btn.btn-primary.mb-lg(ng-click='tour.restart(true)') Start Tour!
-          //- <select ng-change="selectQuestionnaire()" ng-model="selectedQuestionnaire" ng-options="o.name for o in populateOptions track by o.quickCode"></select><br />
-          //-select(ng-model="selectedQuestionnaire")
-            //-option(ng-value="{{option.quickCode}}" ng-repeat="option in populateOptions track by $index"){{option.name}}
-          //-<pre>{{selectedQuestionnaire | json}}</pre>
-
           div.row
             //- - - - - - - - - Sections - - - - - - - - - 
             .col-lg-3.sections
@@ -137,13 +132,6 @@ h3 New Questionnaire
                     //- Questionnaire details
                     div(ng-if='selectedQuestion == null && selectedSection == null')
                       p Select a section
-                    //- import / export
-                    //- .app
-                    //-   .form-group
-                    //-     label(for='title') Data
-                    //-     textarea.importexport(rows='10', questionnaireJsonDirective='', ng-model-options="{ updateOn: 'blur', debounce: { 'default': 500, 'blur': 0 } }", ng-model='questionnaire')
-
-
         // END Wizard Step inputs 
         // START Wizard Step inputs 
         div(ng-show="wizard.active(3)")
