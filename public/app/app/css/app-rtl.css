@@ -6892,6 +6892,11 @@ x:-o-prefocus,
   color: #aaa;
 }
 
+.user-block .user-block-info a:hover,
+.user-block .user-block-info a:focus {
+  text-decoration: none;
+}
+
 .user-block-status {
   position: relative;
 }
