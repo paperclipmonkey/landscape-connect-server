@@ -20,13 +20,15 @@ script(type='text/ng-template', id="sidebar-renderer.html")
           .item.user-block
             // User picture
             .user-block-picture
-              .user-block-status
-                img.img-thumbnail.img-circle(src="/app/app/img/user.jpg", alt="Avatar")
-                .circle.circle-success.circle-lg
+              a(ui-sref="app.settings")
+                .user-block-status
+                  img.img-thumbnail.img-circle(src="/app/app/img/user.jpg", alt="Avatar")
+                  .circle.circle-success.circle-lg
             // Name and Job
             .user-block-info
-              span.user-block-name {{ 'sidebar.WELCOME' | translate }} {{user.username}}
-              span.user-block-role {{user.email}}
+              a(ui-sref="app.settings")
+                span.user-block-name {{ 'sidebar.WELCOME' | translate }} {{user.username}}
+                span.user-block-role {{user.email}}
       // END user info
 
       // Iterates over all sidebar items
