@@ -15,7 +15,7 @@
          <!-- Body content-->
          <ul class="xi">
             <li ng-repeat="xi in questionnaires | filter:query | orderBy:orderProp" class="thumbnail questionnaire-listing">
-               <span class="xi-title"><a href="#/page/questionnaires/{{xi.serverId}}">{{xi.name}}</a>
+               <span class="xi-title"><a href="#/page/questionnaires/{{xi.serverId}}">{{xi.title}}</a>
                </span>
                <span class="description">{{xi.description}}</span>
                <span class="owner"><a href="#/page/user/{{xi.owner.username}}">{{xi.owner.username}}</a>

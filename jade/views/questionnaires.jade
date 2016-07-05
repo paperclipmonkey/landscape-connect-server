@@ -14,7 +14,7 @@ h3
     table.table.table-striped.table-bordered.table-hover(ng-table='table.tableParams5')
       tbody
         tr(ng-repeat='model in $data') 
-          td(data-title="'Name'")
+          td(data-title="'Title'")
             a(href="#/app/questionnaires/{{model.serverId}}") {{model.title}}
           td(data-title="'Description'") {{model.description}}
           td(data-title="'Short code'") {{model.serverId}}
