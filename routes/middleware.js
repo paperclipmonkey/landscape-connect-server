@@ -76,6 +76,10 @@ function ensureIsOwner (req, res, next) {
     if (req.user && req.user.isSuper) {
       return next()
     }
+    //Me
+    if(req.params.id === 'me'){
+      return next()
+    }
     //User object
     if(req.params.id === req.user._id){
       return next()
