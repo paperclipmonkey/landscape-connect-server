@@ -1,7 +1,7 @@
 h3 
-  button(type='button' ui-sref='app.questionnairenew').btn.btn-primary.pull-right
-    em.fa.fa-plus-circle.fa-fw.mr-sm
-    | New User
+  //- button(type='button' ui-sref='app.questionnairenew').btn.btn-primary.pull-right
+  //-   em.fa.fa-plus-circle.fa-fw.mr-sm
+  //-   | New User
   | Users
   small Administer users of the system
 
@@ -18,8 +18,5 @@ h3
             a(href="#/app/users/{{model._id}}") {{model.username}}
           td(data-title="'Email'")
             a(href="#/app/users/{{model._id}}") {{model.email}}
-          td(data-title="'Photo'") {{model.photo}}
-          td(data-title="'Organisation'")
-            a(href="#/app/user/{{model.owner._id}}") {{model.owner.organisation}}
-          td(data-title="'Super?'") {{model.isSuper}}          
+          td(data-title="'Super user'") {{model.isSuper}}          
           td(data-title="'Last login'") {{model.lastLogin}}

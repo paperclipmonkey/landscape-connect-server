@@ -174,6 +174,7 @@ module.exports = (function () {
   app.get('/api/users', middleware.ensureIsSuper, routes.users.list)
   app.get('/api/users/:id', middleware.ensureIsOwner, routes.users.read)
   app.post('/api/users/:id', middleware.ensureIsOwner, multipart, routes.users.edit)
+  app.post('/api/users/:id/password', middleware.ensureIsOwner, multipart, routes.users.editpassword)
   app.delete('/api/users/:id', middleware.ensureIsOwner, middleware.ensureIsOwner, routes.users.remove)
 
   // User login

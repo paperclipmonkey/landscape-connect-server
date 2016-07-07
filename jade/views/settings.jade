@@ -1,0 +1,116 @@
+.container-md(ng-controller="settingsCtrl as settings", ng-init="settingActive = 1")
+    .row
+        .col-md-3
+            .panel.b
+                .panel-heading.bg-gray-lighter.text-bold Personal Settings
+                .list-group
+                    a.list-group-item(href='', ng-click="settingActive=1", ng-class="{'active': (settingActive == 1)}") Account
+                    a.list-group-item(href='', ng-click="settingActive=2", ng-class="{'active': (settingActive == 2)}") Password
+                    //- a.list-group-item(href='', ng-click="settingActive=3", ng-class="{'active': (settingActive == 3)}") Notifications
+                    //- a.list-group-item(href='', ng-click="settingActive=4", ng-class="{'active': (settingActive == 4)}") Applications
+        .col-md-9
+            div(ng-show="settingActive == 1")
+                .panel.b
+                    .panel-heading.bg-gray-lighter.text-bold Account
+                    .panel-body
+                        form.form-validate(action="")
+                            .form-group
+                                label Public Username
+                                input.form-control(type="text" ng-model='user.username')
+                            .form-group
+                                label Email
+                                input.form-control(type="email" ng-model='user.email')
+                            button(type="button" ng-click="update()").btn.btn-info Update profile
+                            //- p: small.text-muted * Integer fermentum accumsan metus, id sagittis ipsum molestie vitae
+
+            div(ng-show="settingActive == 2")
+                .panel.b
+                    .panel-heading.bg-gray-lighter.text-bold Password
+                    .panel-body
+                        form(action="" role='form', name="settings.passwordForm")
+                            .form-group.has-feedback
+                                label Current password
+                                input.form-control(type="password" ng-model="password.currentPassword")
+                                span.fa.fa-lock.form-control-feedback.text-muted
+                            .form-group.has-feedback
+                                label New password
+                                input.form-control(type="password" name="new_password" ng-model="password.newPassword")
+                                span.fa.fa-lock.form-control-feedback.text-muted
+                            .form-group.has-feedback
+                                label Confirm new password
+                                input.form-control(type="password" ng-model="password.newPasswordConfirm" name="confirm_password" ui-validate="'$value==password.newPassword'" ui-validate-watch="'password.newPassword'")
+                                span.fa.fa-lock.form-control-feedback.text-muted
+                                span.text-danger(ng-show="settings.passwordForm.confirm_password.$dirty && settings.passwordForm.confirm_password.$error.validator") Password doesn't match
+                            button(type="button" ng-click="updatePassword()").btn.btn-info Update password
+                            p: small.text-muted * If you've forgotten your password 
+                                a(href="mailto:hello@landscape-connect.com") contact us
+                //- .panel.b
+                //-     .panel-heading.bg-danger.text-bold Delete account
+                //-     .panel-body.bt
+                //-         p You will be asked for confirmation before delete account.
+                //-         button(type="button").btn.btn-default: span.text-danger Delete account
+            div(ng-show="settingActive == 3")
+                form(action="")
+                    .panel.b
+                        .panel-heading.bg-gray-lighter.text-bold Notifications
+                        .panel-body.bb
+                            .form-group
+                                .checkbox
+                                    label
+                                        input(type='checkbox', value='')
+                                        strong Disable email notifications
+                        .panel-body
+                                p: strong Interaction
+                                .form-group
+                                    .checkbox
+                                        label
+                                            input(type='checkbox', value='')
+                                            | Alert me when someone start to follow me
+                                .form-group
+                                    .checkbox
+                                        label
+                                            input(type='checkbox', value='')
+                                            | Alert me when someone star my work
+                                .form-group
+                                    .checkbox
+                                        label
+                                            input(type='checkbox', value='')
+                                            | Alert me when post a new comment
+                                p: strong Marketing
+                                .form-group
+                                    .checkbox
+                                        label
+                                            input(type='checkbox', value='')
+                                            | Send me news and interesting updates
+                                button(type="button").btn.btn-info Update notifications
+                                p: small.text-muted Mauris sodales accumsan erat, ut dapibus erat faucibus vitae.
+            div(ng-show="settingActive == 4")
+                .panel.b
+                    .panel-heading.bg-gray-lighter.text-bold Applications
+                    .panel-body
+                        p
+                            span You have granted access for 
+                            strong 3 applications 
+                            span to your account.
+                        ul.list-group
+                            li.list-group-item.clearfix
+                                .pull-left.mr
+                                    img.img-responsive.thumb48(src="app/img/dummy.png", alt="App")
+                                .pull-right
+                                    button(type="button").btn.btn-default: strong Revoke
+                                p.text-bold.mb0 Application #1
+                                small Ut turpis urna, tristique sed adipiscing nec, luctus quis leo.
+                            li.list-group-item.clearfix
+                                .pull-left.mr
+                                    img.img-responsive.thumb48(src="app/img/dummy.png", alt="App")
+                                .pull-right
+                                    button(type="button").btn.btn-default: strong Revoke
+                                p.text-bold.mb0 Application #2
+                                small Ut turpis urna, tristique sed adipiscing nec, luctus quis leo.
+                            li.list-group-item.clearfix
+                                .pull-left.mr
+                                    img.img-responsive.thumb48(src="app/img/dummy.png", alt="App")
+                                .pull-right
+                                    button(type="button").btn.btn-default: strong Revoke
+                                p.text-bold.mb0 Application #3
+                                small Ut turpis urna, tristique sed adipiscing nec, luctus quis leo.

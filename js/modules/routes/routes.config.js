@@ -77,10 +77,16 @@
               resolve: helper.resolveFor('ngTable', 'ngTableExport')
           })
           .state('app.user', {
-              url: '/user',
+              url: '/users/:userId',
               title: 'User',
-              templateUrl: helper.basepath('user.html'),
-              resolve: helper.resolveFor('ngTable', 'ngTableExport')
+              templateUrl: helper.basepath('settings.html'),
+              resolve: helper.resolveFor('filestyle')
+          })
+          .state('app.settings', {
+              url: '/settings',
+              title: 'Settings',
+              templateUrl: helper.basepath('settings.html'),
+              resolve: helper.resolveFor('filestyle')
           })
           //
           // Single Page Routes
