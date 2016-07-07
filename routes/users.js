@@ -2,6 +2,7 @@ var mongoose = require('mongoose')
 var async = require('async')
 var common = require('../common')
 var path = require('path')
+var crypto = require('crypto')
 
 module.exports = function (app) {
   var objName = 'User'
@@ -64,7 +65,7 @@ module.exports = function (app) {
   }
 
   var list = function (req, res, next) {
-    mongoose.model(modelName).find({}).skip(0).limit(1000).exec(function (err, docs) {
+    mongoose.model(modelName).find({}, '_id username email lastlogin isSuper').skip(0).limit(1000).exec(function (err, docs) {
       if (err) {
         return next(err)
       }
@@ -73,24 +74,75 @@ module.exports = function (app) {
   }
 
   var read = function (req, res, next) {
-    mongoose.model(modelName).findOne({_id: req.params.id}, function (err, doc) {
+    var uId
+    if(req.params.id === 'me'){
+      uId = req.user._id
+    } else {
+      uId = req.params.id
+    }
+    mongoose.model(modelName).findOne({_id: uId},'_id username email lastlogin isSuper', function (err, doc) {
       if (err) return next(err)
       if (!doc) return sendStatus(404)
       res.json(doc)
     })
   }
 
-  var edit = function (req, res, next) {
-    var iModel = mongoose.model(modelName)
-    // uploadFiles(req, req.params.id, function (err) {
-    //  if (err) { return callback(err) }
-    mongoose.model(modelName).findOne({_id: req.params.id}, function (err, doc) {
+  var editpassword = function (req, res, next) {
+    var uId
+    if(req.params.id === 'me'){
+      uId = req.user._id
+    } else {
+      uId = req.params.id
+    }
+    mongoose.model(modelName).findOne({_id: uId}, function (err, doc) {
       if (err) return next(err)
-      doc.set(req.body)
-      doc.save()
-      res.json(results.user)
+
+      if(!req.user.isSuper){
+        //Check currentPassword is correct
+        var shasum = crypto.createHash('sha1')
+        shasum.update(doc.salt + '>><<' + req.body.currentPassword) // Salt + >><< + pw = salting
+        var oldHash = shasum.digest('hex')
+
+        if(oldHash !== doc.password){
+          return res.status('400').send('Password not correct')
+        }
+      }
+
+      doc.set({password: req.body.newPassword})
+      doc.save(function(err){
+        if(err){
+          return res.sendStatus(400)
+        }
+        res.sendStatus(200)
+      }) 
     })
-  // })
+  }
+
+  var edit = function (req, res, next) {
+    var uId
+    if(req.params.id === 'me'){
+      uId = req.user._id
+    } else {
+      uId = req.params.id
+    }
+    mongoose.model(modelName).findOne({_id: uId}, function (err, doc) {
+      if (err) return next(err)
+
+      var limitedObj = {}
+
+      if(req.body.username){
+        limitedObj.username = req.body.username;
+        limitedObj.email = req.body.email;
+      }
+
+      doc.set(limitedObj)
+      doc.save(function(err){
+        if(err){
+          return res.sendStatus(400)
+        }
+        res.sendStatus(200)
+      }) 
+    })
   }
 
   var remove = function (req, res, next) {
@@ -107,6 +159,7 @@ module.exports = function (app) {
     read: read,
     list: list,
     edit: edit,
+    editpassword: editpassword,
     remove: remove
   }
 }
