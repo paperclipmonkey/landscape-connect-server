@@ -20,7 +20,7 @@
         'publicData': true,
         'getLocation': true,
         'getInitialPhoto': true,
-        'getLocationAccuracy': '50',
+        'getLocationAccuracy': 50,
 
         'sections': [
           {
@@ -241,8 +241,11 @@
       }
 
       $scope.submitQuestionnaire = function(a){
-        $http.post("/api/questionnaires/", $scope.questionnaire).success(function(data, status) {
-            $state.go('app.questionnaire', {questionnaireId: data.serverId})
+        $http.post("/api/questionnaires/", $scope.questionnaire).then(function(response) {
+            $.notify({message:"Questionnaire successfully created", status:'success'})
+            $state.go('app.questionnaire', {questionnaireId: response.data.serverId})
+        }, function(response){
+            $.notify({message:"Something went wrong. Please try again", status:'danger'})
         })
       }
 

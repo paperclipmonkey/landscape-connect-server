@@ -21,12 +21,7 @@
                <span ng-show="login.loginForm.account_password.$dirty &amp;&amp; login.loginForm.account_password.$error.required" class="text-danger">This field is required</span>
             </div>
             <div class="clearfix">
-               <div class="checkbox c-checkbox pull-left mt0">
-                  <label>
-                     <input type="checkbox" value="" name="account_remember" ng-model="login.account.remember" />
-                     <span class="fa fa-check"></span>Remember Me</label>
-               </div>
-               <div class="pull-right"><a ui-sref="page.recover" class="text-muted">Forgot your password?</a>
+               <div class="pull-right"><a href="mailto:help@landscape-connect.com" class="text-muted">Forgot your password?</a>
                </div>
             </div>
             <button type="submit" class="btn btn-block btn-primary mt-lg">Login</button>

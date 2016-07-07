@@ -49,7 +49,7 @@
                     $state.go('app.dashboard');
                   //}
                 }, function() {
-                  vm.authMsg = 'Server Request Error';
+                  $.notify({message:"We didn't recognise those details. Please try again", status:'danger'})
                 });
             }
             else {
