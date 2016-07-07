@@ -1,29 +1,41 @@
 <div ng-controller="publicQuestionnairesCtrl as ctrl" class="container-fluid public questionnaire-list">
    <div class="row">
       <div class="col-md-2">
-         <!-- Sidebar content-->
-         <img src="/img/logo-dark.png" />
-         <h2>Questionnaire finder</h2>Search:
-         <input ng-model="query" />
-         <br/>Sort by:
-         <select ng-model="orderProp">
-            <option value="name">Alphabetical</option>
-            <option value="owner">Newest</option>
-         </select>
+         <div class="v-card search">
+            <!-- Sidebar content-->
+            <img src="/img/logo-dark.png" />
+            <h2>Questionnaire finder</h2>
+            <div class="form-group has-feedback">
+               <input ng-model="query" class="form-control" />
+               <span class="fa fa-search form-control-feedback text-muted"></span>
+            </div>
+         </div>
       </div>
       <div class="col-md-10">
          <!-- Body content-->
-         <ul class="xi">
-            <li ng-repeat="xi in questionnaires | filter:query | orderBy:orderProp" class="thumbnail questionnaire-listing">
-               <span class="xi-title"><a href="#/page/questionnaires/{{xi.serverId}}">{{xi.title}}</a>
-               </span>
-               <span class="description">{{xi.description}}</span>
-               <span class="owner"><a href="#/page/user/{{xi.owner.username}}">{{xi.owner.username}}</a>
-               </span>
-               <span class="serverId"><a href="#/page/questionnaires/{{xi.serverId}}">{{xi.serverId}}</a>
-               </span>
-            </li>
-         </ul>
+         <div class="v-card">
+            <div ng-repeat="xi in questionnaires | filter:query | orderBy:orderProp" class="item">
+               <div class="vcard-img">
+                  <a href="#/page/questionnaires/{{xi.serverId}}">
+                     <img data-ng-src="{{getImage(xi.introImage, xi)}}" err-src="/img/logo-circle.png" alt="" class="img-responsive img-thumbnail" />
+                  </a>
+               </div>
+               <div class="vcard-content">
+                  <span class="serverId"><a href="#/page/questionnaires/{{xi.serverId}}">{{xi.serverId}}</a>
+                  </span>
+                  <h4><a href="#/page/questionnaires/{{xi.serverId}}">{{xi.title}}</a>
+                  </h4>
+                  <span class="owner"><a href="#/page/user/{{xi.owner.username}}">{{xi.owner.username}}</a>
+                  </span>
+                  <span class="created-date">{{xi.created | date}}</span>
+                  <p class="description">{{xi.description}}</p>
+                  <div class="brand-bg">
+                     <span ng-show="xi.publicData" class="label label-purple">Public Data</span>
+                     <span ng-show="xi.publicQuestionnaire" class="label label-green">Publicly searchable</span>
+                  </div>
+               </div>
+            </div>
+         </div>
       </div>
    </div>
 </div>

@@ -1,24 +1,35 @@
 .container-fluid.public.questionnaire-list(ng-controller="publicQuestionnairesCtrl as ctrl")
   .row
     .col-md-2
-      // Sidebar content
-      img(src='/img/logo-dark.png')
-      h2 Questionnaire finder
-      |       Search: 
-      input(ng-model='query')
-      br
-      |       Sort by:
-      select(ng-model='orderProp')
-        option(value='name') Alphabetical
-        option(value='owner') Newest
+      .v-card.search
+        // Sidebar content
+        img(src='/img/logo-dark.png')
+        h2 Questionnaire finder
+        .form-group.has-feedback
+          input.form-control(ng-model='query')
+          span.fa.fa-search.form-control-feedback.text-muted
+
+      //- br
+      //- |       Sort by:
+      //- select(ng-model='orderProp')
+      //-   option(value='name') Alphabetical
+      //-   option(value='owner') Newest
     .col-md-10
       // Body content
-      ul.xi
-        li.thumbnail.questionnaire-listing(ng-repeat='xi in questionnaires | filter:query | orderBy:orderProp')
-          span.xi-title
-            a(href='#/page/questionnaires/{{xi.serverId}}') {{xi.title}}
-          span.description {{xi.description}}
-          span.owner
-            a(href='#/page/user/{{xi.owner.username}}') {{xi.owner.username}}
-          span.serverId
-            a(href='#/page/questionnaires/{{xi.serverId}}') {{xi.serverId}}
+      div.v-card
+        div.item(ng-repeat='xi in questionnaires | filter:query | orderBy:orderProp')
+          div.vcard-img
+            a(href='#/page/questionnaires/{{xi.serverId}}')
+              img(data-ng-src='{{getImage(xi.introImage, xi)}}' err-src="/img/logo-circle.png" alt="" class="img-responsive img-thumbnail")
+          div.vcard-content
+            span.serverId
+              a(href='#/page/questionnaires/{{xi.serverId}}') {{xi.serverId}}
+            h4
+              a(href='#/page/questionnaires/{{xi.serverId}}') {{xi.title}}
+            span.owner
+              a(href='#/page/user/{{xi.owner.username}}') {{xi.owner.username}}
+            span.created-date {{xi.created | date}}
+            p.description {{xi.description}}
+            div.brand-bg
+              span.label.label-purple(ng-show="xi.publicData") Public Data
+              span.label.label-green(ng-show="xi.publicQuestionnaire") Publicly searchable

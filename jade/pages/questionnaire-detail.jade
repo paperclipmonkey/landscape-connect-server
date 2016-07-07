@@ -1,28 +1,73 @@
-.public.questionnaire-list(ng-controller="publiQuestionnaireCtrl as ctrl")
-  .row
-    .col-md-4
-      .questionnaire-images
-        img.questionnaire(ng-src="{{'/api/questionnaires/' + questionnaire.serverId + '/qr'}}")
-        .shortcode
-          | Quick code: 
-          span.code {{questionnaire.serverId}}
-        img.img-responsive(data-ng-src='{{questionnaire.introImage}}', data-err-src='images/png/avatar.png')
-    .col-md-8
-      h1 {{questionnaire.title}}
-      p {{questionnaire.description}}
-      ul.specs
-        li
-          | Created 
-          span.date {{questionnaire.dateAdded}}
-          |  by 
-          span.by 3Equals
-        li
-          | Website 
-          span.website
-            a(href='{{questionnaire.website}}') {{questionnaire.website}}
-          | Public Data 
-          span.publicData {{questionnaire.publicData}}
-        li
-          span Sections
-          dl(ng-repeat='section in questionnaire.sections')
-            dd {{section.title}}
+.public.questionnaire-detail(ng-controller="publiQuestionnaireCtrl as ctrl")
+  .v-card
+    a(onclick="history.back()")
+      span.fa.fa-chevron-left.text-muted
+    .row
+      .col-md-4
+        .questionnaire-images
+          img.questionnaire(ng-src="{{'/api/questionnaires/' + questionnaire.serverId + '/qr'}}")
+          .shortcode
+            | Quick code: 
+            span.code {{questionnaire.serverId}}
+            //- ng-dialog-controller='InsideCtrl', ng-dialog-data='{{jsonData}}'
+            p
+              button.btn.btn-default(ng-click="openInstall()") Install details
+          img.img-responsive(data-ng-src='{{questionnaire.introImage}}', data-err-src='images/png/avatar.png')
+      .col-md-8
+        h1 {{questionnaire.title}}
+        p {{questionnaire.description}}
+        ul.specs
+          li
+            | Created 
+            span.date {{questionnaire.dateAdded}}
+            |  by 
+            span.by 3Equals
+          li
+            | Website 
+            span.website
+              a(href='{{questionnaire.website}}') {{questionnaire.website}}
+            span.publicQuestionnaire
+              span.fa.fa-check.text-muted(ng-if="questionnaire.publicQuestionnaire")
+              span.fa.fa-times.text-muted(ng-if="!questionnaire.publicQuestionnaire")
+              | Public Questionnaire
+            span.publicData
+              span.fa.fa-check.text-muted(ng-if="questionnaire.publicData")
+              span.fa.fa-times.text-muted(ng-if="!questionnaire.publicData")
+              | Public Data
+          li
+            span Question sections
+            dl(ng-repeat='section in questionnaire.sections')
+              dd {{section.title}}
+ .modal.fade#installModal(tabindex="-1" role="dialog")
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+          span
+            |&times;
+        h4#gridSystemModalLabel.modal-title
+          |Modal title
+      .modal-body
+        .row
+          .col-md-4 .col-md-4
+          .col-md-4.col-md-offset-4 .col-md-4 .col-md-offset-4
+      .modal-footer
+        button.btn.btn-default(type="button" class="" data-dismiss="modal") Close
+        button.btn.btn-primary(type="button") Save changes
+
+<!-- Templates -->
+script(type="text/ng-template", id="firstDialogId")
+  div
+    .row
+      .col-md-6
+        h5 Install Landscape Connect
+        p To install this questionnaire you need the Landscape Connect Android App</p>
+        p You can get this from the 
+          a(href="") Google Play Store
+      .col-md-6
+        h5 Install Questionnaire
+        p To install the questionnaire use either the 6 character Quick code, or scan the QR from within the app
+      button.btn.btn-default.mr(type='button', ng-click="closeThisDialog()") Close
+
+    //- button.btn.btn-default.mr(type='button', ng-dialog='secondDialogId', ng-dialog-class='ngdialog-theme-default', ng-dialog-controller='SecondModalCtrl', ng-dialog-close-previous='ng-dialog-close-previous') Close and open
+    //- button.btn.btn-primary(type='button', ng-click='openSecond()') Open next

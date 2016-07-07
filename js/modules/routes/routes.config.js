@@ -134,7 +134,10 @@
           .state('page.questionnaire', {
               url: '/questionnaires/:questionnaireId',
               title: 'Questionnaire',
-              templateUrl: 'app/pages/questionnaire-detail.html'
+              templateUrl: 'app/pages/questionnaire-detail.html',
+              resolve: angular.extend(helper.resolveFor('ngDialog'),{
+                tpl: function() { return { path: helper.basepath('ngdialog-template.html') }; }
+              }),
           })
           
         //   // CUSTOM RESOLVES
