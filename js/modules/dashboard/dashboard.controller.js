@@ -115,6 +115,12 @@
             vm.totalResponses = resp.data.result;
           });
 
+          vm.events = []
+          $http.get('/api/dash/events').then(function(resp){
+            vm.events = resp.data.result;
+          });
+
+          window.DashboardController = vm
 
         }
     }

@@ -265,3 +265,28 @@ div(ng-controller="DashboardController as dash")
       // END messages and activity
     // END dashboard sidebar
 
+
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+    //- Timeline
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+    //- h3 Timeline
+    //- // START timeline
+    //- ul(ng-class="timelineAlt ? 'timeline-alt' : 'timeline'", ng-init="timelineAlt=false")
+    //-   li.timeline-separator(data-datetime="Now")
+      
+    //-   // START timeline item
+    //-   li(ng-repeat='event in dash.events', ng-class-even="'timeline-inverted'")
+    //-     .timeline-badge.primary
+    //-       em.fa.fa-pencil-square-o
+    //-     .timeline-panel
+    //-       .popover(ng-class-odd="'left'" ng-class-even="'right'")
+    //-           h4.popover-title New response
+    //-           .arrow
+    //-           .popover-content
+    //-             .row
+    //-               .col-lg-6
+    //-                 img.media(src="/api/map/?lat={{event.lat}}&lng={{event.lng}}")
+    //-               .col-lg-6
+    //-                 img.media(ng-src="event.media[0]")
+    //-   // END timeline item
