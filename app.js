@@ -140,7 +140,7 @@ module.exports = (function () {
   app.get('/api/dash/questionnaires/total', middleware.ensureLoggedIn, routes.dashboard.questionnaires_total)
   app.get('/api/dash/responses/total', middleware.ensureLoggedIn, routes.dashboard.responses_total)
   app.get('/api/dash/responses/latest', middleware.ensureLoggedIn, routes.dashboard.responses_latest)
-  app.get('/api/dash/events', middleware.ensureLoggedIn, routes.dashboard.events)
+  // app.get('/api/dash/events', middleware.ensureLoggedIn, routes.dashboard.events)
 
   // Download
   app.get('/api/questionnaires/:id/download/csv', middleware.ensurePublicOrAuthenticated, routes.download.download_csv)
@@ -158,7 +158,7 @@ module.exports = (function () {
   app.post('/api/questionnaires/', routes.questionnaires.create)
 
   // Response media
-  app.get('/api/map/', middleware.map)
+  // app.get('/api/map/', middleware.map)
 
   // Response media
   app.get('/api/media/:mid', function(req, res, next){
