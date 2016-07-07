@@ -65,6 +65,25 @@ module.exports = function (app) {
     }
   }
 
+  var events = function (req, res, next) {
+    var cback = function(err, results){
+      if(err){
+        console.log(err)
+        return res.sendStatus(400)
+      }
+      res.json({"result": results})
+    }
+
+    // if(req.user.isSuper){
+    //  resModel.find({},'', cback)
+    // } else {
+      qreModel.find({owner: req.user._id}, 'serverId', function (err, questionnaires) {
+        var k = questionnaires.map(function(o){return o.serverId})
+        resModel.where('questionnaire').in(k).exec(cback)
+     })
+    // }
+  }
+
   var responses_latest = function (req, res, next) {
     var limit = 10
     var cback = function(err, results){
@@ -293,7 +312,7 @@ module.exports = function (app) {
     questionnaires_total: questionnaires_total,
     responses_total: responses_total,
     responses_latest: responses_latest,
-    
+    events: events,
     dashboard_rating_average: rating_average,
     dashboard_views_by_month: views_by_month,
     dashboard_rating_by_month: rating_by_month,
