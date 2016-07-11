@@ -95,7 +95,9 @@ module.exports = function (app) {
       uId = req.params.id
     }
     mongoose.model(modelName).findOne({_id: uId}, function (err, doc) {
-      if (err) return next(err)
+      if (err){
+        return res.status(400).json({'err':'Failed to update ' + objName})
+      }
 
       if(!req.user.isSuper){
         //Check currentPassword is correct
@@ -138,7 +140,7 @@ module.exports = function (app) {
       doc.set(limitedObj)
       doc.save(function(err){
         if(err){
-          return res.sendStatus(400)
+          return res.status(400).json({'err':'Failed to update ' + objName})
         }
         res.sendStatus(200)
       }) 

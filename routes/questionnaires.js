@@ -100,7 +100,9 @@ module.exports = function (app) {
 
   var update = function (req, res, next) {
     mongoose.model(modelName).findOneAndUpdate({serverId: req.params.id}, req.body, {'new': true}, function (err, doc) {
-      if (err) return next(err)
+      if (err){
+        return res.status(400).json({'err':'Failed to update ' + objName})
+      }
       eventServer.emit(objName + ':update', doc)
       res.json(doc)
     })
