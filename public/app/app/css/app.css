@@ -11436,6 +11436,11 @@ flatdoc .button .badge {
 .public ul.specs dt {
   font-weight: bold;
 }
+.public .specs > li.right .website,
+.public .specs > li.right .publicQuestionnaire,
+.public .specs > li.right .publicData {
+  float: left;
+}
 .public .shortcode {
   text-align: center;
   clear: both;
