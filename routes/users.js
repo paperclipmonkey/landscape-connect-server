@@ -14,7 +14,7 @@ module.exports = function (app) {
     k.save(function (err) {
       if (err) {
         if (err.code == 11000) {
-          return res.send('That email address is already register. Do you want to sign in instead?')
+          return res.status(400).json({status:'error', err:'That email address is already register. Do you want to sign in instead?'})
         }
         return next(err)
       }
