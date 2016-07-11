@@ -1,6 +1,6 @@
 .public.questionnaire-detail(ng-controller="publiQuestionnaireCtrl as ctrl")
   .v-card
-    a(onclick="history.back()")
+    a(ui-sref="page.questionnaires")
       span.fa.fa-chevron-left.text-muted
     .row
       .col-md-4
@@ -17,12 +17,12 @@
         h1 {{questionnaire.title}}
         p {{questionnaire.description}}
         ul.specs
-          li
+          li.left
             | Created 
             span.date {{questionnaire.dateAdded}}
             |  by 
             span.by 3Equals
-          li
+          li.right
             | Website 
             span.website
               a(href='{{questionnaire.website}}') {{questionnaire.website}}
