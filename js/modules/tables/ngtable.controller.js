@@ -155,10 +155,10 @@
 
           vm.tableParams5 = new ngTableParams({
               page: 1,            // show first page
-              count: 10           // count per page
+              count: 1000           // count per page
           }, {
               total: 0,           // length of data
-              counts: [],         // hide page counts control
+              // counts: [],         // hide page counts control
               getData: function($defer, params) {
                   
                   // Service using cache to avoid mutiple requests
