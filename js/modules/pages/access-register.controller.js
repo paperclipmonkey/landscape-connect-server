@@ -10,11 +10,16 @@
         .module('app.pages')
         .controller('RegisterFormController', RegisterFormController);
 
-    RegisterFormController.$inject = ['$http', '$state'];
-    function RegisterFormController($http, $state) {
+    RegisterFormController.$inject = ['$scope','ngDialog','$http', '$state'];
+    function RegisterFormController($scope, ngDialog, $http, $state) {
         var vm = this;
 
         activate();
+
+        $scope.openTerms = function () {
+            console.log('Opening terms')
+            ngDialog.open({ template: 'terms' });//controller: 'InsideCtrl', data: {foo: 'some data'}
+        };
 
         ////////////////
 
@@ -37,12 +42,15 @@
                   //If 200 then redirect to dashboard.
                   //If !200 then display message directly
                   if (response.status === 200) {
+                    $.notify({message: "Successfully signed up!", status: 'success'})
                     $state.go('app.dashboard');
-                  }else{
-                    vm.authMsg = response.data;
                   }
-                }, function() {
-                  vm.authMsg = 'Server Error';
+                }, function(response) {
+                  if(response.data && response.data.err){
+                    $.notify({message: response.data.err, status: 'danger'})
+                  } else {
+                    $.notify({message: 'Something went wrong. Please try again', status: 'danger'})
+                  }
                 });
             }
             else {

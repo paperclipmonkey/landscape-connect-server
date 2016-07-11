@@ -107,7 +107,10 @@
           .state('page.register', {
               url: '/register',
               title: 'Register',
-              templateUrl: 'app/pages/register.html'
+              templateUrl: 'app/pages/register.html',
+              resolve: angular.extend(helper.resolveFor('ngDialog'),{
+                tpl: function() { return { path: helper.basepath('ngdialog-template.html') }; }
+              })
           })
         //   .state('page.recover', {
         //       url: '/recover',
@@ -137,7 +140,7 @@
               templateUrl: 'app/pages/questionnaire-detail.html',
               resolve: angular.extend(helper.resolveFor('ngDialog'),{
                 tpl: function() { return { path: helper.basepath('ngdialog-template.html') }; }
-              }),
+              })
           })
           
         //   // CUSTOM RESOLVES
