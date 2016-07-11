@@ -103,7 +103,7 @@ function ensurePublicOrAuthenticated (req, res, next) {
   }
   mongoose.model('questionnaire').findOne({serverId: req.params.id}, function (err, questionnaire) {
     if(questionnaire != null){
-      if (questionnaire.owner === req.user._id) {//Owned by logged in user
+      if (req.user!= null && questionnaire.owner === req.user._id) {//Owned by logged in user
         return next()
       }
       if (questionnaire.publicData === true) {//Public data
