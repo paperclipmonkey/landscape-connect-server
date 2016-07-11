@@ -21,7 +21,8 @@
         'getLocation': true,
         'getInitialPhoto': true,
         'getLocationAccuracy': 50,
-
+        'introTitle': "Welcome to the {{title}} questionnaire",
+        'introDescription': "Help us to build a picture of the landscape by submitting your responses. This feeds back in to our project.",
         'sections': [
           {
             'title': 'Sample Section 1',
@@ -162,15 +163,20 @@
         if($scope.selectedQuestion == null){
           return true
         }
+
+        if(!$scope.selectedQuestion.title){
+          $scope.errorNotify('Please add a question title')
+          return false
+        }
         //check if question type is multi or radio. If is, check has enough options
         if($scope.selectedQuestion.type === 'radio'){
           if($scope.selectedQuestion.choices.length < 3){
-            alert('A single response question must have two or more options')
+            $scope.errorNotify('A single response question must have two or more options')
             return false
           }
         } else if($scope.selectedQuestion.type === 'multi'){
           if($scope.selectedQuestion.choices.length < 2){
-            alert('A multi select question must have one or more options')
+            $scope.errorNotify('A multi select question must have one or more options')
             return false
           }
         }
@@ -222,6 +228,13 @@
         }
       }
 
+      $scope.checkSectionValid = function(){
+        if(!$scope.selectedSection.title){
+          $scope.errorNotify('Please add a section title')
+          return false
+        }
+      }
+
       $scope.deselectSection = function () {
         $scope.selectedSection = null
         $scope.selectedQuestion = null
@@ -241,13 +254,40 @@
       }
 
       $scope.submitQuestionnaire = function(a){
+        //Check there's a title and description
+        if(!$scope.questionnaire.title){
+          $scope.errorNotify('Please add a title')
+          return
+        }
+
+        if(!$scope.questionnaire.description){
+          $scope.errorNotify('Please add a description')
+          return
+        }
+
+        //Add strings to IntroTitle and IntroDescription
+        $scope.questionnaire.introTitle = $scope.questionnaire.introTitle.replace('{{title}}', $scope.questionnaire.title)
+        $scope.questionnaire.introTitle = $scope.questionnaire.introTitle.replace('{{website}}', $scope.questionnaire.website)
+
+        $scope.questionnaire.introDescription = $scope.questionnaire.introDescription.replace('{{title}}', $scope.questionnaire.title)
+        $scope.questionnaire.introDescription = $scope.questionnaire.introDescription.replace('{{website}}', $scope.questionnaire.website)
+
         $http.post("/api/questionnaires/", $scope.questionnaire).then(function(response) {
-            $.notify({message:"Questionnaire successfully created", status:'success'})
+            $scope.successNotify("Questionnaire successfully created")
             $state.go('app.questionnaire', {questionnaireId: response.data.serverId})
         }, function(response){
-            $.notify({message:"Something went wrong. Please try again", status:'danger'})
+            $scope.errorNotify("Something went wrong. Please try again")
         })
       }
+
+      $scope.errorNotify = function(msg){
+        $.notify({message:msg, status:'danger'})
+      }
+
+      $scope.successNotify = function(msg){
+        $.notify({message:msg, status:'success'})
+      }
+
 
       $scope.sectionOptions = {}
 

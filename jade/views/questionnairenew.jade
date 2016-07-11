@@ -37,6 +37,7 @@ h3 New Questionnaire
               input.mb-lg.form-control.input-lg(type="text", ng-model='questionnaire.website', placeholder='http://')
               p Description
               textarea.form-control(rows='6', ng-model='questionnaire.description')
+              p.help-block Adding a description will help people find and use the questionnaire
               .clearfix
             ul.pager
               li.next
@@ -108,7 +109,7 @@ h3 New Questionnaire
                     div(ng-if='selectedQuestion != null')
                       .form-group
                         label(for='title') Title
-                        input.form-control(type='text', ng-model='selectedQuestion.title', placeholder='Title')
+                        input.form-control(type='text', ng-model='selectedQuestion.title', placeholder='Title' ng-change="checkQuestionValid()")
 
                       .form-group.screen.draggable-element-container.list-group(ng-show='selectedQuestion.choices', ng-if="selectedQuestion.type === 'multi' || selectedQuestion.type === 'radio'")
                         label(for='title') choices
@@ -128,7 +129,7 @@ h3 New Questionnaire
                     div(ng-if='selectedQuestion == null && selectedSection != null')
                       .form-group
                         label(for='title') Title
-                        input.form-control(type='text', ng-model='selectedSection.title', placeholder='Title')
+                        input.form-control(type='text', ng-model='selectedSection.title', placeholder='Title' ng-change="checkSectionValid()")
                     //- Questionnaire details
                     div(ng-if='selectedQuestion == null && selectedSection == null')
                       p Select a section
@@ -139,7 +140,7 @@ h3 New Questionnaire
             .panel-body
               fieldset
                 legend Splash page
-                p The splash page is shown when starting a new response to a questionnaire. Longer content will scroll on smaller devices
+                p The splash page is shown when starting a new response to a questionnaire.
                 // START row 
                 .row
                   .col-md-12
