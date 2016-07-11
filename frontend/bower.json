@@ -34,7 +34,7 @@
     "font-awesome": "4.4.0",
     "waitForImages": "~2.1.0",
     "jquery.browser": "master",
-    "owl.carousel": "~2.0.0-beta.3"
+    "owl.carousel": "~2.1.6"
   },
   "resolutions": {
     "jquery": ">= 1.9.1"
