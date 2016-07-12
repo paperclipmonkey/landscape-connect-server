@@ -5,7 +5,7 @@ h3
 // START widgets box
 div(ng-controller="DashboardController as dash")
   .row
-    .col-lg-3.col-sm-6
+    .col-lg-4.col-sm-6
       // START widget
       .panel.widget.bg-green
         .row.row-table
@@ -14,17 +14,7 @@ div(ng-controller="DashboardController as dash")
           .col-xs-8.pv-lg
             .h2.mt0 {{dash.totalQuestionnaires}}
             .text-uppercase Questionnaires
-    .col-lg-3.col-sm-6
-      // START widget
-      .panel.widget.bg-purple
-        .row.row-table
-          .col-xs-4.text-center.bg-purple-dark.pv-lg
-            em.icon-globe.fa-3x
-          .col-xs-8.pv-lg
-            .h2.mt0 700
-              small MB
-            .text-uppercase Quota
-    .col-lg-3.col-md-6.col-sm-12
+    .col-lg-4.col-md-6.col-sm-12
       // START widget
       .panel.widget.bg-primary
         .row.row-table
@@ -33,7 +23,7 @@ div(ng-controller="DashboardController as dash")
           .col-xs-8.pv-lg
             .h2.mt0 {{dash.totalResponses}}
             .text-uppercase Responses
-    .col-lg-3.col-md-6.col-sm-12
+    .col-lg-4.col-md-6.col-sm-12
       // START date widget
       .panel.widget
         .row.row-table

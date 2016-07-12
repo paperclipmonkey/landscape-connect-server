@@ -1,3 +1,4 @@
+"use strict"
 var mongoose = require('mongoose')
 var escape = require('escape-html')
 var common = require('../common')
@@ -112,7 +113,15 @@ module.exports = function (app) {
     mongoose.model(modelName).findOne({serverId: req.params.id}).populate('owner', 'username _id').exec(function (err, doc) {
       if (err) return res.sendStatus(400)
       if (!doc) return res.sendStatus(404)
-      res.send(doc)
+
+      let doc2 = JSON.parse(JSON.stringify(doc));
+
+      doc2.ownerName = doc2.owner.username
+      doc2.ownerId = doc2.owner._id
+      console.log(doc.ownerName)
+
+
+      res.send(doc2)
     })
   }
 
