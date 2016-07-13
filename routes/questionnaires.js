@@ -118,8 +118,6 @@ module.exports = function (app) {
 
       doc2.ownerName = doc2.owner.username
       doc2.ownerId = doc2.owner._id
-      console.log(doc.ownerName)
-
 
       res.send(doc2)
     })
