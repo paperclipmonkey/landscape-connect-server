@@ -79,7 +79,8 @@ module.exports = function (app) {
     // } else {
       qreModel.find({owner: req.user._id}, 'serverId', function (err, questionnaires) {
         var k = questionnaires.map(function(o){return o.serverId})
-        resModel.where('questionnaire').in(k).exec(cback)
+        resModel.where('questionnaire').in(k).sort({'timestamp': 'desc'}).limit(100)
+.exec(cback)
      })
     // }
   }
