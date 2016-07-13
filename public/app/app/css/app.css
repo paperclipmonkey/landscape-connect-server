@@ -11335,6 +11335,9 @@ flatdoc .button .badge {
 .response .section .panel-title {
   font-size: 22px;
 }
+.questionnaire img.qr {
+  max-width: 100%;
+}
 .public {
   font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
