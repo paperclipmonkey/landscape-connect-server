@@ -12,7 +12,7 @@ describe('Responses', function () {
       // Delete all areas with name test - Unique test on Area names
       var mongoose = require('mongoose')
       var Questionnaire = mongoose.model('questionnaire')
-      Questionnaire.findOne({'name': 'Test'}, function (err, qaire) {
+      Questionnaire.findOne({'title': 'Test'}, function (err, qaire) {
         if (err) return done(err)
         if (!qaire) return done(new Error('No questionnaire'))
         testQId = qaire.serverId

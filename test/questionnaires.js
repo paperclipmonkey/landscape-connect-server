@@ -14,7 +14,7 @@ describe('Questionnaires', function () {
       rAgent = request.agent(app)
       var mongoose = require('mongoose')
       var Questionnaire = mongoose.model('questionnaire')
-      Questionnaire.findOne({'name': 'Test'}, function (err, obj) {
+      Questionnaire.findOne({'title': 'Test'}, function (err, obj) {
         questionnaire = obj
         done()
       })
