@@ -98,8 +98,8 @@
                 div
                   fieldset: .form-group
                     label.col-md-4.control-label {{question.title}}
-                    .col-md-8
-                      flot(dataset='chart.pieData', options='chart.pieOptions', height="300px")
+                    //-.col-md-8
+                    //-  flot(dataset='chart.pieData', options='chart.pieOptions', height="300px")
               //- .panel-footer.text-right
               //-   a.btn.btn-default.btn-sm(href='#') View All Activity
 
@@ -173,12 +173,26 @@
       .panel-heading Properties
       .panel-body
         ul.list-unstyled
-          li Public: {{questionnaire.publicQuestionnaire}}
-          li Public data: {{questionnaire.publicData}}
-          li Website: 
+          li 
+            span.fa.fa-check.text-muted(ng-if="questionnaire.publicQuestionnaire")
+            span.fa.fa-times.text-muted(ng-if="!questionnaire.publicQuestionnaire")
+            | Public questionnaire
+          li 
+            span.fa.fa-check.text-muted(ng-if="questionnaire.publicData")
+            span.fa.fa-times.text-muted(ng-if="!questionnaire.publicData")
+            | Public data
+          li
+            span.fa.fa-check.text-muted(ng-if="questionnaire.getLocation")
+            span.fa.fa-times.text-muted(ng-if="!questionnaire.getLocation")
+            | Uses Location
+          li
+            span.fa.fa-check.text-muted(ng-if="questionnaire.getInitialPhoto")
+            span.fa.fa-times.text-muted(ng-if="!questionnaire.getInitialPhoto")
+            | Uses photo
+          li(ng-if="questionnaire.website") Website: 
             a(href="{{questionnaire.website}}") {{questionnaire.website}}
-          li View public listing: 
-            a(href="{{getPublicUrl(questionnaire.serverId)}}") View website
+          li
+            a(href="{{getPublicUrl(questionnaire.serverId)}}") View public listing
     // Ads
     .panel.panel-default
       .panel-heading Introduction

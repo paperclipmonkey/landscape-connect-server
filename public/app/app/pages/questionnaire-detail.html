@@ -28,6 +28,12 @@
                   <span class="website"><a href="{{questionnaire.website}}">{{questionnaire.website}}</a>
                   </span>
                   <span class="publicQuestionnaire">
+                     <span ng-if="questionnaire.getLocation" class="fa fa-check text-muted"></span>
+                     <span ng-if="!questionnaire.getLocation" class="fa fa-times text-muted"></span>Uses Location</span>
+                  <span class="publicQuestionnaire">
+                     <span ng-if="questionnaire.getInitialPhoto" class="fa fa-check text-muted"></span>
+                     <span ng-if="!questionnaire.getInitialPhoto" class="fa fa-times text-muted"></span>Uses Photo</span>
+                  <span class="publicQuestionnaire">
                      <span ng-if="questionnaire.publicQuestionnaire" class="fa fa-check text-muted"></span>
                      <span ng-if="!questionnaire.publicQuestionnaire" class="fa fa-times text-muted"></span>Public Questionnaire</span>
                   <span class="publicData">

@@ -27,6 +27,14 @@
             span.website
               a(href='{{questionnaire.website}}') {{questionnaire.website}}
             span.publicQuestionnaire
+              span.fa.fa-check.text-muted(ng-if="questionnaire.getLocation")
+              span.fa.fa-times.text-muted(ng-if="!questionnaire.getLocation")
+              | Uses Location
+            span.publicQuestionnaire
+              span.fa.fa-check.text-muted(ng-if="questionnaire.getInitialPhoto")
+              span.fa.fa-times.text-muted(ng-if="!questionnaire.getInitialPhoto")
+              | Uses Photo
+            span.publicQuestionnaire
               span.fa.fa-check.text-muted(ng-if="questionnaire.publicQuestionnaire")
               span.fa.fa-times.text-muted(ng-if="!questionnaire.publicQuestionnaire")
               | Public Questionnaire

@@ -38,7 +38,20 @@ h3 New Questionnaire
               p Description
               textarea.form-control(rows='6', ng-model='questionnaire.description')
               p.help-block Adding a description will help people find and use the questionnaire
-              .clearfix
+              .form-group.clearfix
+                .checkbox.c-checkbox.pull-left.mt0
+                  label
+                    input(type='checkbox', ng-model="questionnaire.getLocation")
+                    span.fa.fa-check
+                    |  Collect location
+                    p.help-block Collect the user's location at the same time as taking a photo
+
+              //- .form-group.clearfix
+              //-   .checkbox.c-checkbox.pull-left.mt0
+              //-     label
+              //-       input(type='checkbox', ng-model="questionnaire.getInitialPhoto")
+              //-       span.fa.fa-check
+              //-       |  Collect photo
             ul.pager
               li.next
                 a(ng-click="wizard.go(2)")
