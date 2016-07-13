@@ -190,6 +190,18 @@ describe('Back-end admin', function () {
           .expect(200, done)
       })
 
+      it('GET /api/dash/events should show response events', function (done) {
+        rAgent
+          .get('/api/dash/events')
+          .expect(200, done)
+      })
+
+      it('GET /api/map?lat=11&lng=11 should show map', function (done) {
+        rAgent
+          .get('/api/map?lat=11&lng=11')
+          .expect(200, done)
+      })
+
       it('POST /api/questionnaires/ without title should error', function (done) {
         var questionnaireHeaders2 = JSON.parse(JSON.stringify(questionnaireHeaders));
         delete questionnaireHeaders2.title
