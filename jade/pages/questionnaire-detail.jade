@@ -8,10 +8,11 @@
           img.questionnaire(ng-src="{{'/api/questionnaires/' + questionnaire.serverId + '/qr'}}")
           .shortcode
             | Quick code: 
-            span.code {{questionnaire.serverId}}
+            a(href="{{'/questionnaires/' + questionnaire.serverId}}")
+              span.code {{questionnaire.serverId}}
             //- ng-dialog-controller='InsideCtrl', ng-dialog-data='{{jsonData}}'
             p
-              button.btn.btn-default(ng-click="openInstall()") Install details
+              button.btn.btn-default(ng-click="openInstall()") Download instructions
           img.img-responsive(data-ng-src='{{questionnaire.introImage}}', data-err-src='images/png/avatar.png')
       .col-md-8
         h1 {{questionnaire.title}}
@@ -52,12 +53,12 @@ script(type="text/ng-template", id="firstDialogId")
     .row
       .col-md-6
         h5 Install Landscape Connect
-        p To install this questionnaire you need the Landscape Connect Android App</p>
+        p To download this questionnaire you need the Landscape Connect Android App</p>
         p You can get this from the 
           a(href="") Google Play Store
       .col-md-6
-        h5 Install Questionnaire
-        p To install the questionnaire use either the 5 character Quick code, or scan the QR from within the app
+        h5 Download Questionnaire
+        p To download the questionnaire click the 5 character Quick code, enter the code manually, or scan the QR from within the app
       button.btn.btn-default.mr(type='button', ng-click="closeThisDialog()") Close
 
     //- button.btn.btn-default.mr(type='button', ng-dialog='secondDialogId', ng-dialog-class='ngdialog-theme-default', ng-dialog-controller='SecondModalCtrl', ng-dialog-close-previous='ng-dialog-close-previous') Close and open

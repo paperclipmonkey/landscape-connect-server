@@ -144,13 +144,13 @@
                     source(src="{{getUrl(mediaItem)}}")
       // Blog Sidebar
   .col-lg-3
-    // Install
+    // Download
     .panel.panel-default
-      .panel-heading Install
+      .panel-heading Download
       .panel-body
         form.form-horizontal
           .input-group
-            p Install using the Quick Code 
+            p Download using the Quick Code 
             h3 {{questionnaire.serverId}}
             p Or scan the QR code
             img.qr(src="/api/questionnaires/{{questionnaire.serverId}}/qr")
