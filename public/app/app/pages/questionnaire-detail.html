@@ -48,6 +48,16 @@
                      <dd>{{section.title}}</dd>
                   </dl>
                </li>
+               <div ng-display="questionnaire.publicData">Download
+                  <ul>
+                     <li><a href="{{'/api/questionnaires/' + questionnaire.serverId + '/download/csv'}}">csv</a>
+                     </li>
+                     <li><a href="{{'/api/questionnaires/' + questionnaire.serverId + '/download/kmz'}}">Google Earth</a>
+                     </li>
+                     <li><a href="{{'/api/questionnaires/' + questionnaire.serverId + '/download/media'}}">Media</a>
+                     </li>
+                  </ul>
+               </div>
             </ul>
          </div>
       </div>

@@ -47,6 +47,16 @@
             span Question sections
             dl(ng-repeat='section in questionnaire.sections')
               dd {{section.title}}
+          div(ng-display="questionnaire.publicData")
+            | Download
+            ul
+              li
+                a(href="{{'/api/questionnaires/' + questionnaire.serverId + '/download/csv'}}") csv
+              li
+                a(href="{{'/api/questionnaires/' + questionnaire.serverId + '/download/kmz'}}") Google Earth
+              li
+                a(href="{{'/api/questionnaires/' + questionnaire.serverId + '/download/media'}}") Media
+
 <!-- Templates -->
 script(type="text/ng-template", id="firstDialogId")
   div
