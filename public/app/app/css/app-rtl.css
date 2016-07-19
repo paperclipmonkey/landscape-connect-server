@@ -14453,10 +14453,11 @@ flatdoc .button .badge {
 
 @media (max-width: 767px) {
   .public .v-card .vcard-img {
-    float: none;
-    max-width: 150px;
-    margin: 0 auto;
-    margin-bottom: 20px;
+    display: none;
+  }
+
+  .public .serverId {
+    font-size: 100%;
   }
 }
 
@@ -14561,8 +14562,8 @@ flatdoc .button .badge {
   color: rgba(255, 255, 255, 0.7);
 }
 
-.public .search {
-  position: fixed;
+.public .search img {
+  max-width: 100%;
 }
 
 .public .owner {

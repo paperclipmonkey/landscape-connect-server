@@ -1,6 +1,6 @@
 <div ng-controller="publicQuestionnairesCtrl as ctrl" class="container-fluid public questionnaire-list">
    <div class="row">
-      <div class="col-md-2">
+      <div class="col-md-3">
          <div class="v-card search">
             <!-- Sidebar content-->
             <img src="/img/logo-dark.png" />
@@ -11,7 +11,7 @@
             </div>
          </div>
       </div>
-      <div class="col-md-10">
+      <div class="col-md-9">
          <!-- Body content-->
          <div class="v-card">
             <div ng-repeat="xi in questionnaires | filter:query | orderBy:orderProp" class="item">
@@ -23,10 +23,10 @@
                <div class="vcard-content">
                   <span class="serverId"><a href="#/page/questionnaires/{{xi.serverId}}">{{xi.serverId}}</a>
                   </span>
-                  <h4><a href="#/page/questionnaires/{{xi.serverId}}">{{xi.title}}</a>
-                  </h4>
                   <span class="owner"><a href="#/page/user/{{xi.owner.username}}">{{xi.owner.username}}</a>
                   </span>
+                  <h4><a href="#/page/questionnaires/{{xi.serverId}}">{{xi.title}}</a>
+                  </h4>
                   <span class="created-date">{{xi.created | date}}</span>
                   <p class="description">{{xi.description}}</p>
                   <div class="brand-bg">

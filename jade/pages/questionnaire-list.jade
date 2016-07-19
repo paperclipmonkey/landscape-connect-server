@@ -1,6 +1,6 @@
 .container-fluid.public.questionnaire-list(ng-controller="publicQuestionnairesCtrl as ctrl")
   .row
-    .col-md-2
+    .col-md-3
       .v-card.search
         // Sidebar content
         img(src='/img/logo-dark.png')
@@ -14,7 +14,7 @@
       //- select(ng-model='orderProp')
       //-   option(value='name') Alphabetical
       //-   option(value='owner') Newest
-    .col-md-10
+    .col-md-9
       // Body content
       div.v-card
         div.item(ng-repeat='xi in questionnaires | filter:query | orderBy:orderProp')
@@ -24,10 +24,10 @@
           div.vcard-content
             span.serverId
               a(href='#/page/questionnaires/{{xi.serverId}}') {{xi.serverId}}
-            h4
-              a(href='#/page/questionnaires/{{xi.serverId}}') {{xi.title}}
             span.owner
               a(href='#/page/user/{{xi.owner.username}}') {{xi.owner.username}}
+            h4
+              a(href='#/page/questionnaires/{{xi.serverId}}') {{xi.title}}
             span.created-date {{xi.created | date}}
             p.description {{xi.description}}
             div.brand-bg
