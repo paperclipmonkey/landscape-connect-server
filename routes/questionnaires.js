@@ -21,7 +21,6 @@ module.exports = function (app) {
   lcValidator.addSchema(questionSchema, '/Question');
 
   var create = function (req, res, next) {
-    eventServer.emit(objName + ':creating', instance)
     var toInsert = req.body
 
     //Validate JSON against Schema
@@ -92,6 +91,7 @@ module.exports = function (app) {
   }
 
   var remove = function (req, res, next) {
+    eventServer.emit(objName + ':delete', req.params.id)
     mongoose.model(modelName).findOneAndRemove({serverId: req.params.id}, function (err, doc) {
       if (err) return next(err)
       eventServer.emit(objName + ':delete', doc)

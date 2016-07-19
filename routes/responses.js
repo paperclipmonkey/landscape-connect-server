@@ -30,9 +30,6 @@ module.exports = function (app) {
   }
 
   var create = function (req, res, next) {
-    eventServer.emit(objName + ':creating', req.body)
-
-    eventServer.emit(objName + ':creating')
     var toInsert = req.body
 
     var Model = mongoose.model(modelName)

@@ -3,6 +3,7 @@ var async = require('async')
 var common = require('../common')
 var path = require('path')
 var crypto = require('crypto')
+var eventServer = require('../eventemitter')
 
 module.exports = function (app) {
   var objName = 'User'
@@ -11,6 +12,7 @@ module.exports = function (app) {
   var register = function (req, res, next) {
     var iModel = mongoose.model(modelName)
     var k = new iModel(req.body) // TODO - clean user input
+    eventServer.emit(objName + ':create', k)
     k.save(function (err) {
       if (err) {
         if (err.code == 11000) {
@@ -94,6 +96,7 @@ module.exports = function (app) {
     } else {
       uId = req.params.id
     }
+    eventServer.emit(objName + ':update', uId)
     mongoose.model(modelName).findOne({_id: uId}, function (err, doc) {
       if (err){
         return res.status(400).json({'err':'Failed to update ' + objName})
@@ -127,6 +130,7 @@ module.exports = function (app) {
     } else {
       uId = req.params.id
     }
+    eventServer.emit(objName + ':update', uId)
     mongoose.model(modelName).findOne({_id: uId}, function (err, doc) {
       if (err) return next(err)
 
@@ -148,6 +152,7 @@ module.exports = function (app) {
   }
 
   var remove = function (req, res, next) {
+    eventServer.emit(objName + ':update', req.params.id)
     mongoose.model(modelName).findByIdAndRemove(req.params.id, function (err, docs) {
       if (err) return next(err)
       res.sendStatus(200)

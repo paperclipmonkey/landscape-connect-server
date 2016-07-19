@@ -41,26 +41,29 @@ module.exports = (function () {
     common.emailAdmins(view)
   })
 
-  if (process.env.DEBUG === 'true') {
-    eventServer.on('user:login', function (a, b) {
-      console.log('Logged in')
-    })
+  if (process.env.LOGGING === 'true') {
+    // eventServer.on('user:login', function (a, b) {
+    //   console.log('Logged in')
+    // })
 
-    eventServer.on('Response:creating', function (view) {
-      console.log('New response being created')
-    })
+    // eventServer.on('Response:creating', function (view) {
+    //   console.log('New response being created')
+    // })
 
-    eventServer.on('Response:error', function (err) {
-      console.error(err)
-    })
+    // eventServer.on('Response:error', function (err) {
+    //   console.error(err)
+    // })
 
     // eventServer.on('Response:*', function (data) {
     //   console.log(data)
     // })
 
-    // Catch all email events
-    eventServer.on('email:*', function (info) {
-      console.log('email event recieved: ', info)
+    // // Catch all email events
+    // eventServer.on('email:*', function (info) {
+    //   console.log('email event recieved: ', info)
+    // })
+    eventServer.on('*', function (a, b) {
+      console.log(a, b)
     })
   }
 

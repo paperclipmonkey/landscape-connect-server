@@ -3,9 +3,11 @@ var fs = require('fs')
 var archiver = require('archiver')
 var json2csv = require('json2csv')
 var common = require('../common')
+var eventServer = require('../eventemitter')
 
 module.exports = function (app) {
   var download_csv = function (req, res, next) {
+    eventServer.emit("questionnaire" + ':downloading:csv', req.params.id)
     download_docs_raw(req.params.id, function (docs) {
         if (docs.length === 0) {
           return next(new Error('Empty result'))
@@ -68,6 +70,7 @@ module.exports = function (app) {
   }
 
   var download_kmz = function (req, res) {
+    eventServer.emit("questionnaire" + ':downloading:kmz', req.params.id)
     download_docs_formatted([req.params.id], packageKML, res)
   }
 
@@ -121,6 +124,7 @@ module.exports = function (app) {
   }
 
   var download_media = function (req, res) {
+    eventServer.emit("questionnaire" + ':downloading:media', req.params.id)
     try {
       var ids = req.params.id
     } catch (e) {
