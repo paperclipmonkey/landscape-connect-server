@@ -1,5 +1,6 @@
-<div ng-controller="publiQuestionnaireCtrl as ctrl" class="public questionnaire-detail">
-   <div class="v-card">
+<div ng-controller="publiQuestionnaireCtrl as ctrl" class="public questionnaire-detail row">
+   <div class="col-md-3"></div>
+   <div class="v-card col-md-9">
       <a ui-sref="page.questionnaires">
          <span class="fa fa-chevron-left text-muted"></span>
       </a>
@@ -26,9 +27,7 @@
                   <span class="date">{{questionnaire.dateAdded}}</span>by
                   <span class="by">3Equals</span>
                </li>
-               <li class="right">Website
-                  <span class="website"><a href="{{questionnaire.website}}">{{questionnaire.website}}</a>
-                  </span>
+               <li class="right">
                   <span class="publicQuestionnaire">
                      <span ng-if="questionnaire.getLocation" class="fa fa-check text-muted"></span>
                      <span ng-if="!questionnaire.getLocation" class="fa fa-times text-muted"></span>Uses Location</span>
@@ -41,6 +40,8 @@
                   <span class="publicData">
                      <span ng-if="questionnaire.publicData" class="fa fa-check text-muted"></span>
                      <span ng-if="!questionnaire.publicData" class="fa fa-times text-muted"></span>Public Data</span>
+                  <span ng-if="questionnaire.website" class="website">Website <a href="{{questionnaire.website}}">{{questionnaire.website}}</a>
+                  </span>
                </li>
                <li>
                   <span>Question sections</span>
@@ -48,7 +49,7 @@
                      <dd>{{section.title}}</dd>
                   </dl>
                </li>
-               <div ng-display="questionnaire.publicData">Download
+               <div ng-display="questionnaire.publicData">Download data
                   <ul>
                      <li><a href="{{'/api/questionnaires/' + questionnaire.serverId + '/download/csv'}}">csv</a>
                      </li>

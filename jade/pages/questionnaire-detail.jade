@@ -1,5 +1,6 @@
-.public.questionnaire-detail(ng-controller="publiQuestionnaireCtrl as ctrl")
-  .v-card
+.public.questionnaire-detail.row(ng-controller="publiQuestionnaireCtrl as ctrl")
+  .col-md-3
+  .v-card.col-md-9
     a(ui-sref="page.questionnaires")
       span.fa.fa-chevron-left.text-muted
     .row
@@ -24,9 +25,6 @@
             |  by 
             span.by 3Equals
           li.right
-            | Website 
-            span.website
-              a(href='{{questionnaire.website}}') {{questionnaire.website}}
             span.publicQuestionnaire
               span.fa.fa-check.text-muted(ng-if="questionnaire.getLocation")
               span.fa.fa-times.text-muted(ng-if="!questionnaire.getLocation")
@@ -43,12 +41,15 @@
               span.fa.fa-check.text-muted(ng-if="questionnaire.publicData")
               span.fa.fa-times.text-muted(ng-if="!questionnaire.publicData")
               | Public Data
+            span.website(ng-if="questionnaire.website")
+              | Website 
+              a(href='{{questionnaire.website}}') {{questionnaire.website}}
           li
             span Question sections
             dl(ng-repeat='section in questionnaire.sections')
               dd {{section.title}}
           div(ng-display="questionnaire.publicData")
-            | Download
+            | Download data
             ul
               li
                 a(href="{{'/api/questionnaires/' + questionnaire.serverId + '/download/csv'}}") csv
