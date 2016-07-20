@@ -59,7 +59,7 @@ div(ng-controller="DashboardController as dash")
               .popover-content
                 .row
                   .col-lg-6
-                    img.media(src="/api/map/?lat={{event.lat}}&lng={{event.lng}}")
+                    img.media(src="/api/map/?lat={{event.lng}}&lng={{event.lat}}")
                   .col-lg-6(ng-if="event.media")
                     img.media(ng-src="/api/media/{{event.media[0]}}")
       // END timeline item
