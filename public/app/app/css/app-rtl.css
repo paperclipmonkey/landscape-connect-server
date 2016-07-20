@@ -13520,6 +13520,10 @@ flatdoc .button .badge {
   max-width: 100%;
 }
 
+.questionnaire .pad-a-10 {
+  padding: 1em;
+}
+
 .public {
   font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;

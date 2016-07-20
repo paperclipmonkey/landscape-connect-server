@@ -85,7 +85,7 @@
 
     .panel.panel-default
       .panel-heading
-        .panel-title Question Responses
+        .panel-title Questions
       .panel-body
         uib-tabset(justified="true" vertical="true")
           uib-tab(ng-repeat='section in questionnaire.sections')
@@ -199,5 +199,5 @@
       .panel-body
           h4 {{questionnaire.introTitle}}
           p {{questionnaire.introDescription}}
-        img.img-responsive(data-ng-src='{{questionnaire.introImage}}', data-err-src='images/png/avatar.png')
+        img.img-responsive.pad-a-10(data-ng-src='{{questionnaire.introImage}}', data-err-src='images/png/avatar.png')
 
