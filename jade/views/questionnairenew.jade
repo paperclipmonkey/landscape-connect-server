@@ -122,7 +122,7 @@ h3 New Questionnaire
                     div(ng-if='selectedQuestion != null')
                       .form-group
                         label(for='title') Title
-                        input.form-control(type='text', ng-model='selectedQuestion.title', placeholder='Title' ng-change="checkQuestionValid()")
+                        input.form-control(type='text', ng-model='selectedQuestion.title', placeholder='Title' ng-change="checkQuestionTitleValid()")
 
                       .form-group.screen.draggable-element-container.list-group(ng-show='selectedQuestion.choices', ng-if="selectedQuestion.type === 'multi' || selectedQuestion.type === 'radio'")
                         label(for='title') choices

@@ -170,7 +170,7 @@
         }
         //check if question type is multi or radio. If is, check has enough options
         if($scope.selectedQuestion.type === 'radio'){
-          if($scope.selectedQuestion.choices.length < 3){
+          if($scope.selectedQuestion.choices.length <= 2){
             $scope.errorNotify('A single response question must have two or more options')
             return false
           }
@@ -179,6 +179,18 @@
             $scope.errorNotify('A multi select question must have one or more options')
             return false
           }
+        }
+        return true
+      }
+
+      $scope.checkQuestionTitleValid = function(){
+        if($scope.selectedQuestion == null){
+          return true
+        }
+
+        if(!$scope.selectedQuestion.title){
+          $scope.errorNotify('Please add a question title')
+          return false
         }
         return true
       }
