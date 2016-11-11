@@ -121,6 +121,7 @@
     "angular-route": "1.4.7",
     "seiyria-bootstrap-slider": "~4.13",
     "jquery": "2.1.4",
-    "angular-ui-utils": "3.0.0"
+    "angular-ui-utils": "3.0.0",
+    "d3": "3.5.17"
   }
 }
