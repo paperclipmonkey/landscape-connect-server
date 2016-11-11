@@ -58,7 +58,7 @@
         "method-override": "2.3.x",
         "mocha": "2.2.x",
         "moment": "2.13.0",
-        "mongoose": "4.1.x",
+        "mongoose": "4.6.x",
         "node-uuid": "1.4.x",
         "nodemailer": "1.4.x",
         "passport": "0.3.x",
