@@ -119,7 +119,7 @@ module.exports = function (app) {
           return res.sendStatus(400)
         }
         res.sendStatus(200)
-      }) 
+      })
     })
   }
 
@@ -137,8 +137,8 @@ module.exports = function (app) {
       var limitedObj = {}
 
       if(req.body.username){
-        limitedObj.username = req.body.username;
-        limitedObj.email = req.body.email;
+        limitedObj.username = req.body.username
+        limitedObj.email = req.body.email
       }
 
       doc.set(limitedObj)
@@ -147,7 +147,7 @@ module.exports = function (app) {
           return res.status(400).json({'err':'Failed to update ' + objName})
         }
         res.sendStatus(200)
-      }) 
+      })
     })
   }
 

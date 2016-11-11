@@ -14,11 +14,11 @@ module.exports = function (app) {
 
   //Build JSONSchema object
   var lcValidator = new Validator()
-  var questionSchema = require('../schema/question-schema');
-  var questionnaireSchema = require('../schema/questionnaire-schema');
-  
+  var questionSchema = require('../schema/question-schema')
+  var questionnaireSchema = require('../schema/questionnaire-schema')
+
   //Load the additional schema document
-  lcValidator.addSchema(questionSchema, '/Question');
+  lcValidator.addSchema(questionSchema, '/Question')
 
   var create = function (req, res, next) {
     var toInsert = req.body
@@ -74,10 +74,7 @@ module.exports = function (app) {
     }
 
     if (req.user && req.user.isSuper) {
-    mongoose.model(modelName).find({}).populate('owner', 'username _id').exec(function (err, results) {
-      // Link questionnaire with user
-      cback(err, results)
-    })
+      mongoose.model(modelName).find({}).populate('owner', 'username _id').exec(cback)
     } else {
       mongoose.model(modelName).find({owner: req.user._id}).populate('owner', 'username _id').exec(cback)//user: req.user._id // {'owner': req.user._id}
     }
@@ -86,7 +83,7 @@ module.exports = function (app) {
   var list_public = function (req, res, next) {
     mongoose.model(modelName).find({publicQuestionnaire: true}).populate('owner', 'username _id').exec(function (err, results) {
       if (err) return next(err)
-      res.json({result: results})    
+      res.json({result: results})
     })
   }
 
@@ -114,7 +111,7 @@ module.exports = function (app) {
       if (err) return res.sendStatus(400)
       if (!doc) return res.sendStatus(404)
 
-      let doc2 = JSON.parse(JSON.stringify(doc));
+      let doc2 = JSON.parse(JSON.stringify(doc))
 
       doc2.ownerName = doc2.owner.username
       doc2.ownerId = doc2.owner._id

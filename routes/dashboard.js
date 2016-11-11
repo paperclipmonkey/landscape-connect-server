@@ -4,8 +4,8 @@ var common = require('../common')
 require('date-utils')
 
 module.exports = function (app) {
-  var resModel = mongoose.model('response');
-  var qreModel = mongoose.model('questionnaire');
+  var resModel = mongoose.model('response')
+  var qreModel = mongoose.model('questionnaire')
 
   var rating_average = function (req, res, next) {
     var cback = function (err, results) {

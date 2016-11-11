@@ -28,25 +28,25 @@ module.exports = function (app) {
           var basefields = [
             {
               label: 'media files',
-              value: 'media' 
+              value: 'media'
             },
             {
               label: 'date',
               value: function(row) {
-                return new Date(row.timestamp).toLocaleString();
+                return new Date(row.timestamp).toLocaleString()
               },
             },
             {
               label: 'lat',
-              value: 'lat' 
+              value: 'lat'
             },
             {
               label: 'lng',
-              value: 'lng' 
+              value: 'lng'
             },
             {
               label: 'location accuracy',
-              value: 'locAcc' 
+              value: 'locAcc'
             }
           ]
 
