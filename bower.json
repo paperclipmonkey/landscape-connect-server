@@ -60,7 +60,7 @@
     "fastclick": "1.0.6",
     "modernizr": "https://modernizr.com/download?backgroundsize-bgpositionshorthand-bgpositionxy-bgrepeatspace_bgrepeatround-bgsizecover-borderradius-cssanimations-csscalc-csstransforms-csstransforms3d-csstransitions-flexboxtweener-fontface-inlinesvg-localstorage-multiplebgs-preserve3d-sessionstorage-smil-svgclippaths-svgfilters-svgforeignobject-todataurljpeg_todataurlpng_todataurlwebp-setclasses&q=background.zip",
     "animo.js": "ThrivingKings/animo.js#1.0.2",
-    "jquery-classyloader": "http://vox.space/files/jquery-classyloader.zip",
+    "jquery-classyloader": "https://github.com/robdvr/jquery-classyloader/archive/master.zip",
     "whirl": "1.0.0",
     "skycons": "darkskyapp/skycons",
     "ngDialog": "0.5.5",
