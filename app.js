@@ -89,6 +89,15 @@ module.exports = (function () {
     showStack: true
   }))
 
+
+  // a middleware with no mount path; gets executed for every request to the app
+  app.use(function(req, res, next) {
+    res.setHeader('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    res.setHeader('Expires', '-1');
+    res.setHeader('Pragma', 'no-cache');
+    next()
+  })
+
   hbs.registerHelper('toJSON', function (obj) {
     return JSON.stringify(obj)
   })
@@ -153,7 +162,7 @@ module.exports = (function () {
   // Questionnaire
   app.get('/api/questionnaires', middleware.ensureLoggedIn, routes.questionnaires.list)
   app.get('/api/questionnaires/public', routes.questionnaires.list_public)
- 
+
   app.get('/api/questionnaires/:id', routes.questionnaires.read)
   app.get('/api/questionnaires/:id/qr', routes.questionnaires.qr)
   app.delete('/api/questionnaires/:id', middleware.ensureLoggedIn, middleware.ensureIsOwner, routes.questionnaires.remove)
