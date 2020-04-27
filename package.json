@@ -83,6 +83,12 @@
     "format": "standard -F"
   },
   "standard": {
+    "globals": [
+      "before",
+      "it",
+      "after",
+      "describe"
+    ],
     "ignore": [
       "/bower_components/",
       "/coverage/",
