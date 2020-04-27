@@ -1,5 +1,5 @@
-var mongoose = require('mongoose')
-var Schema = mongoose.Schema
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 require('datejs')
 
 /*
@@ -16,26 +16,26 @@ require('datejs')
   "sections": [
 */
 
-var schemaName = 'questionnaire'
+const schemaName = 'questionnaire'
 
 module.exports = (function (app) {
-  var NSchema = new Schema({
-    title: {type: String},
-    serverId: {type: String, index: { unique: true }},
-    description: {type: String},
-    publicQuestionnaire: {type: Boolean},
-    publicData: {type: Boolean},
-    getLocation: {type: Boolean, default: true},
-    getLocationAccuracy: {type: Number, default: 50},//Metres
-    getInitialPhoto: {type: Boolean, default: true},
-    introTitle: {type: String},
-    introDescription: {type: String},
-    introImage: {type: String}, // B64 image
-    website: {type: String},
-    sections: {type: Array},
+  const NSchema = new Schema({
+    title: { type: String },
+    serverId: { type: String, index: { unique: true } },
+    description: { type: String },
+    publicQuestionnaire: { type: Boolean },
+    publicData: { type: Boolean },
+    getLocation: { type: Boolean, default: true },
+    getLocationAccuracy: { type: Number, default: 50 }, // Metres
+    getInitialPhoto: { type: Boolean, default: true },
+    introTitle: { type: String },
+    introDescription: { type: String },
+    introImage: { type: String }, // B64 image
+    website: { type: String },
+    sections: { type: Array },
     owner: { type: Schema.Types.ObjectId, ref: 'user' },
-    created: {type: Date, default: Date.now},
-    uploadUrl: {type: String}
+    created: { type: Date, default: Date.now },
+    uploadUrl: { type: String }
   })
 
   NSchema.pre('save', checkHasserverId)
@@ -50,13 +50,13 @@ module.exports = (function (app) {
 
   function uniqueOrAgain (cx, next) {
     cx.serverId = makeid(5)
-    mongoose.models[schemaName].findOne({serverId: cx.serverId}, function (err, obj) {
+    mongoose.models[schemaName].findOne({ serverId: cx.serverId }, function (err, obj) {
       if (err) {
         next(err)
       } else if (obj) {
         uniqueOrAgain(cx, next)
       } else {
-        //Create uploadUrl now we have a Unique ID
+        // Create uploadUrl now we have a Unique ID
         cx.uploadUrl = process.env.SITE_URL + '/api/questionnaires/' + cx.serverId + '/responses/'
         next()
       }
@@ -64,11 +64,12 @@ module.exports = (function (app) {
   }
 
   function makeid (length) {
-    var text = ''
-    var possible = 'ABCDEF0123456789'
+    let text = ''
+    const possible = 'ABCDEF0123456789'
 
-    for ( var i = 0; i < length; i++)
+    for (let i = 0; i < length; i++) {
       text += possible.charAt(Math.floor(Math.random() * possible.length))
+    }
     return text
   }
 

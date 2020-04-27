@@ -10,7 +10,8 @@ describe('Questionnaires', function () {
       rAgent = request.agent(app)
       const mongoose = require('mongoose')
       const Questionnaire = mongoose.model('questionnaire')
-      Questionnaire.findOne({'title': 'Test'}, function (err, obj) {
+      Questionnaire.findOne({ title: 'Test' }, function (err, obj) {
+        if (err) console.log(err)
         questionnaire = obj
         done()
       })
@@ -48,7 +49,7 @@ describe('Questionnaires', function () {
   //     .expect(400, done)
   // })
 
-  // - - - - - - - - - - - - - - 
+  // - - - - - - - - - - - - - -
   // Page redirects for normal clients and Android client app
   // - - - - - - - - - - - - - -
 

@@ -1,48 +1,47 @@
 module.exports = (function () {
-  var mongoose = require('mongoose')
   var s3Client = require('./s3-client')
-  var mailer = require('./mailer')
   var request = require('request')
   var AWS = require('aws-sdk')
   var fs = require('fs')
-  var base64 = require('base64-stream')
-  var stream = require('stream')
-  var eventServer = require('./eventemitter')
 
-  /*
-  Convert response from storage format to outputting format
-  */
-  function formatResponse(response, questionnaire){
-    var newData = {}
+  /**
+   * Convert response from storage format to outputting format
+   * @param {*} response
+   * @param {*} questionnaire
+   */
+  function formatResponse (response, questionnaire) {
     for (var i = questionnaire.sections.length - 1; i >= 0; i--) {
-      var section =  questionnaire.sections[i]
+      var section = questionnaire.sections[i]
       for (var x = section.questions.length - 1; x >= 0; x--) {
-          var question = section.questions[x]
-          section.questions[x] = {
-              title: section.questions[x].title,
-              answer: getQuestionResponse(response, section.sectionId, question.questionId)
-          }
+        var question = section.questions[x]
+        section.questions[x] = {
+          title: section.questions[x].title,
+          answer: getQuestionResponse(response, section.sectionId, question.questionId)
+        }
       }
     }
     response.data = questionnaire.sections
     return response
   }
 
-  /*
-  Lookup answers to questions
-  */
-  var getQuestionResponse = function(response, sectionId, questionId){
-    try{
-        return response.data[sectionId][questionId]
-    } catch(e){
-        return
+  /**
+   * Lookup answers to questions
+   * @param {*} response
+   * @param {*} sectionId
+   * @param {*} questionId
+   */
+  var getQuestionResponse = function (response, sectionId, questionId) {
+    try {
+      return response.data[sectionId][questionId]
+    } catch (e) {
+
     }
   }
 
-  /*
-  ##Downloads a file from the S3 Data service
-  Responds with a byte stream
-  Works with an evented system based on top of the Node.js Stream API
+  /**
+  * Downloads a file from the S3 Data service.
+  * Responds with a byte stream.
+  * Works with an evented system based on top of the Node.js Stream API.
   */
   function downloadFromS3 (filename) {
     var s3Params = {
@@ -52,21 +51,28 @@ module.exports = (function () {
     var downloader = s3Client.downloadStream(s3Params)
 
     downloader.on('error', function (err) {
-      console.error('Unable to download from S3')
+      console.error('Unable to download from S3', err)
       this.end()
     })
     return downloader
   }
 
+  /**
+   * Upload Stream to S3 with correct filename
+   * @param {*} key
+   * @param {*} stream
+   * @param {function} done
+   */
   function saveStreamToS3 (key, stream, done) {
-    // Upload Stream to S3 with correct filename
-    var s3obj = new AWS.S3({params: {
+    var s3obj = new AWS.S3({
+      params: {
         Bucket: process.env.S3_BUCKET,
         Key: key,
         ACL: 'public-read'
-    }})
+      }
+    })
 
-    s3obj.upload({Body: stream})
+    s3obj.upload({ Body: stream })
       .send(function (err, data) {
         if (done) {
           done(err)
@@ -78,7 +84,7 @@ module.exports = (function () {
     var readStream = fs.createReadStream(filename)
     // This will wait until we know the readable stream is actually valid before piping
     readStream.on('open', function () {
-      // This just pipes the read stream)
+      // This just pipes the read stream
       saveStreamToS3(key, readStream, done)
     })
 

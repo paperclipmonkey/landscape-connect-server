@@ -7,24 +7,24 @@ var pass = require('../authenticate')
 const router = express.Router()
 
 /**
- * 
- * @param {Express.Request} req 
- * @param {Express.Response} res 
- * @param {Function} next 
+ *
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ * @param {Function} next
  */
-function loginFunction(req, res, next) {
-    pass.authenticate(
-        'local',
-        function (err, user, info) {
-            if (err) return res.sendStatus(401)
-            if (!user) return res.sendStatus(401)
-            req.logIn(user, function (err) {
-                if (err) { return next(err); }
-                req.app.emit('user.login')
-                res.sendStatus(200) // Authentication successful. Redirect home.
-            })
-        }
-    )(req, res, next)
+function loginFunction (req, res, next) {
+  pass.authenticate(
+    'local',
+    function (err, user, info) {
+      if (err) return res.sendStatus(401)
+      if (!user) return res.sendStatus(401)
+      req.logIn(user, function (err) {
+        if (err) { return next(err) }
+        req.app.emit('user.login')
+        res.sendStatus(200) // Authentication successful. Redirect home.
+      })
+    }
+  )(req, res, next)
 }
 
 // User login

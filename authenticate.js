@@ -2,21 +2,22 @@ module.exports = (function () {
   var passport = require('passport') // Authentication
   var mongoose = require('mongoose')
   var fs = require('fs')
+  const path = require('path')
   var crypto = require('crypto')
   var LocalStrategy = require('passport-local').Strategy
 
-  var modelFiles = fs.readdirSync(__dirname + '/models/')
+  var modelFiles = fs.readdirSync(path.join(__dirname, '/models/'))
   modelFiles.forEach(function (file) {
-    require(__dirname + '/models/' + file)
+    require(path.join(__dirname, '/models/', file))
   })
 
   var userModel = mongoose.model('user')
 
-  passport.use(new LocalStrategy({usernameField: 'email' },
+  passport.use(new LocalStrategy({ usernameField: 'email' },
     function (email, password, done) {
       var shasum = crypto.createHash('sha1')
       // Need to find user object to grab salt
-      userModel.findOne({email: email}, function (err, user1) {
+      userModel.findOne({ email: email }, function (err, user1) {
         if (err) {
           return done(err, false) // done(err)
         }
@@ -25,8 +26,8 @@ module.exports = (function () {
         }
         shasum.update(user1.salt + '>><<' + password) // Salt + >><< + pw = salting
         var toQuery = {
-          'email': email,
-          'password': shasum.digest('hex')
+          email: email,
+          password: shasum.digest('hex')
         }
         userModel.findOne(toQuery, function (err, user2) {
           if (!user2) {
@@ -44,11 +45,11 @@ module.exports = (function () {
   ))
 
   passport.serializeUser(function (user, done) {
-    done(null, user['_id'])
+    done(null, user._id)
   })
 
   passport.deserializeUser(function (id, done) {
-    userModel.findOne({'_id': id}, function (err, user) {
+    userModel.findOne({ _id: id }, function (err, user) {
       done(err, user)
     })
   })

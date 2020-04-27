@@ -24,7 +24,6 @@ describe('Front-end', function () {
       .expect(/\bLandscape Connect\b/, done)
   })
 
-
   it('GET /questionnaires/ should redirect to questionnaires gallery', function (done) {
     rAgent
       .get('/questionnaires/')

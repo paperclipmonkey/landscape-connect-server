@@ -2,8 +2,8 @@ var app = require('../app')
 var request = require('supertest')
 var server
 var users = {
-  'super': {email: 'me@me.com', password: 'mememe', isSuper: true, id: '575eeb9322137beca74f77b4'},
-  'nonsuper': {email: 'example+nonsuper@sample.com', password: 'pwordme', isSuper: false, id: '575eeb9322137beca74f77b4'}
+  super: { email: 'me@me.com', password: 'mememe', isSuper: true, id: '575eeb9322137beca74f77b4' },
+  nonsuper: { email: 'example+nonsuper@sample.com', password: 'pwordme', isSuper: false, id: '575eeb9322137beca74f77b4' }
 }
 var questionnaires = [
   'AAAAAA'
@@ -13,15 +13,14 @@ var mongoose = require('mongoose')
 var User = mongoose.model('user')
 var Questionnaire = mongoose.model('questionnaire')
 
-
 describe('Logged out user', function () {
   var rAgent
   before(function (done) {
     server = app.listen(process.env.PORT, function () {
       rAgent = request.agent(app)
       // Delete all areas with name test - Unique test on Area names
-      Questionnaire.remove({'name': 'test'}, function () {
-        User.remove({'email': 'test@test.com'}, done)
+      Questionnaire.remove({ name: 'test' }, function () {
+        User.remove({ email: 'test@test.com' }, done)
       })
     })
   })
@@ -86,9 +85,7 @@ describe('Logged out user', function () {
   it('GET /api/users/:superUserId', function (done) {
     rAgent
       .get('/api/users/' + users.super.id)
-      .end(function(err, res){
-        done()
-    })
+      .expect(401, done)
   })
 
   it('POST /api/questionnaires/:id Update not logged in', function (done) {

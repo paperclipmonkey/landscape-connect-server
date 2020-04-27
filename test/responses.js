@@ -1,5 +1,6 @@
 const app = require('../app')
 const request = require('supertest')
+const path = require('path')
 let server
 
 describe('Responses', function () {
@@ -11,7 +12,7 @@ describe('Responses', function () {
       rAgent = request.agent(app)
       const mongoose = require('mongoose')
       const Questionnaire = mongoose.model('questionnaire')
-      Questionnaire.findOne({'title': 'Test'}, function (err, qaire) {
+      Questionnaire.findOne({ title: 'Test' }, function (err, qaire) {
         if (err) return done(err)
         if (!qaire) return done(new Error('No questionnaire'))
         testQId = qaire.serverId
@@ -25,7 +26,7 @@ describe('Responses', function () {
   })
 
   it('POST /api/questionnaires/x/responses should save new response', function (done) {
-    this.timeout(20000);
+    this.timeout(20000)
     rAgent
       .post(`/api/questionnaires/${testQId}/responses`)
       .field('questionnaire', testQId)
@@ -36,7 +37,7 @@ describe('Responses', function () {
       .field('data[Sample Section 1][Example Multi Select]', 'My name')
       .field('data[Sample Section 1][Example Multiline Textarea]', '11tytwelve')
       .field('data[Sample Section 2][Second Multi Select]', '50kmph')
-      .attach('media1', __dirname + '/data/example1.jpg')
+      .attach('media1', path.join(__dirname, '/data/example1.jpg'))
       .expect(200)
       .end(function (err, res) {
         if (err) return done(err)
@@ -45,7 +46,7 @@ describe('Responses', function () {
   })
 
   it('POST /api/questionnaires/x/responses with multiple photos should save new response', function (done) {
-    this.timeout(20000);
+    this.timeout(20000)
     rAgent
       .post(`/api/questionnaires/${testQId}/responses`)
       .field('questionnaire', testQId)
@@ -56,8 +57,8 @@ describe('Responses', function () {
       .field('data[Sample Section 1][Example Multi Select]', 'My name')
       .field('data[Sample Section 1][Example Multiline Textarea]', '11tytwelve')
       .field('data[Sample Section 2][Second Multi Select]', '50kmph')
-      .attach('media1', __dirname + '/data/example1.jpg')
-      .attach('media2', __dirname + '/data/example2.jpg')
+      .attach('media1', path.join(__dirname, '/data/example1.jpg'))
+      .attach('media2', path.join(__dirname, '/data/example2.jpg'))
       .expect(200)
       .end(function (err, res) {
         if (err) return done(err)
@@ -66,7 +67,7 @@ describe('Responses', function () {
   })
 
   it('POST /api/questionnaires/x/responses with MP3 should save new response', function (done) {
-    this.timeout(20000);
+    this.timeout(20000)
     rAgent
       .post(`/api/questionnaires/${testQId}/responses`)
       .field('questionnaire', testQId)
@@ -77,7 +78,7 @@ describe('Responses', function () {
       .field('data[Sample Section 1][Example Multi Select]', 'My name')
       .field('data[Sample Section 1][Example Multiline Textarea]', '11tytwelve')
       .field('data[Sample Section 2][Second Multi Select]', '50kmph')
-      .attach('media1', __dirname + '/data/example1.mp3')
+      .attach('media1', path.join(__dirname, '/data/example1.mp3'))
       .expect(200)
       .end(function (err, res) {
         if (err) return done(err)

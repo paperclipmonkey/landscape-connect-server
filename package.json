@@ -69,6 +69,7 @@
     "request": "2.60.x",
     "s3": "git://github.com/andrewrk/node-s3-client",
     "should": "7.x",
+    "standard": "^14.3.3",
     "supertest": "*",
     "through2": "^0.6.3",
     "vows": "0.8.x",
@@ -91,6 +92,7 @@
     ],
     "ignore": [
       "/bower_components/",
+      "gulpfile.js",
       "/coverage/",
       "/frontend/",
       "/jade/",

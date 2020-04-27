@@ -2,16 +2,15 @@ const app = require('../app')
 const request = require('supertest')
 let server
 const users = {
-  'super': {email: 'me@me.com', password: 'mememe', isSuper: true, id: '575eeb9322137beca74f77b4'},
-  'nonsuper': {email: 'example+nonsuper@sample.com', password: 'pwordme', isSuper: false, id: '575eeb9322137beca74f77b4'}
+  super: { email: 'me@me.com', password: 'mememe', isSuper: true, id: '575eeb9322137beca74f77b4' },
+  nonsuper: { email: 'example+nonsuper@sample.com', password: 'pwordme', isSuper: false, id: '575eeb9322137beca74f77b4' }
 }
 
-const questionnaireHeaders = {"title":"my Title","description":"my Description","publicQuestionnaire":true,"publicData":true,"getInitialPhoto":true, "getLocationAccuracy": 20, "getLocation": true,"sections":[{"title":"Sample Section 1","sectionId":"lnnder","questions":[{"title":"Example Multi Select","questionId":"ovgdfq","type":"multi","choices":[{"choice":"Example choice 1"},{"choice":"Another example choice 2"}]},{"title":"Example Multiline Textarea","questionId":"qjmyzw","type":"textarea"},{"title":"Single Text Line","type":"text","questionId":"ziwbhc"},{"title":"Single Select","type":"radio","choices":[{"choice":"Example single choice"},{"choice":"Another example single choice"}],"questionId":"pigrve"}]},{"title":"Sample Section 2","sectionId":"swghrp","questions":[{"title":"Second Multi Select","questionId":"ilxkxu","type":"multi","choices":[{"choice":"Example choice"},{"choice":"Another example choice"}]}]}],"website":"http://project.com","introTitle":"intro title","introDescription":"intro description","introImage":"data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAA8AAD/7gAOQWRvYmUAZMAAAAAB/9sAhAAGBAQEBQQGBQUGCQYFBgkLCAYGCAsMCgoLCgoMEAwMDAwMDBAMDg8QDw4MExMUFBMTHBsbGxwfHx8fHx8fHx8fAQcHBw0MDRgQEBgaFREVGh8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx//wAARCAABAAEDAREAAhEBAxEB/8QASgABAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAABhABAAAAAAAAAAAAAAAAAAAAABEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AAsLf/9k="}
+const questionnaireHeaders = { title: 'my Title', description: 'my Description', publicQuestionnaire: true, publicData: true, getInitialPhoto: true, getLocationAccuracy: 20, getLocation: true, sections: [{ title: 'Sample Section 1', sectionId: 'lnnder', questions: [{ title: 'Example Multi Select', questionId: 'ovgdfq', type: 'multi', choices: [{ choice: 'Example choice 1' }, { choice: 'Another example choice 2' }] }, { title: 'Example Multiline Textarea', questionId: 'qjmyzw', type: 'textarea' }, { title: 'Single Text Line', type: 'text', questionId: 'ziwbhc' }, { title: 'Single Select', type: 'radio', choices: [{ choice: 'Example single choice' }, { choice: 'Another example single choice' }], questionId: 'pigrve' }] }, { title: 'Sample Section 2', sectionId: 'swghrp', questions: [{ title: 'Second Multi Select', questionId: 'ilxkxu', type: 'multi', choices: [{ choice: 'Example choice' }, { choice: 'Another example choice' }] }] }], website: 'http://project.com', introTitle: 'intro title', introDescription: 'intro description', introImage: 'data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAA8AAD/7gAOQWRvYmUAZMAAAAAB/9sAhAAGBAQEBQQGBQUGCQYFBgkLCAYGCAsMCgoLCgoMEAwMDAwMDBAMDg8QDw4MExMUFBMTHBsbGxwfHx8fHx8fHx8fAQcHBw0MDRgQEBgaFREVGh8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx//wAARCAABAAEDAREAAhEBAxEB/8QASgABAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAABhABAAAAAAAAAAAAAAAAAAAAABEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AAsLf/9k=' }
 
 const mongoose = require('mongoose')
 const User = mongoose.model('user')
 const Questionnaire = mongoose.model('questionnaire')
-
 
 describe('Back-end admin', function () {
   let rAgent
@@ -19,8 +18,8 @@ describe('Back-end admin', function () {
     server = app.listen(process.env.PORT, function () {
       rAgent = request.agent(app)
       // Delete all areas with name test - Unique test on Area names
-      Questionnaire.remove({'name': 'test'}, function () {
-        User.remove({'email': 'test@test.com'}, done)
+      Questionnaire.remove({ name: 'test' }, function () {
+        User.remove({ email: 'test@test.com' }, done)
       })
     })
   })
@@ -39,7 +38,7 @@ describe('Back-end admin', function () {
   it('POST /api/account/login with wrong password should not login', function (done) {
     rAgent
       .post('/api/account/login')
-      .send({email: users.super.email, password: users.super.password + '1'})
+      .send({ email: users.super.email, password: users.super.password + '1' })
       .expect(401, done)
   })
 
@@ -206,7 +205,7 @@ describe('Back-end admin', function () {
       })
 
       it('POST /api/questionnaires/ without title should error', function (done) {
-        let requestHeaders = JSON.parse(JSON.stringify(questionnaireHeaders));
+        const requestHeaders = JSON.parse(JSON.stringify(questionnaireHeaders))
         delete requestHeaders.title
         rAgent
           .post('/api/questionnaires')
@@ -216,7 +215,7 @@ describe('Back-end admin', function () {
       })
 
       it('POST /api/questionnaires/ without section title should error', function (done) {
-        let requestHeaders = JSON.parse(JSON.stringify(questionnaireHeaders));
+        const requestHeaders = JSON.parse(JSON.stringify(questionnaireHeaders))
         delete requestHeaders.sections[0].title
         rAgent
           .post('/api/questionnaires')
@@ -226,7 +225,7 @@ describe('Back-end admin', function () {
       })
 
       it('POST /api/questionnaires/ without question title should error', function (done) {
-        let requestHeaders = JSON.parse(JSON.stringify(questionnaireHeaders));
+        const requestHeaders = JSON.parse(JSON.stringify(questionnaireHeaders))
         delete requestHeaders.sections[0].questions[0].title
         rAgent
           .post('/api/questionnaires')
@@ -251,37 +250,27 @@ describe('Back-end admin', function () {
     })
   }
 
-  //Get Id of 
+  // Get Id of
 
   // Super Admin
   runAs(users.super)
   // Normal Admin
   runAs(users.nonsuper)
 
-  function loginAs(userLogin, done){
-    rAgent
-      .post('/api/account/login')
-      .send(userLogin)
-      .expect(200, done)
-  }
-
+  // todo fix
   function checkPermissions (userLogin, expected) {
     describe('check permissions: ' + userLogin.email, function () {
-
       it('GET /api/users/:superUserId', function (done) {
         rAgent
           .get(`/api/users/${users.super.id}`)
-          .end(function(err, res){
-            done()
-        })
+          .expect(401, done)
       })
 
+      // todo fix
       it('GET /api/questionnaires/:id with questionnaire not mine', function (done) {
         rAgent
           .get('/api/questionnaires/:id')
-          .end(function(err, res){
-            done()
-          })
+          .expect(404, done)
       })
 
       it('POST /api/questionnaires/:id Update with id not mine', function (done) {
@@ -295,13 +284,11 @@ describe('Back-end admin', function () {
           .get('/api/questionnaires/:id')
           .expect(404, done)
       })
-
     })
   }
 
   checkPermissions(users.super, true)
   checkPermissions(users.nonsuper, false)
-
 
   /* - - - - Non-Super admin - - - - - */
   it('POST /api/account/login as non-super should login & set cookie', function (done) {

@@ -1,20 +1,20 @@
-var args = require('yargs').argv,
-  path = require('path'),
-  flip = require('css-flip'),
-  through = require('through2'),
-  gulp = require('gulp'),
-  $ = require('gulp-load-plugins')(),
-  shell = require('gulp-shell'),
-  gulpsync = $.sync(gulp),
-  PluginError = $.util.PluginError,
-  del = require('del')
+var args = require('yargs').argv
+var path = require('path')
+var flip = require('css-flip')
+var through = require('through2')
+var gulp = require('gulp')
+var $ = require('gulp-load-plugins')()
+var shell = require('gulp-shell')
+var gulpsync = $.sync(gulp)
+var PluginError = $.util.PluginError
+var del = require('del')
 
 // production mode (see build task)
 var isProduction = false
 // styles sourcemaps
 var useSourceMaps = false
 
-// Switch to sass mode. 
+// Switch to sass mode.
 // Example:
 //    gulp --usesass
 var useSass = args.usesass
@@ -57,7 +57,7 @@ var vendor = {
   }
 }
 
-// SOURCES CONFIG 
+// SOURCES CONFIG
 var source = {
   scripts: [paths.scripts + 'app.module.js',
     // template modules
@@ -72,20 +72,20 @@ var source = {
     views: [paths.markup + '**/*.*', '!' + paths.markup + 'index.*']
   },
   styles: {
-    app: [ paths.styles + '*.*'],
-    themes: [ paths.styles + 'themes/*'],
-    watch: [ paths.styles + '**/*', '!' + paths.styles + 'themes/*']
+    app: [paths.styles + '*.*'],
+    themes: [paths.styles + 'themes/*'],
+    watch: [paths.styles + '**/*', '!' + paths.styles + 'themes/*']
   }
 }
 
-// BUILD TARGET CONFIG 
+// BUILD TARGET CONFIG
 var build = {
   scripts: paths.app + 'js',
   styles: paths.app + 'css',
   templates: {
     index: 'public/app/',
     views: paths.app,
-    cache: paths.app + 'js/' + 'templates.js',
+    cache: paths.app + 'js/' + 'templates.js'
   }
 }
 
@@ -151,7 +151,7 @@ gulp.task('scripts:app', function () {
     .pipe($.concat('app.js'))
     .pipe($.ngAnnotate())
     .on('error', handleError)
-    .pipe($.if(isProduction, $.uglify({preserveComments: 'some'})))
+    .pipe($.if(isProduction, $.uglify({ preserveComments: 'some' })))
     .on('error', handleError)
     .pipe($.if(useSourceMaps, $.sourcemaps.write()))
     .pipe(gulp.dest(build.scripts))
@@ -168,7 +168,6 @@ gulp.task('vendor:base', function () {
     .pipe($.if(isProduction, $.uglify()))
     .pipe($.concat(vendor.base.name))
     .pipe(gulp.dest(vendor.base.dest))
-
 })
 
 // copy file from bower folder into the app vendor folder
@@ -178,7 +177,7 @@ gulp.task('vendor:app', function () {
   var jsFilter = $.filter('**/*.js')
   var cssFilter = $.filter('**/*.css')
 
-  return gulp.src(vendor.app.source, {base: 'bower_components'})
+  return gulp.src(vendor.app.source, { base: 'bower_components' })
     .pipe($.expectFile(vendor.app.source))
     .pipe(jsFilter)
     .pipe($.if(isProduction, $.uglify(vendorUglifyOpts)))
@@ -187,7 +186,6 @@ gulp.task('vendor:app', function () {
     .pipe($.if(isProduction, $.minifyCss()))
     .pipe(cssFilter.restore())
     .pipe(gulp.dest(vendor.app.dest))
-
 })
 
 // APP LESS
@@ -232,14 +230,13 @@ gulp.task('styles:themes', function () {
 gulp.task('templates:index', ['templates:views'], function () {
   log('Building index..')
 
-  var tplscript = gulp.src(build.templates.cache, {read: false})
+  var tplscript = gulp.src(build.templates.cache, { read: false })
   return gulp.src(source.templates.index)
     .pipe($.if(useCache, $.inject(tplscript, injectOptions))) // inject the templates.js into index
     .pipe($.jade())
     .on('error', handleError)
     .pipe($.htmlPrettify(prettifyOpts))
     .pipe(gulp.dest(build.templates.index))
-
 })
 
 // JADE
@@ -251,7 +248,7 @@ gulp.task('templates:views', function () {
       .pipe($.jade())
       .on('error', handleError)
       .pipe($.angularTemplatecache(tplCacheOptions))
-      .pipe($.if(isProduction, $.uglify({preserveComments: 'some'})))
+      .pipe($.if(isProduction, $.uglify({ preserveComments: 'some' })))
       .pipe(gulp.dest(build.scripts))
   } else {
     return gulp.src(source.templates.views)
@@ -260,7 +257,6 @@ gulp.task('templates:views', function () {
       .on('error', handleError)
       .pipe($.htmlPrettify(prettifyOpts))
       .pipe(gulp.dest(build.templates.views))
-
   }
 })
 
@@ -298,7 +294,6 @@ gulp.task('watch', function () {
         $.livereload.changed(event.path)
       }, livereloadDelay)
     })
-
 })
 
 // lint javascript
@@ -306,7 +301,7 @@ gulp.task('lint', function () {
   return gulp
     .src(source.scripts)
     .pipe($.jshint())
-    .pipe($.jshint.reporter('jshint-stylish', {verbose: true}))
+    .pipe($.jshint.reporter('jshint-stylish', { verbose: true }))
     .pipe($.jshint.reporter('fail'))
 })
 
@@ -323,7 +318,7 @@ gulp.task('clean', function (done) {
 
   log('Cleaning: ' + $.util.colors.blue(delconfig))
   // force: clean files outside current directory
-  del(delconfig, {force: true}, done)
+  del(delconfig, { force: true }, done)
 })
 
 // ---------------
@@ -344,20 +339,19 @@ gulp.task('prod', function () {
 
 // build with sourcemaps (no minify)
 gulp.task('sourcemaps', ['usesources', 'default'])
-gulp.task('usesources', function () { useSourceMaps = true; })
+gulp.task('usesources', function () { useSourceMaps = true })
 
 // default (no minify)
 gulp.task('default', gulpsync.sync([
   'vendor',
   'assets',
-  'frontend',
+  'frontend'
 // 'watch',
 // 'serveprod'
 ]), function () {
   log('************')
   log('* All Done * You can start editing your code, LiveReload will update your browser after any change..')
   log('************')
-
 })
 
 gulp.task('assets', [
@@ -381,7 +375,7 @@ gulp.task('frontend', shell.task([
   'npm install',
   'bower install',
   'gulp'
-], {cwd: 'frontend'}))
+], { cwd: 'frontend' }))
 
 // Error handler
 function handleError (err) {
@@ -410,7 +404,7 @@ function flipcss (opt) {
   return stream
 }
 
-// log to console using 
+// log to console using
 function log (msg) {
   $.util.log($.util.colors.blue(msg))
 }

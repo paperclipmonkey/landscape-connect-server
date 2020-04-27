@@ -1,5 +1,5 @@
-var mongoose = require('mongoose')
-var Schema = mongoose.Schema
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 require('datejs')
 
 /*
@@ -13,14 +13,14 @@ require('datejs')
 */
 
 module.exports = (function (app) {
-  var NSchema = new Schema({
-    timestamp: {type: Number},
-    lat: {type: Number},
-    lng: {type: Number},
-    locAcc: {type: Number}, // m
-    questionnaire: {type: String},
+  const NSchema = new Schema({
+    timestamp: { type: Number },
+    lat: { type: Number },
+    lng: { type: Number },
+    locAcc: { type: Number }, // m
+    questionnaire: { type: String },
     media: [String], // URL
-    data: {type: Object}
+    data: { type: Object }
   })
 
   return mongoose.model('response', NSchema)

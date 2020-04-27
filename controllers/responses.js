@@ -1,33 +1,31 @@
 var mongoose = require('mongoose')
-var escape = require('escape-html')
 var moment = require('moment')
 var common = require('../common')
-var async = require('async')
-var s3Client = require('../s3-client')
 var eventServer = require('../eventemitter')
 
 module.exports = function (app) {
   var objName = 'Response'
   var modelName = 'response'
 
-  var check_nonce = function (req, res, next) {
-    // Ensure we have a new response - check NONCE from App
-    if (req.body.uuid) {
-      // Do lookup in DB for nonce. Does it exist already?
-      mongoose.model(modelName).findOne({uuid: req.body.uuid}, function (err, response) {
-        if (err) {
-          return next()
-        }
-        if (response !== null) {
-          res.json({status: "success", obj: response}) // JSON
-          return res.end()
-        }
-        return next()
-      })
-    } else {
-      return next()
-    }
-  }
+  // TODO - should this be used?
+  // var checkNonce = function (req, res, next) {
+  //   // Ensure we have a new response - check NONCE from App
+  //   if (req.body.uuid) {
+  //     // Do lookup in DB for nonce. Does it exist already?
+  //     mongoose.model(modelName).findOne({ uuid: req.body.uuid }, function (err, response) {
+  //       if (err) {
+  //         return next()
+  //       }
+  //       if (response !== null) {
+  //         res.json({ status: 'success', obj: response }) // JSON
+  //         return res.end()
+  //       }
+  //       return next()
+  //     })
+  //   } else {
+  //     return next()
+  //   }
+  // }
 
   var create = function (req, res, next) {
     var toInsert = req.body
@@ -35,7 +33,7 @@ module.exports = function (app) {
     var Model = mongoose.model(modelName)
     var instance = new Model(toInsert)
 
-    if(req.uploadedFileNames){
+    if (req.uploadedFileNames) {
       instance.media = req.uploadedFileNames
     }
 
@@ -43,14 +41,14 @@ module.exports = function (app) {
       if (err) {
         eventServer.emit(objName + ':error', err)
         eventServer.emit(instance)
-        res.status(400).json(JSON.stringify({'err': err.message}))
+        res.status(400).json(JSON.stringify({ err: err.message }))
         return res.end()
       }
 
       // Publish event to the system
       eventServer.emit(objName + ':create', instance)
 
-      res.json({status: "success", obj: instance}) // JSON
+      res.json({ status: 'success', obj: instance }) // JSON
       res.end()
     })
   }
@@ -63,15 +61,16 @@ module.exports = function (app) {
       for (var i = 0; i < results.length; i++) {
         results[i] = common.formatResponse(results[i], questionnaire)
       }
-      res.json({'result': results})
+      res.json({ result: results })
     }
-    mongoose.model('questionnaire').findOne({serverId: req.params.id}, function (err, docb) {
+    mongoose.model('questionnaire').findOne({ serverId: req.params.id }, function (err, docb) {
+      if (err) console.log(err)
       questionnaire = docb
       if (req.user && req.user.isSuper) {
-        mongoose.model(modelName).find({questionnaire: req.params.id}, cback)
+        mongoose.model(modelName).find({ questionnaire: req.params.id }, cback)
       } else {
         // TODO - check if data is public for this questionnaire
-        mongoose.model(modelName).find({questionnaire: req.params.id}, cback) // user: req.user._id
+        mongoose.model(modelName).find({ questionnaire: req.params.id }, cback) // user: req.user._id
       }
     })
   }
@@ -85,21 +84,22 @@ module.exports = function (app) {
   }
 
   var read = function (req, res, next) {
-    mongoose.model(modelName).findOne({_id: req.params.id}, function (err, doca) {
+    mongoose.model(modelName).findOne({ _id: req.params.id }, function (err, doca) {
       if (err) return next(err)
       if (!doca) return res.sendStatus(404)
-      mongoose.model('questionnaire').findOne({serverId: doca.questionnaire}, function (err, docb) {
+      mongoose.model('questionnaire').findOne({ serverId: doca.questionnaire }, function (err, docb) {
+        if (err) console.log(err)
         var doc = common.formatResponse(doca, docb)
         res.send(doc)
       })
     })
   }
 
-  var statistics = function (req, res, next) {
+  var statistics = function (req, res) {
     var lastWeek = moment().subtract(1, 'week').format('x')
-    mongoose.model(modelName).find({questionnaire: req.params.id}, function (erra, docsa) {
-      mongoose.model(modelName).find({questionnaire: req.params.id, timestamp:{ $gte: lastWeek}}, function (errb, docsb) {
-        if(erra || errb){
+    mongoose.model(modelName).find({ questionnaire: req.params.id }, function (erra, docsa) {
+      mongoose.model(modelName).find({ questionnaire: req.params.id, timestamp: { $gte: lastWeek } }, function (errb, docsb) {
+        if (erra || errb) {
           eventServer.emit(objName + ':error', erra)
           eventServer.emit(objName + ':error', errb)
           return res.sendStatus(400)
@@ -113,10 +113,10 @@ module.exports = function (app) {
   }
 
   return {
-    'create': create,
-    'list': list,
-    'remove': remove,
-    'read': read,
-    'statistics': statistics
+    create: create,
+    list: list,
+    remove: remove,
+    read: read,
+    statistics: statistics
   }
 }

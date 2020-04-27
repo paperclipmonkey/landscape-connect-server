@@ -10,6 +10,7 @@ module.exports = (function () {
   const hbs = require('hbs')
   const middleware = require('./controllers/middleware')
   const AWS = require('aws-sdk')
+  const path = require('path')
 
   require('./helpers/events') // Register event listeners
 
@@ -20,7 +21,7 @@ module.exports = (function () {
   const responsesRouter = require('./routes/responses')
   const authRouter = require('./routes/auth')
   const publicRouter = require('./routes/public')
-  
+
   AWS.config.update({
     accessKeyId: process.env.S3_ACCESS_KEY_ID,
     secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
@@ -47,7 +48,7 @@ module.exports = (function () {
   }))
   app.use(pass.initialize())
   app.use(pass.session())
-  app.use(express['static'](__dirname + '/public'))
+  app.use(express.static(path.join(__dirname, '/public')))
   app.set('view engine', 'html')
   app.engine('html', require('hbs').__express)
   app.set('views', __dirname)
@@ -56,12 +57,11 @@ module.exports = (function () {
     showStack: true
   }))
 
-
   // a middleware with no mount path; gets executed for every request to the app
-  app.use(function(req, res, next) {
-    res.setHeader('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-    res.setHeader('Expires', '-1');
-    res.setHeader('Pragma', 'no-cache');
+  app.use(function (req, res, next) {
+    res.setHeader('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+    res.setHeader('Expires', '-1')
+    res.setHeader('Pragma', 'no-cache')
     next()
   })
 

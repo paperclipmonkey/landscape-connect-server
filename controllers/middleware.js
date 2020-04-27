@@ -5,11 +5,11 @@ var async = require('async')
 var s3Client = require('../s3-client')
 
 // Sanitise inputs for non admins - This stops them from upgrading their own settings
-function sanitiseInput (req) {
-  if (req.body && req.body.isSuper) {
-    req.body.isSuper = false
-  }
-}
+// function sanitiseInput (req) {
+//   if (req.body && req.body.isSuper) {
+//     req.body.isSuper = false
+//   }
+// }
 
 /**
  * Generate a random ID
@@ -41,29 +41,29 @@ function randomUUID () {
 
 /**
  * Save all files uploaded to server
- * @param {Express.Request} req 
- * @param {Express.Response} res 
- * @param {Function} next 
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ * @param {Function} next
  */
 function saveUploaded (req, res, next) {
   var folder = 'uploads/'
   var acceptedExtensions = ['.jpg', '.jpeg', '.mp3', '.aac', '.png', '.tiff']
-  
-  //Loop over files in files
+
+  // Loop over files in files
   if (req.files && req.files) {
     req.uploadedFileNames = []
-    async.forEachOf(req.files, function(item, key, callback){
+    async.forEachOf(req.files, function (item, key, callback) {
       var originalExt = path.extname(item.name).toLowerCase()
       // Check file extension is kosher
       if (acceptedExtensions.indexOf(originalExt) === -1) {
         console.log('Uploading with wrong extension:' + originalExt)
-        return callback(new Error("Wrong extension"))
+        return callback(new Error('Wrong extension'))
       }
       var newFilename = randomUUID() + originalExt
       req.uploadedFileNames.push(newFilename)
       common.saveFileToS3(folder + newFilename, item.path, callback)
-    }, function(err){
-      if(err) console.log("Error uploading", err)
+    }, function (err) {
+      if (err) console.log('Error uploading', err)
       return next()
     })
   } else {
@@ -73,9 +73,9 @@ function saveUploaded (req, res, next) {
 
 /**
  * Ensures the request is logged in and a super user
- * @param {Express.Request} req 
- * @param {Express.Response} res 
- * @param {Function} next 
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ * @param {Function} next
  */
 function ensureIsSuper (req, res, next) {
   if (req.isAuthenticated()) {
@@ -97,16 +97,17 @@ function ensureIsOwner (req, res, next) {
     if (req.user && req.user.isSuper) {
       return next()
     }
-    //Me. Performing update on user.
-    if(req.params.id === 'me'){
+    // Me. Performing update on user.
+    if (req.params.id === 'me') {
       return next()
     }
     // Performing ID based update on user.
-    if(req.params.id === req.user._id){
+    if (req.params.id === req.user._id) {
       return next()
     }
-    //Questionnaire object
-    mongoose.model('questionnaire').findOne({owner: req.user._id, serverId: req.params.id}, function (err, questionnaire) {
+    // Questionnaire object
+    mongoose.model('questionnaire').findOne({ owner: req.user._id, serverId: req.params.id }, function (err, questionnaire) {
+      if (err) console.log(err)
       if (questionnaire != null) {
         return next()
       }
@@ -127,12 +128,13 @@ function ensurePublicOrAuthenticated (req, res, next) {
   if (req.user && req.user.isSuper) {
     return next()
   }
-  mongoose.model('questionnaire').findOne({serverId: req.params.id}, function (err, questionnaire) {
-    if(questionnaire != null){
-      if (req.user!= null && questionnaire.owner === req.user._id) {//Owned by logged in user
+  mongoose.model('questionnaire').findOne({ serverId: req.params.id }, function (err, questionnaire) {
+    if (err) console.log(err)
+    if (questionnaire != null) {
+      if (req.user != null && questionnaire.owner === req.user._id) { // Owned by logged in user
         return next()
       }
-      if (questionnaire.publicData === true) {//Public data
+      if (questionnaire.publicData === true) { // Public data
         return next()
       }
     }
@@ -165,7 +167,7 @@ var map = function (req, res, next) {
   // Check if S3 has image
   // Else download file and upload to S3
   // Redirect user to S3
-  var coord = [req.query.lat,req.query.lng]
+  var coord = [req.query.lat, req.query.lng]
   // var color = 'green'
   // if (doc.rating < 4) {
   //   color = 'orange'
@@ -181,7 +183,7 @@ var map = function (req, res, next) {
 
   downloader.on('error', function () {
     common.saveUrlToS3(
-       //https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=250x170&sensor=false&visual_refresh=true&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=AIzaSyC_j0J2_IUjBcIJwz5_zCcCYKZbPmXcqBg")
+      // https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=250x170&sensor=false&visual_refresh=true&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=AIzaSyC_j0J2_IUjBcIJwz5_zCcCYKZbPmXcqBg")
 
       'https://maps.googleapis.com/maps/api/staticmap?center=' + coord[0] + ',' + coord[1] + '&zoom=10&size=200x200&sensor=false&visual_refresh=true&markers=color:red%7C' + coord[1] + ',' + coord[0] + '&key=AIzaSyC_j0J2_IUjBcIJwz5_zCcCYKZbPmXcqBg',
       s3Params.Key,
