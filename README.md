@@ -1,5 +1,7 @@
 # Landscape Connect website and server
 
+[![Build Status](https://travis-ci.com/paperclipmonkey/landscape-connect-server.svg?token=SsrjjdmEtzcJsGDqjxQw&branch=master)](https://travis-ci.com/paperclipmonkey/landscape-connect-server)
+
 There are two parts to the system - the build step and the server.
 
 ## Requirements:
@@ -22,8 +24,16 @@ The tests are written in Mocha, and can be run with:
 
 ```heroku local:run mocha -e .env.test```
 
-They're also run on Travis CI from GitHub.
-https://travis-ci.com/github/paperclipmonkey/landscape-connect-server
+They're also run on [Travis CI](https://travis-ci.com/github/paperclipmonkey/landscape-connect-server) from GitHub actions.
+
+## Deployment
+
+The deployment pipeline uses GitHub actions to run the Travis CI test runner. If that pases, it's deployed to a beta environment. This can then manually be deployed to production.
+
+Environments:
+
+* [Beta](https://landscape-connect-beta.herokuapp.com/)
+* [Production](https://landscape-connect-public.herokuapp.com/)
 
 ## Commands
  *	`heroku local:run npm run dev` - Build and start
