@@ -6112,6 +6112,10 @@ a:hover {
 .navbar-sticky .navbar-brand {
   height: 60px;
 }
+.navbar-sticky a.navbar-brand img {
+  float: left;
+  margin-right: 5px;
+}
 .navbar-sticky .main-navbar li a {
   line-height: 30px;
   font-weight: 400;

@@ -51,6 +51,22 @@
    <link rel="stylesheet" href="css/styles.css" id="stylescss">
    <link rel="stylesheet" href="css/theme-b.css">
    <!--[if lt IE 9]><script src="js/html5shiv.js"></script><script src="js/respond.min.js"></script><![endif]-->
+   <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+   <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+   <script>
+      window.addEventListener("load", function(){
+       window.cookieconsent.initialise({
+         "palette": {
+           "popup": {
+             "background": "#237afc"
+           },
+           "button": {
+             "background": "#fff",
+             "text": "#237afc"
+           }
+         }
+       })});
+   </script>
 </head>
 
 <body>
@@ -73,6 +89,7 @@
                   </button>
                   <a href="#" class="navbar-brand">
                      <img src="img/logo-dark.png" alt="">
+                     <img src="img/ruritage.jpg" alt="">
                   </a>
                </div>
                <!-- MENU-->
@@ -82,7 +99,7 @@
                      </li>
                      <li><a href="#features">Features</a>
                      </li>
-                     <li><a href="#plans">Plans</a>
+                     <li><a href="#shots">Questionnaires</a>
                      </li>
                      <li><a href="#download">Download</a>
                      </li>
@@ -105,11 +122,11 @@
                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                   <!-- INTRO MESSAGE-->
                   <div class="intro-section">
-                     <h1 class="intro">The new landscape based questionnaire tool</h1>
-                     <!--h5 Available on //a.buy-link(href="https://wrapbootstrap.com/theme/angle-bootstrap-admin-app-angularjs-WB04HF123") WrapBootstrap-->
+                     <h1 class="intro">The landscape questionnaire tool</h1>
+                     <!--h5 Available on//a.buy-link(href="https://wrapbootstrap.com/theme/angle-bootstrap-admin-app-angularjs-WB04HF123") WrapBootstrap-->
                      <!-- DEMO BUTTON-->
                      <div class="text-center"><a href="https://play.google.com/store/apps/details?id=uk.co.threeequals.landscapeconnect" class="btn btn-lg btn-theme"><i class="icon-app-download"></i><span><em class="fa fa-android"></em>Answer a questionnaire</span></a><a href="#versions"
-                        class="btn btn-lg btn-theme"><i class="icon-app-download"></i><span> <strong>Build a new questionnaire</strong></span></a>
+                        class="btn btn-lg btn-theme"><i class="icon-app-download"></i><span><strong>Build a new questionnaire</strong></span></a>
                      </div>
                   </div>
                   <div class="intro-shot">
@@ -373,7 +390,7 @@
       <div class="container">
          <!-- SECTION HEADER-->
          <div class="section-header">
-            <h2>Questionnaire Gallery</h2>
+            <h2>Live Projects</h2>
             <div class="section-description">See what our users have been creating in the public questionnaire gallery.</div>
             <div class="section-description"><a href="/questionnaires/">Find a questionnaire</a>
             </div>
@@ -406,74 +423,6 @@
       </div>
    </section>
    <!-- END APP SHOTS-->
-   <!-- START PLAN TABLE-->
-   <section id="plans" class="plan-table">
-      <div class="container">
-         <!-- SECTION HEADER-->
-         <div data-wow-offset="15" data-wow-duration="1.3s" class="section-header wow fadeIn animated">
-            <h2>Plans</h2>
-            <div class="section-description">
-               Signup now for a free account or upgrade to a full account</div>
-         </div>
-         <!-- END SECTION HEADER-->
-         <div class="row">
-            <!-- PLAN-->
-            <div data-wow-offset="15" data-wow-duration="1.3s" class="col-md-6 col-sm-6 wow fadeIn animated">
-               <div class="plan">
-                  <h3 class="plan-header">Free</h3>
-                  <div class="plan-price">
-                     <h2><sup><small>£</small></sup>0
-                        <span class="plan-period">/mo</span>
-                     </h2>
-                  </div>
-                  <ul class="plan-features">
-                     <li>
-                        <em class="fa fa-check"></em>Unlimited questionnaires</li>
-                     <li>
-                        <em class="fa fa-check"></em>Unlimited questions</li>
-                     <li>
-                        <em class="fa fa-check"></em>Public data collection</li>
-                     <li>
-                        <em class="fa fa-check"></em>Private data collection</li>
-                     <li>
-                        <em class="fa fa-check"></em>Free Updates</li>
-                  </ul>
-                  <hr>
-                  <div class="text-center"><a href="/app/#/page/register" class="btn btn-theme">Try free</a>
-                  </div>
-               </div>
-            </div>
-            <!-- PLAN-->
-            <div data-wow-offset="15" data-wow-duration="1.3s" class="col-md-6 col-sm-6 wow fadeIn animated">
-               <div class="plan">
-                  <h3 class="plan-header">Premium</h3>
-                  <div class="plan-price">
-                     <h2><sup><small>£</small></sup>TBC
-                        <span class="plan-period">/mo</span>
-                     </h2>
-                  </div>
-                  <ul class="plan-features">
-                     <li>
-                        <em class="fa fa-check"></em>Greater location accuracy</li>
-                     <li>
-                        <em class="fa fa-check"></em>Custom print outs</li>
-                     <li>
-                        <em class="fa fa-check"></em>Better analytics</li>
-                     <li>
-                        <em class="fa fa-check"></em>Email Notifications</li>
-                     <li>
-                        <em class="fa fa-check"></em>Unlimited questions</li>
-                  </ul>
-                  <hr>
-                  <!--p.plan-description The perfect price for all your project solutions.-->
-                  <div class="text-center"><a href="/app/#/page/register" class="btn btn-theme">Coming soon</a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </section>
-   <!-- END PLAN TABLE-->
    <!-- START DOWNLOAD-->
    <section id="download" class="download">
       <div class="container">
@@ -507,7 +456,7 @@
             </div>
             <div class="col-sm-6">
                <!-- COPYRIGHT-->
-               <p class="copyright">Landscape Connect &copy; 2016</p>
+               <p class="copyright">Landscape Connect &copy; 2019</p>
             </div>
          </div>
       </div>
