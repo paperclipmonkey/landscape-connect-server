@@ -11,6 +11,10 @@ function sanitiseInput (req) {
   }
 }
 
+/**
+ * Generate a random ID
+ * Used for IDs
+ */
 function randomUUID () {
   var s = []
   var itoh = '0123456789ABCDEF'
@@ -35,8 +39,12 @@ function randomUUID () {
   return s.join('')
 }
 
-//Save all files uploaded to server
-//Use media as variable name in 
+/**
+ * Save all files uploaded to server
+ * @param {Express.Request} req 
+ * @param {Express.Response} res 
+ * @param {Function} next 
+ */
 function saveUploaded (req, res, next) {
   var folder = 'uploads/'
   var acceptedExtensions = ['.jpg', '.jpeg', '.mp3', '.aac', '.png', '.tiff']
@@ -63,6 +71,12 @@ function saveUploaded (req, res, next) {
   }
 }
 
+/**
+ * Ensures the request is logged in and a super user
+ * @param {Express.Request} req 
+ * @param {Express.Response} res 
+ * @param {Function} next 
+ */
 function ensureIsSuper (req, res, next) {
   if (req.isAuthenticated()) {
     if (req.user && req.user.isSuper) {
@@ -72,16 +86,22 @@ function ensureIsSuper (req, res, next) {
   return res.sendStatus(401)
 }
 
+/**
+ * Ensure is owner of requested resource, or super
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ * @param {Function} next
+ */
 function ensureIsOwner (req, res, next) {
   if (req.isAuthenticated()) {
     if (req.user && req.user.isSuper) {
       return next()
     }
-    //Me
+    //Me. Performing update on user.
     if(req.params.id === 'me'){
       return next()
     }
-    //User object
+    // Performing ID based update on user.
     if(req.params.id === req.user._id){
       return next()
     }
@@ -97,6 +117,12 @@ function ensureIsOwner (req, res, next) {
   }
 }
 
+/**
+ * Check Questionnaire is public or owned.
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ * @param {Function} next
+ */
 function ensurePublicOrAuthenticated (req, res, next) {
   if (req.user && req.user.isSuper) {
     return next()
@@ -114,6 +140,12 @@ function ensurePublicOrAuthenticated (req, res, next) {
   })
 }
 
+/**
+ * Ensure user is logged in
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ * @param {Function} next
+ */
 function ensureLoggedIn (req, res, next) {
   if (req.user != null) {
     return next()
@@ -121,6 +153,14 @@ function ensureLoggedIn (req, res, next) {
   return res.sendStatus(401)
 }
 
+// TODO move this from middleware
+// TODO update this to RmV Version
+/**
+ * Get cached map from Google static map API
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ * @param {Function} next
+ */
 var map = function (req, res, next) {
   // Check if S3 has image
   // Else download file and upload to S3
