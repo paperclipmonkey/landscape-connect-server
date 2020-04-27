@@ -26,6 +26,10 @@ describe('Back-end admin', function () {
     })
   })
 
+  after(function () {
+    server.close()
+  })
+
   /* - - - - - - - - - Super Admin - - - - - - */
   it('GET /api/account/details should give unauthorised', function (done) {
     rAgent
@@ -267,7 +271,7 @@ describe('Back-end admin', function () {
 
       it('GET /api/users/:superUserId', function (done) {
         rAgent
-          .get('/api/users/' + users.super.id)
+          .get(`/api/users/${users.super.id}`)
           .end(function(err, res){
             done()
         })
@@ -312,9 +316,5 @@ describe('Back-end admin', function () {
     rAgent
       .get('/api/users/')
       .expect(401, done)
-  })
-
-  after(function () {
-    server.close()
   })
 })

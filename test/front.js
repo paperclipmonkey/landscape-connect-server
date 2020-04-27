@@ -1,14 +1,18 @@
-var app = require('../app')
-var request = require('supertest')
-var server
+const app = require('../app')
+const request = require('supertest')
+let server
 
 describe('Front-end', function () {
-  var rAgent
+  let rAgent
   before(function (done) {
     server = app.listen(process.env.PORT, function () {
       rAgent = request.agent(app)
       done()
     })
+  })
+
+  after(function () {
+    server.close()
   })
 
   /* - - - - Front-end - - - - - */
@@ -31,9 +35,5 @@ describe('Front-end', function () {
     rAgent
       .get('/api/questionnaires/public/')
       .expect(200, done)
-  })
-
-  after(function () {
-    server.close()
   })
 })

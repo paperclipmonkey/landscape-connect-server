@@ -26,6 +26,10 @@ describe('Logged out user', function () {
     })
   })
 
+  after(function () {
+    server.close()
+  })
+
   /* - - - - - - - - - Super Admin - - - - - - */
   it('GET /api/account/details should give unauthorised', function (done) {
     rAgent
@@ -89,13 +93,13 @@ describe('Logged out user', function () {
 
   it('POST /api/questionnaires/:id Update not logged in', function (done) {
     rAgent
-      .post('/api/questionnaires/' + questionnaires[0])
+      .post(`/api/questionnaires/${questionnaires[0]}`)
       .expect(401, done)
   })
 
   it('DELETE /api/questionnaires/:id not logged in', function (done) {
     rAgent
-      .delete('/api/questionnaires/' + + questionnaires[0])
+      .delete(`/api/questionnaires/${questionnaires[0]}`)
       .expect(401, done)
   })
 
@@ -103,9 +107,5 @@ describe('Logged out user', function () {
     rAgent
       .get('/api/users/')
       .expect(401, done)
-  })
-
-  after(function () {
-    server.close()
   })
 })

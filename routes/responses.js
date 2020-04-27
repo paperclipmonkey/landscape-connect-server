@@ -11,7 +11,7 @@ module.exports = function (app) {
   var modelName = 'response'
 
   var check_nonce = function (req, res, next) {
-    // Ensure we have a new view - check NONCE from App
+    // Ensure we have a new response - check NONCE from App
     if (req.body.uuid) {
       // Do lookup in DB for nonce. Does it exist already?
       mongoose.model(modelName).findOne({uuid: req.body.uuid}, function (err, response) {

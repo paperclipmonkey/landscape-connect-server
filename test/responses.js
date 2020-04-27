@@ -1,17 +1,16 @@
-var app = require('../app')
-var request = require('supertest')
-var server
+const app = require('../app')
+const request = require('supertest')
+let server
 
 describe('Responses', function () {
-  var rAgent,
+  let rAgent,
     testQId
 
   before(function (done) {
     server = app.listen(process.env.PORT, function () {
       rAgent = request.agent(app)
-      // Delete all areas with name test - Unique test on Area names
-      var mongoose = require('mongoose')
-      var Questionnaire = mongoose.model('questionnaire')
+      const mongoose = require('mongoose')
+      const Questionnaire = mongoose.model('questionnaire')
       Questionnaire.findOne({'title': 'Test'}, function (err, qaire) {
         if (err) return done(err)
         if (!qaire) return done(new Error('No questionnaire'))
@@ -21,10 +20,14 @@ describe('Responses', function () {
     })
   })
 
+  after(function () {
+    server.close()
+  })
+
   it('POST /api/questionnaires/x/responses should save new response', function (done) {
     this.timeout(20000);
     rAgent
-      .post('/api/questionnaires/' + testQId + '/responses')
+      .post(`/api/questionnaires/${testQId}/responses`)
       .field('questionnaire', testQId)
       .field('timestamp', new Date().getTime()) // Millis since epoch
       .field('lat', (Math.random() * 360) - 180)
@@ -44,7 +47,7 @@ describe('Responses', function () {
   it('POST /api/questionnaires/x/responses with multiple photos should save new response', function (done) {
     this.timeout(20000);
     rAgent
-      .post('/api/questionnaires/' + testQId + '/responses')
+      .post(`/api/questionnaires/${testQId}/responses`)
       .field('questionnaire', testQId)
       .field('timestamp', new Date().getTime()) // Millis since epoch
       .field('lat', (Math.random() * 360) - 180)
@@ -65,7 +68,7 @@ describe('Responses', function () {
   it('POST /api/questionnaires/x/responses with MP3 should save new response', function (done) {
     this.timeout(20000);
     rAgent
-      .post('/api/questionnaires/' + testQId + '/responses')
+      .post(`/api/questionnaires/${testQId}/responses`)
       .field('questionnaire', testQId)
       .field('timestamp', new Date().getTime()) // Millis since epoch
       .field('lat', (Math.random() * 360) - 180)
@@ -84,12 +87,8 @@ describe('Responses', function () {
 
   it('GET /api/questionnaires/x/responses should show responses', function (done) {
     rAgent
-      .get('/api/questionnaires/' + testQId + '/responses')
+      .get(`/api/questionnaires/${testQId}/responses`)
       .expect(200)
       .expect(/\bresult\b/, done())
-  })
-
-  after(function () {
-    server.close()
   })
 })

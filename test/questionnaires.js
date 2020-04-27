@@ -1,24 +1,24 @@
-var app = require('../app')
-var request = require('supertest')
-var server
-var users = {
-  'super': {username: 'example@sample.com', password: 'pword'},
-  'nonsuper': {username: 'example+nonsuper@sample.com', password: 'pword'}
-}
+const app = require('../app')
+const request = require('supertest')
+let server
 
 describe('Questionnaires', function () {
-  var rAgent
-  var questionnaire
+  let rAgent
+  let questionnaire
   before(function (done) {
     server = app.listen(process.env.PORT, function () {
       rAgent = request.agent(app)
-      var mongoose = require('mongoose')
-      var Questionnaire = mongoose.model('questionnaire')
+      const mongoose = require('mongoose')
+      const Questionnaire = mongoose.model('questionnaire')
       Questionnaire.findOne({'title': 'Test'}, function (err, obj) {
         questionnaire = obj
         done()
       })
     })
+  })
+
+  after(function () {
+    server.close()
   })
 
   /* - - - - Questionnaires - - - - - */
@@ -61,20 +61,20 @@ describe('Questionnaires', function () {
 
   it('GET /questionnaires/x as normal client should redirect to questionnaire page', function (done) {
     rAgent
-      .get('/questionnaires/' + questionnaire.serverId)
+      .get(`/questionnaires/${questionnaire.serverId}`)
       .expect(302)
       .expect(/(app)/, done)
   })
 
   it('GET /api/questionnaires/x/qr should show qr code', function (done) {
     rAgent
-      .get('/api/questionnaires/' + questionnaire.serverId + '/qr')
+      .get(`/api/questionnaires/${questionnaire.serverId}/qr`)
       .expect(200, done)
   })
 
   it('GET /questionnaires/x as Android client V1 should show JSON', function (done) {
     rAgent
-      .get('/questionnaires/' + questionnaire.serverId)
+      .get(`/questionnaires/${questionnaire.serverId}`)
       .set('User-Agent', 'LandscapeConnectV1')
       .expect(/(Test)/)
       .expect(200, done)
@@ -82,7 +82,7 @@ describe('Questionnaires', function () {
 
   it('GET /questionnaires/x as Android client V2 should show JSON', function (done) {
     rAgent
-      .get('/questionnaires/' + questionnaire.serverId)
+      .get(`/questionnaires/${questionnaire.serverId}`)
       .set('User-Agent', 'LandscapeConnectV2')
       .expect(200)
       .expect(/(Test)/)
@@ -90,9 +90,5 @@ describe('Questionnaires', function () {
         if (err) return done(err)
         done()
       })
-  })
-
-  after(function () {
-    server.close()
   })
 })
