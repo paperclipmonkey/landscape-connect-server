@@ -80,7 +80,7 @@
   "scripts": {
     "start": "node ./",
     "dev": "bower install && gulp && node ./",
-    "test": "mocha",
+    "test": "mocha --exit",
     "format": "standard -F"
   },
   "standard": {
