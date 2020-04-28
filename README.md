@@ -2,7 +2,11 @@
 
 [![Build Status](https://travis-ci.com/paperclipmonkey/landscape-connect-server.svg?token=SsrjjdmEtzcJsGDqjxQw&branch=master)](https://travis-ci.com/paperclipmonkey/landscape-connect-server)
 
-There are two parts to the system - the build step and the server.
+There are three parts to the system:
+
+* Web server - this is a node.js web server which replies to requests and builds responses.
+* Front end build system. This builds simply the splash page showing off the features.
+* Admin console. Full administrative system as an SPA which uses the web server to function.
 
 ## Requirements:
 
