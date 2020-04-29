@@ -6329,7 +6329,6 @@ header .header-shot {
   background: #fff;
 }
 .versions .row > div {
-  cursor: pointer;
   padding-top: 10px;
   padding-bottom: 10px;
   -webkit-transition: box-shadow 0.2s ease;

@@ -5,8 +5,6 @@ var through = require('through2')
 var gulp = require('gulp')
 var $ = require('gulp-load-plugins')()
 var shell = require('gulp-shell')
-var gulpsync = $.sync(gulp)
-var PluginError = $.util.PluginError
 var del = require('del')
 
 // production mode (see build task)
@@ -157,9 +155,6 @@ gulp.task('scripts:app', function () {
     .pipe(gulp.dest(build.scripts))
 })
 
-// VENDOR BUILD
-gulp.task('vendor', gulpsync.sync(['vendor:base', 'vendor:app']))
-
 // Build the base script to start the application from vendor assets
 gulp.task('vendor:base', function () {
   log('Copying base vendor assets..')
@@ -179,14 +174,17 @@ gulp.task('vendor:app', function () {
 
   return gulp.src(vendor.app.source, { base: 'bower_components' })
     .pipe($.expectFile(vendor.app.source))
-    .pipe(jsFilter)
-    .pipe($.if(isProduction, $.uglify(vendorUglifyOpts)))
-    .pipe(jsFilter.restore())
-    .pipe(cssFilter)
-    .pipe($.if(isProduction, $.minifyCss()))
-    .pipe(cssFilter.restore())
+    // .pipe(jsFilter)
+    // .pipe($.if(isProduction, $.uglify(vendorUglifyOpts)))
+    // .pipe(jsFilter.restore)
+    // .pipe(cssFilter)
+    // .pipe($.if(isProduction, $.minifyCss()))
+    // .pipe(cssFilter.restore)
     .pipe(gulp.dest(vendor.app.dest))
 })
+
+// VENDOR BUILD
+gulp.task('vendor', gulp.parallel(['vendor:base', 'vendor:app']))
 
 // APP LESS
 gulp.task('styles:app', function () {
@@ -227,19 +225,6 @@ gulp.task('styles:themes', function () {
 })
 
 // JADE
-gulp.task('templates:index', ['templates:views'], function () {
-  log('Building index..')
-
-  var tplscript = gulp.src(build.templates.cache, { read: false })
-  return gulp.src(source.templates.index)
-    .pipe($.if(useCache, $.inject(tplscript, injectOptions))) // inject the templates.js into index
-    .pipe($.jade())
-    .on('error', handleError)
-    .pipe($.htmlPrettify(prettifyOpts))
-    .pipe(gulp.dest(build.templates.index))
-})
-
-// JADE
 gulp.task('templates:views', function () {
   log('Building views.. ' + (useCache ? 'using cache' : ''))
 
@@ -260,6 +245,19 @@ gulp.task('templates:views', function () {
   }
 })
 
+// JADE
+gulp.task('templates:index', gulp.series('templates:views'), function () {
+  log('Building index..')
+
+  var tplscript = gulp.src(build.templates.cache, { read: false })
+  return gulp.src(source.templates.index)
+    .pipe($.if(useCache, $.inject(tplscript, injectOptions))) // inject the templates.js into index
+    .pipe($.jade())
+    .on('error', handleError)
+    .pipe($.htmlPrettify(prettifyOpts))
+    .pipe(gulp.dest(build.templates.index))
+})
+
 // ---------------
 // WATCH
 // ---------------
@@ -270,11 +268,11 @@ gulp.task('watch', function () {
 
   $.livereload.listen()
 
-  gulp.watch(source.scripts, ['scripts:app'])
-  gulp.watch(source.styles.watch, ['styles:app', 'styles:app:rtl'])
-  gulp.watch(source.styles.themes, ['styles:themes'])
-  gulp.watch(source.templates.views, ['templates:views'])
-  gulp.watch(source.templates.index, ['templates:index'])
+  gulp.watch(source.scripts, gulp.series('scripts:app'))
+  gulp.watch(source.styles.watch, gulp.series('styles:app', 'styles:app:rtl'))
+  gulp.watch(source.styles.themes, gulp.series('styles:themes'))
+  gulp.watch(source.templates.views, gulp.series('templates:views'))
+  gulp.watch(source.templates.index, gulp.series('templates:index'))
 
   // a delay before triggering browser reload to ensure everything is compiled
   var livereloadDelay = 1500
@@ -291,7 +289,7 @@ gulp.task('watch', function () {
     .watch(watchSource)
     .on('change', function (event) {
       setTimeout(function () {
-        $.livereload.changed(event.path)
+        $.livereload.changed(event)
       }, livereloadDelay)
     })
 })
@@ -325,43 +323,50 @@ gulp.task('clean', function (done) {
 // MAIN TASKS
 // ---------------
 
-// build for production (minify)
-gulp.task('build', gulpsync.sync([
-  'prod',
-  'vendor',
-  'assets'
-]))
-
-gulp.task('prod', function () {
+gulp.task('prod', function (done) {
   log('Starting production build..')
   isProduction = true
+  done()
 })
 
-// build with sourcemaps (no minify)
-gulp.task('sourcemaps', ['usesources', 'default'])
-gulp.task('usesources', function () { useSourceMaps = true })
-
-// default (no minify)
-gulp.task('default', gulpsync.sync([
-  'vendor',
-  'assets',
-  'frontend'
-// 'watch',
-// 'serveprod'
-]), function () {
-  log('************')
-  log('* All Done * You can start editing your code, LiveReload will update your browser after any change..')
-  log('************')
-})
-
-gulp.task('assets', [
+gulp.task('assets', gulp.series(
   'scripts:app',
   'styles:app',
   'styles:app:rtl',
   'styles:themes',
   'templates:index',
   'templates:views'
-])
+))
+
+// build for production (minify)
+gulp.task('build', gulp.parallel(
+  'prod',
+  'vendor',
+  'assets'
+))
+
+gulp.task('frontend', shell.task([
+  'npm install',
+  'bower install',
+  'gulp'
+], { cwd: 'frontend' }))
+
+// default (no minify)
+gulp.task('default', gulp.parallel(
+  'vendor',
+  'assets',
+  'frontend'
+// 'watch',
+// 'serveprod'
+), function () {
+  log('************')
+  log('* All Done * You can start editing your code, LiveReload will update your browser after any change..')
+  log('************')
+})
+
+// build with sourcemaps (no minify)
+gulp.task('usesources', function () { useSourceMaps = true })
+gulp.task('sourcemaps', gulp.series('usesources', 'default'))
 
 // - Custom added gulp tasks for LC
 // gulp.task('serveprod', function() {
@@ -370,12 +375,6 @@ gulp.task('assets', [
 //     console.log('Listening on port %d', server.address().port)
 //   })
 // })
-
-gulp.task('frontend', shell.task([
-  'npm install',
-  'bower install',
-  'gulp'
-], { cwd: 'frontend' }))
 
 // Error handler
 function handleError (err) {

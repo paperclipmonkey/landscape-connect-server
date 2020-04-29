@@ -211,24 +211,21 @@ gulp.task('watch', function() {
 //---------------
 
 // build for production (minify)
-gulp.task('build', ['prod', 'default']);
-gulp.task('prod', function() { isProduction = true; });
-// build with sourcemaps (no minify)
-gulp.task('sourcemaps', ['usesources', 'default']);
-gulp.task('usesources', function(){ useSourceMaps = true; });
-// default (no minify)
-gulp.task('start',[
-          'styles:site',
-          'styles:themes',
-          'templates:pages'
-          // 'watch'
-        ]);
+gulp.task('prod', function(done) { isProduction = true; done() });
 
-gulp.task('default', gulpsync.sync([
-          'scripts:vendor',
-          'scripts:site',
-          'start'
-        ]), function(){
+// default (no minify)
+gulp.task('start', gulp.series(
+  'styles:site',
+  'styles:themes',
+  'templates:pages'
+  // 'watch'
+));
+
+gulp.task('default', gulp.parallel(
+  'scripts:vendor',
+  'scripts:site',
+  'start'
+), function () {
 
   gutil.log(gutil.colors.cyan('************'));
   gutil.log(gutil.colors.cyan('* All Done *'), 'The front-end site has been built');
@@ -236,9 +233,16 @@ gulp.task('default', gulpsync.sync([
 
 });
 
+// build with sourcemaps (no minify)
+gulp.task('usesources', function(done){ useSourceMaps = true; done() });
+gulp.task('sourcemaps', gulp.series('usesources', 'default'));
 
-gulp.task('done', function(){
+gulp.task('build', gulp.series('prod', 'default'));
+
+
+gulp.task('done', function(done){
   console.log('All Done!! You can start editing your code, LiveReload will update your browser after any change..');
+  done()
 });
 
 // Error handler

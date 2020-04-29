@@ -7,7 +7,7 @@ module.exports = (function () {
   const methodOverride = require('method-override')
   const errorHandler = require('errorhandler')
   const pass = require('./authenticate')
-  const hbs = require('hbs')
+  const hbs = require('hbs') // KML download rendering
   const middleware = require('./controllers/middleware')
   const AWS = require('aws-sdk')
   const path = require('path')
@@ -48,7 +48,9 @@ module.exports = (function () {
   }))
   app.use(pass.initialize())
   app.use(pass.session())
-  app.use(express.static(path.join(__dirname, '/public')))
+
+  app.use(express.static(path.join(__dirname, '/public'))) // Serve the staticly built website
+  
   app.set('view engine', 'html')
   app.engine('html', require('hbs').__express)
   app.set('views', __dirname)
