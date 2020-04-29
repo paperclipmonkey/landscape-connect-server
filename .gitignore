@@ -16,3 +16,6 @@
 
 /npm-debug.log
 
+.env
+.env.test
+TODO.md
