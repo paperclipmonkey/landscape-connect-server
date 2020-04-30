@@ -104,6 +104,7 @@
     "ag-grid": "2.3.5",
     "ng-nestable": "0.0.1",
     "angular-deckgrid": "0.5.0",
+    "sweetalert": "1.1.3",
     "angular-sweetalert": "1.1.0",
     "angular-bootstrap-tour": "0.3.3",
     "jquery.browser": "master",
