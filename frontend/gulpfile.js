@@ -119,12 +119,12 @@ gulp.task('scripts:vendor', function() {
 
   return gulp.src(vendor.site.source, {base: 'bower_components'})
       .pipe(expect(vendor.site.source))
-      .pipe(jsFilter)
-      .pipe(uglify())
-      .pipe(jsFilter.restore())
-      .pipe(cssFilter)
-      .pipe(minifyCSS())
-      .pipe(cssFilter.restore())
+      // .pipe(jsFilter)
+      // .pipe(uglify())
+      // .pipe(jsFilter.restore)
+      // .pipe(cssFilter)
+      // .pipe(minifyCSS())
+      // .pipe(cssFilter.restore)
       .pipe( gulp.dest(vendor.site.dest) );
 
 });

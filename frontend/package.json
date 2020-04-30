@@ -11,7 +11,7 @@
     "gulp-changed": "^1.0.0",
     "gulp-concat": "^2.4.1",
     "gulp-expect-file": "0.0.7",
-    "gulp-filter": "^2.0.0",
+    "gulp-filter": "^6.0.0",
     "gulp-html-prettify": "0.0.1",
     "gulp-ignore": "^1.2.0",
     "gulp-jade": "^0.8.0",
