@@ -82,6 +82,7 @@
     "start": "node ./",
     "dev": "bower install && gulp && node ./",
     "test": "mocha --exit",
+    "build": "gulp",
     "format": "standard -F"
   },
   "standard": {
