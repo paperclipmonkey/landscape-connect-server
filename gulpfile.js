@@ -345,6 +345,10 @@ gulp.task('build', gulp.parallel(
   'assets'
 ))
 
+gulp.task('bower', shell.task([
+  'bower install',
+]))
+
 gulp.task('frontend', shell.task([
   'npm install',
   'bower install',
@@ -352,7 +356,8 @@ gulp.task('frontend', shell.task([
 ], { cwd: 'frontend' }))
 
 // default (no minify)
-gulp.task('default', gulp.parallel(
+gulp.task('default', gulp.series(
+  'bower',
   'vendor',
   'assets',
   'frontend'
