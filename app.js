@@ -44,7 +44,7 @@ module.exports = (function () {
   app.disable('x-powered-by')
   app.use(cookieParser())
   app.use(session({
-    keys: ['SomethingHereForSession', 'SomethingElseHereForSession']
+    keys: [process.env.SESSION_KEY_1, process.env.SESSION_KEY_2]
   }))
   app.use(pass.initialize())
   app.use(pass.session())
