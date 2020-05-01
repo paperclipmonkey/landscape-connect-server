@@ -60,6 +60,7 @@ module.exports = (function () {
   }))
 
   // a middleware with no mount path; gets executed for every request to the app
+  // Stops most caching on all endpoints
   app.use(function (req, res, next) {
     res.setHeader('Cache-Control', 'private, no-cache, no-store, must-revalidate')
     res.setHeader('Expires', '-1')
