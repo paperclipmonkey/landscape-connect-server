@@ -14,10 +14,7 @@ There are three parts to the system:
 The version of node is specified in `.nvmrc` as 14. This ensures long term compatability.
 
 ### Front-end build
-The node version needs to be less than <TODO check> 8.
-
-## Running
-To run the system nvm can be used to run multiple versions of node on the same machine. The system must be built before being deployed
+The build node version is currently also 14.
 
 ## Linting
 ```npx lint --fix```
