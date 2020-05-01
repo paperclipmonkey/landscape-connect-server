@@ -33,8 +33,9 @@ script(type='text/ng-template', id="sidebar-renderer.html")
 
       // Iterates over all sidebar items
       li(ng-class="getMenuItemPropClasses(item)", ng-repeat='item in menuItems', ng-init="pIndex = $index", ng-include="'sidebar-renderer.html'", ng-click="toggleCollapse(pIndex, true)")
-      li
-        img(src="app/img/ruritage.jpg", style="max-width:90%;margin:2%")
+      li.sponsors
+        span Sponsored by:
+        img(src="app/img/ruritage.jpg")
     // END sidebar nav
 
 // END Sidebar (left)

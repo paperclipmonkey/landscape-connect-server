@@ -46,7 +46,7 @@ module.exports = function (app) {
             value: 'lng'
           },
           {
-            label: 'location accuracy',
+            label: 'location accuracy (m)',
             value: 'locAcc'
           }
         ]

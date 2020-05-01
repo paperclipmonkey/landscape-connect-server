@@ -17,7 +17,7 @@
               center: {
                   lat: 55,
                   lng: 0,
-                  zoom: 5
+                  zoom: 3
               },
               defaults: {
                   scrollWheelZoom: false
