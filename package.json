@@ -6,7 +6,7 @@
   "dependencies": {
     "archiver": "^4.0.1",
     "async": "1.4.x",
-    "aws-sdk": "^2.663.0",
+    "aws-sdk": "^2.814.0",
     "base64-stream": "^0.1.3",
     "body-parser": "^1.19.0",
     "bower": "^1.8.8",
