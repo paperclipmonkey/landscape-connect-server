@@ -26,7 +26,7 @@
     "gulp-w3cjs": "^0.2.1",
     "interpret": "1.0.0",
     "liftoff": "2.2.0",
-    "marked": "~0.3.2",
+    "marked": "~4.0.10",
     "pretty-hrtime": "1.0.1",
     "semver": "5.1.0",
     "through2": "^0.6.2",
