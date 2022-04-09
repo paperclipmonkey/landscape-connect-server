@@ -59,7 +59,7 @@
     "marked": "^1.0.0",
     "method-override": "^2.3.10",
     "mocha": "^7.1.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "mongoose": "^5.9.10",
     "node-uuid": "1.4.x",
     "nodemailer": "1.4.x",
